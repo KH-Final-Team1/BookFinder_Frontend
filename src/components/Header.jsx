@@ -17,7 +17,7 @@ export default function Header(){
             <Link to="" className={"menu"}>메뉴명3</Link>
           </div>
           <div>
-            <Link to="" className={"menu"}>로그인</Link>
+            <Link to="/login" className={"menu"}>로그인</Link>
           </div>
           <div>
             <Link to="" className={"menu"}>마이페이지</Link>
