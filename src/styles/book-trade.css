@@ -1,0 +1,15 @@
+/* 사용자간 대출 목록*/
+.book-trades { display: flex; align-items: center; height: 100vh; flex-direction: column; margin-top: 50px; } 
+.book-trades hr { border: solid 1px #a4a4a4; width: 700px } 
+.book-trades table { width: 900px; } 
+.book-trades table tr { border-bottom: 1px; solid-color: black; } 
+.book-trades table .book-img-border { text-align: center; vertical-align: middle; padding: 10px; } 
+.book-trades table .book-img-border img { height: 220px; } 
+.book-trades table .book-title { font-size: 24px; } 
+.book-trades table .trade-info { padding-left: 25px; } 
+.book-trades table .trade-info .trade-type { margin-bottom: 5px; } 
+.book-trades table .trade-info .book-title { margin: 0; } 
+.book-trades table .trade-info .book-info { color: gray; font-size: 14px; margin: 3px 0 0 15px; } 
+.book-trades table .trade-info .trade-price img { vertical-align: text-top; width: 15px; margin-right: 5px; } 
+.book-trades table .trade-info .writer-info img { vertical-align: text-top; width: 15px; margin-right: 5px; } 
+/* 사용자간 대출 목록*/
