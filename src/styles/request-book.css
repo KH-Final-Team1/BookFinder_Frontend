@@ -14,6 +14,4 @@
 .request-book .book .book-info .book-publisher,
 .request-book .book .book-info .book-publication-year { font-size: 18px; } 
 .request-book .buttons { display: flex; justify-content: flex-end; width: 100%; margin: 30px 40% 0 0; } 
-.request-book .buttons .cancel-button { width: 100px; height: 50px; background-color: white; border: 1px solid black; border-radius: 10px; margin-right: 8px; font-size: 20px; } 
-.request-book .buttons .submit-button { width: 100px; height: 50px; background-color: black; border: none; border-radius: 10px; font-size: 20px; color: white } 
 /* 도서 요청*/

@@ -16,3 +16,8 @@
 .main .main-search .search-button { border: none; background-color: white; } 
 .main .main-search .search-button img { display: flex; justify-content: center; align-items: center; width: 40px; } 
 /*메인 화면*/
+
+/*버튼*/
+.submit-button { width: 100px; height: 50px; background-color: black; border: none; border-radius: 10px; font-size: 20px; color: white } 
+.cancel-button { width: 100px; height: 50px; background-color: white; border: 1px solid black; border-radius: 10px; margin-right: 8px; font-size: 20px; } 
+/*버튼*/
