@@ -1,0 +1,17 @@
+/* 도서 요청*/
+.request-book { display: flex; justify-content: center; align-items: center; height: 100vh; flex-direction: column; } 
+.request-book .search-isbn { margin-bottom: 30px; width: 250px; height: 40px; font-size: 24px; border: none; border-bottom: 2px solid black; text-align:center; padding-left: 15px } 
+.request-book hr { border: solid 1px #a4a4a4; width: 700px } 
+.request-book .book { display: flex; justify-content: center; align-items: center; } 
+.request-book .book .book-img { align-items: center; justify-content: center; } 
+.request-book .book .book-info { align-items: center; justify-content: center; } 
+.request-book .book .book-info dl { font-size: 13px; margin: 0 0 10px 7px; } 
+.request-book .book .book-info dt { float: left; width: 80px; font-weight: bold; color: #000; text-align: left; } 
+.request-book .book .book-info dd { margin-left: 90px } 
+.request-book .book .book-info .book-title { font-size: 24px; } 
+.request-book .book .book-info .book-class,
+.request-book .book .book-info .book-author,
+.request-book .book .book-info .book-publisher,
+.request-book .book .book-info .book-publication-year { font-size: 18px; } 
+.request-book .buttons { display: flex; justify-content: flex-end; width: 100%; margin: 30px 40% 0 0; } 
+/* 도서 요청*/

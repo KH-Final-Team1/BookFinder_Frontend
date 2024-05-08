@@ -5,6 +5,7 @@ import Header from "./components/Header";
 import Main from "./pages/Main";
 import Footer from "./components/Footer";
 import RequestBook from "./pages/RequestBook";
+import BookTradeList from "./pages/BookTradeList";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Main />} />
           <Route path="/requestBook" element={<RequestBook />} />
+          <Route path="/tradeList" element={<BookTradeList />} />
         </Routes>
         <Footer />
       </BrowserRouter>
