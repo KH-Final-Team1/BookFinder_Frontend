@@ -6,7 +6,7 @@ import Main from "./pages/Main";
 import Footer from "./components/Footer";
 import RequestBook from "./pages/RequestBook";
 import Login from "./pages/Login";
-import SignUpForm from "./pages/SignUpForm";
+import SignUp from "./pages/SignUp";
 import "./styles/signup.css"
 
 function App() {
@@ -17,7 +17,7 @@ function App() {
           <Route path="/" element={<Main/>}/>
           <Route path="/requestBook" element={<RequestBook/>}/>
           <Route path="/login" element={<Login/>}/>
-          <Route path="/sign-up" element={<SignUpForm/>}/>
+          <Route path="/sign-up" element={<SignUp/>}/>
         </Routes>
         <Footer/>
       </BrowserRouter>
