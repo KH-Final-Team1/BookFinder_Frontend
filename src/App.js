@@ -5,8 +5,8 @@ import Header from "./components/Header";
 import Main from "./pages/Main";
 import Footer from "./components/Footer";
 import RequestBook from "./pages/RequestBook";
-import BookTradeList from "./pages/BookTradeList";
-import BookTradeDetail from "./pages/BookTradeDetail";
+import BookTradeList from "./pages/trade/BookTradeList";
+import BookTradeDetail from "./pages/trade/BookTradeDetail";
 
 function App() {
   return (
@@ -15,7 +15,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Main />} />
           <Route path="/requestBook" element={<RequestBook />} />
-          <Route path="/tradeList" element={<BookTradeList />} />
+          <Route path="/trade/list" element={<BookTradeList />} />
           <Route path="/trade" element={<BookTradeDetail />} />
         </Routes>
         <Footer />
