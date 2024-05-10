@@ -1,21 +1,29 @@
 import React, {useEffect, useRef, useState} from "react";
-import axios from "axios";
-import Button from "../components/ui/Button";
-import DeleteTrade from "../services/DeleteTrade";
+import { useNavigate } from 'react-router-dom';
+import Button from "../../components/ui/Button";
+import { deleteTrade, getTrade } from "../../services/trade/tradeAPI";
 
 export default function TradeDetails() {
   const tradeId = 3;
   const [trade, setTrade] = useState(null);
   const [addressInfo, setAddressInfo] = useState('');
   const mapRef = useRef(null); // Ref to store the map instance
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    axios.get(`http://localhost:8080/api/v1/trades/${tradeId}`)
-    .then(response => {
-      setTrade(response.data);
-    })
-    .catch(error => console.error("Error fetching trade:", error));
+  useEffect(()=>{
+    const fetchData = async () => {
+      const result = await getTrade(tradeId);
+      setTrade(result);
+    }
+    fetchData();
   }, []);
+
+  const deleteTradeClick = async () => {
+    const result = await deleteTrade(tradeId);
+    if (result) {
+      navigate('/trade/list');
+    }
+  };
 
   useEffect(() => {
     const kakaoMaps = window.kakao.maps;
@@ -60,12 +68,6 @@ export default function TradeDetails() {
     };
   }, [trade]);
 
-  const deleteTradeInstance = DeleteTrade({ tradeId });
-
-  const handleDeleteClick = () => {
-    deleteTradeInstance.handleDelete();
-  };
-
   return (
       <div className="trade-details">
         {trade && (
@@ -108,7 +110,7 @@ export default function TradeDetails() {
               <div className={'buttons'}>
                 <Button type={'submit'}
                       className={'cancel-button'}>수정</Button>
-                <Button className={'submit-button'} onClick={handleDeleteClick}>삭제</Button>
+                <Button className={'submit-button'} onClick={deleteTradeClick}>삭제</Button>
               </div>
               <hr/>
               <div className={'comment-area'}>

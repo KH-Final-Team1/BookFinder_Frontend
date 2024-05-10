@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Button from "../components/ui/Button";
+import Button from "../../components/ui/Button";
 
 export default function BookTradeList() {
   const boroughId = 1;
