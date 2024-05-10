@@ -6,6 +6,7 @@ import Main from "./pages/Main";
 import Footer from "./components/Footer";
 import RequestBook from "./pages/RequestBook";
 import BookTradeList from "./pages/BookTradeList";
+import BookTradeDetail from "./pages/BookTradeDetail";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/" element={<Main />} />
           <Route path="/requestBook" element={<RequestBook />} />
           <Route path="/tradeList" element={<BookTradeList />} />
+          <Route path="/trade" element={<BookTradeDetail />} />
         </Routes>
         <Footer />
       </BrowserRouter>
