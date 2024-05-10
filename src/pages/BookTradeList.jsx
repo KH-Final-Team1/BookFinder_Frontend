@@ -31,9 +31,6 @@ export default function BookTradeList() {
         <table>
           <tbody>
           {trades.map(trade => {
-            const date = new Date(trade.createDate);
-            const formattedDate = `${date.getFullYear()}-${String(
-                date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
             const tradeType = trade.tradeType == 'BORROW' ? "빌려요" : "빌려드려요"
             const tradeTypeColor = trade.tradeType === 'BORROW' ? "red" : "blue";
             const tradeYn = trade.tradeYn == 'Y' ? "거래완료" : "거래중"
@@ -57,7 +54,9 @@ export default function BookTradeList() {
                     </p>
                     <div>
                       <p className='trade-yn'>{tradeYn}</p>
-                      <p className="create-date">{formattedDate}</p>
+                      <p className="create-date">
+                        {new Date(trade.createDate).toISOString().slice(0, 10)}
+                      </p>
                     </div>
                   </td>
                 </tr>
