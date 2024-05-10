@@ -25,11 +25,11 @@ label.input-label { font-size: 18px; text-align: left; }
 .invalid-input { width: 100%; height: 48px; min-height: 48px; outline: none; background-color: transparent; border: none; border-bottom: 2px solid #ff0000; font-size: 18px; font-weight: 400; }
 
 /* 중복확인, 주소찾기 버튼 */
-.checking-duplicate, .finding-address { position: absolute; z-index: 1; top: 50%; right: -10px; transform: translateY(-21%); width: fit-content; height: fit-content; min-height: initial; background-color: transparent; padding: 10px; border-radius: 10px; font-size: 18px; border: none; cursor: pointer; color: #000000; }
-.checking-duplicate:disabled { cursor: default; color: #dddddd; }
+.checking-verification, .finding-address { position: absolute; z-index: 1; top: 50%; right: -10px; transform: translateY(-21%); width: fit-content; height: fit-content; min-height: initial; background-color: transparent; padding: 10px; border-radius: 10px; font-size: 18px; border: none; cursor: pointer; color: #000000; }
+.checking-verification:disabled, .valid-input:disabled { cursor: default; color: #dddddd; }
 .invalid-caption { font-size: 16px; color: #ff0000; margin: 5px 0 0 0; }
 
 /* 회원 가입 버튼*/
-.sign-up-button { width: 100%; height: 50px; background-color: black; border: none; border-radius: 10px; font-size: 20px; color: white }
+.sign-up-button { width: 100%; height: 50px; background-color: black; border: none; border-radius: 10px; font-size: 20px; color: white; cursor: pointer; }
 
 /** 회원 가입 Form 영역 끝 **/

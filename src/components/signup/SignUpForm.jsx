@@ -1,113 +1,182 @@
 import {useState} from "react";
 import InputField from "./InputField";
 import Button from "../ui/Button";
+import {useDaumPostcodePopup} from 'react-daum-postcode'
+import {testRegExp} from "../regexp";
+import {requestAuthEmail, requestCheckingVerification, requestDuplicate, requestSignUp} from "../axios";
+import {useNavigate} from "react-router-dom";
 
-const REGEXP_EMAIL = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-const REGEXP_PASSWORD = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()-_=+]).{8,20}$/;
-const REGEXP_NICKNAME = /^[가-힣a-zA-Z0-9]{3,20}$/;
-const REGEXP_PHONE = /^01[0-9][0-9]{3,4}[0-9]{4}$/;
+let signingToken = "";
 export default function SignUpForm() {
+  const initialInputFields = (name) => {
+    return {
+      name: name,
+      value: "",
+      valid: true,
+      disabled: false
+    }
+  }
+  const navigate = useNavigate();
+  const open = useDaumPostcodePopup();
   let [fields, setFields] = useState({
-    email: "",
-    password: "",
-    passwordConfirm: "",
-    nickname: "",
-    address: "",
-    phone: ""
+    email: initialInputFields("email"),
+    password: initialInputFields("password"),
+    passwordConfirm: initialInputFields("passwordConfirm"),
+    nickname: initialInputFields("nickname"),
+    address: initialInputFields("address"),
+    phone: initialInputFields("phone"),
+    authCode: initialInputFields("authCode")
   })
-  let [validations, setValidations] = useState({
-    email: false,
-    password: false,
-    passwordConfirm: false,
-    nickname: false,
-    address: false,
-    phone: false
-  })
+  let [isEmailSent, setIsEmailSent] = useState(false)
+  const handleInputChange = (field, value) => {
+    setFields(prevState => ({
+      ...prevState,
+      [field.name]: {
+        ...prevState[field.name],
+        value: value,
+        valid: isValid(field.name, value),
+        duplicate: false
+      }
+    }))
+  }
+  const isValid = (fieldName, value) => {
+    if (fieldName === "passwordConfirm") {
+      return value === fields.password.value;
+    }
+    return testRegExp(fieldName, value);
+  }
+  const isConfirmation = (field) => {
+    return field.disabled || field.value === "" || !field.valid;
+  }
 
-  let handleInputChange = (fieldName, value) => {
+  const submitSignUpForm = async (e) => {
+    e.preventDefault()
+    try {
+      let result = await requestSignUp(fields);
+      alert(result);
+      navigate("/login")
+    } catch (error) {
+      updateFields("email", {valid: false})
+    }
+  }
+  const handleEmailCheck = async () => {
+    try {
+      let result = await requestDuplicate(fields.email);
+      if (window.confirm(result)) {
+        updateFields("email", {disabled: true})
+        setIsEmailSent(true)
+        signingToken = await requestAuthEmail(fields.email.value);
+      }
+    } catch (error) {
+      updateFields("email", {valid: false, caption: error, duplicate: true})
+    }
+  }
+  const handleAuthCodeCheck = async () => {
+    try {
+      signingToken = await requestCheckingVerification(fields.authCode.value, signingToken);
+      updateFields("authCode", {disabled: true})
+    } catch (error) {
+      alert(error)
+      window.location.reload()
+    }
+  }
+  const handleNicknameCheck = async () => {
+    try {
+      let result = await requestDuplicate(fields.nickname);
+      if (window.confirm(result)) {
+        updateFields("nickname", {disabled: true})
+      }
+    } catch (error) {
+      updateFields("nickname", {valid: false, caption: error, duplicate: true})
+    }
+  }
+  const handleAddress = () => {
+    open({
+      onComplete: (data) => {
+        updateFields("address", {value: data.address, valid: true})
+      }
+    })
+  }
+  const updateFields = (fieldName, keyValue) => {
     setFields({
       ...fields,
-      [fieldName]: fieldName === "phone" ? value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1') : value
+      [fieldName]: {
+        ...fields[fieldName],
+        ...keyValue
+      }
     })
-    validateField(fieldName, value)
-  }
-  let validateField = (fieldName, value) => {
-    setValidations({
-      ...validations,
-      [fieldName]: isValid(fieldName, value)
-    })
-  }
-
-  let isValid = (fieldName, value) => {
-    if (fieldName === "passwordConfirm" && value === fields.password) {
-      return true;
-    }
-    return (fieldName === "email" && REGEXP_EMAIL.test(value))
-        || (fieldName === "password" && REGEXP_PASSWORD.test(value))
-        || (fieldName === "nickname" && REGEXP_NICKNAME.test(value))
-        || (fieldName === "phone" && REGEXP_PHONE.test(value));
   }
 
   return (
       <div className="sign-up">
-        <form className="sign-up">
-          <InputField label="이메일"
-                      type="email"
-                      name="email"
-                      value={fields.email}
-                      placeholder="이메일을 입력해주세요."
-                      eventHandler={(value) => handleInputChange("email", value)}
-                      isValid={fields.email === "" || validations.email}
+        <form onSubmit={submitSignUpForm} className="sign-up">
+          <InputField field={fields.email}
+                      value={fields.email.value}
+                      eventHandler={(value) => handleInputChange(fields.email, value)}
+                      valid={fields.email.valid}
                       button={
-                        <button className="checking-duplicate" disabled={!validations.email}>
+                        <Button type="button" className="checking-verification"
+                                disabled={isConfirmation(fields.email)}
+                                onClick={handleEmailCheck}>
                           중복확인
-                        </button>}>
-            <p className="invalid-caption">유효하지 않은 이메일 형식입니다.</p>
+                        </Button>
+                      }>
+            <p className="invalid-caption">{fields.email.duplicate ? fields.email.caption : "유효하지 않은 이메일 형식입니다."}</p>
           </InputField>
-          <InputField label="비밀번호"
-                      type="password"
-                      name="password"
-                      value={fields.password}
-                      placeholder="비밀번호를 입력해주세요."
-                      eventHandler={(value) => handleInputChange("password", value)}
-                      isValid={fields.password === "" || validations.password}>
+          {isEmailSent && (
+              <InputField field={fields.authCode}
+                          value={fields.authCode.value}
+                          eventHandler={(value) => handleInputChange(fields.authCode, value)}
+                          valid={true}
+                          button={
+                            <Button type="button" className="checking-verification"
+                                    disabled={fields.authCode.disabled}
+                                    onClick={handleAuthCodeCheck}>
+                              코드 확인
+                            </Button>}
+              >
+              </InputField>
+          )}
+          <InputField field={fields.password}
+                      value={fields.password.value}
+                      eventHandler={(value) => handleInputChange(fields.password, value)}
+                      valid={fields.password.valid}>
             <p className="invalid-caption">영문, 숫자, 특수기호를 포함하여 8자 이상 20자 이하로 입력해주세요.</p>
           </InputField>
-          <InputField label="비밀번호 확인"
-                      type="password"
-                      name="passwordConfirm"
-                      value={fields.passwordConfirm}
-                      placeholder="비밀번호를 다시 한번 입력해주세요."
-                      eventHandler={(value) => handleInputChange("passwordConfirm", value)}
-                      isValid={fields.passwordConfirm === "" || validations.passwordConfirm}>
+          <InputField field={fields.passwordConfirm}
+                      value={fields.passwordConfirm.value}
+                      eventHandler={(value) => handleInputChange(fields.passwordConfirm, value)}
+                      valid={fields.passwordConfirm.valid}>
             <p className="invalid-caption">비밀번호와 비밀번호 확인이 일치하지 않습니다.</p>
           </InputField>
-          <InputField label="닉네임"
-                      type="text"
-                      name="nickname"
-                      value={fields.nickname}
-                      placeholder="닉네임을 입력해주세요"
-                      eventHandler={(value) => handleInputChange("nickname", value)}
-                      isValid={fields.nickname === "" || validations.nickname}
-                      button={<button className="checking-duplicate" disabled={!validations.nickname}>중복 확인</button>}>
-            <p className="invalid-caption">영문, 유효한 한글, 숫자를 이용하여 3자 이상 10자 이하로 입력해주세요.</p>
+          <InputField field={fields.nickname}
+                      value={fields.nickname.value}
+                      eventHandler={(value) => handleInputChange(fields.nickname, value)}
+                      valid={fields.nickname.valid}
+                      button={
+                        <Button type="button" className="checking-verification"
+                                disabled={isConfirmation(fields.nickname)}
+                                onClick={handleNicknameCheck}>
+                          중복확인
+                        </Button>
+                      }>
+            <p className="invalid-caption">{fields.nickname.duplicate ? fields.nickname.caption
+                : "영문, 유효한 한글, 숫자를 이용하여 3자 이상 20자 이하로 입력해주세요."}</p>
           </InputField>
-          <InputField label="주소"
-                      type="text"
-                      name="address"
-                      value={fields.address}
-                      placeholder="주소찾기"
-                      eventHandler={(value) => handleInputChange("address", value)}
-                      isValid={fields.address === "" || validations.address}
-                      button={<button className="finding-address">주소 찾기</button>}>
+          <InputField field={fields.address}
+                      value={fields.address.value}
+                      eventHandler={(value) => handleInputChange(fields.address, value)}
+                      valid={fields.address.valid}
+                      button={
+                        <Button type="button" className="finding-address" onClick={handleAddress}>
+                          주소 찾기
+                        </Button>
+                      }>
           </InputField>
-          <InputField label="휴대폰 번호"
-                      type="text"
-                      name="phone"
-                      value={fields.phone}
-                      placeholder="(예시)01012345678"
-                      eventHandler={(value) => handleInputChange("phone", value)}
-                      isValid={fields.phone === "" || validations.phone}>
+          <InputField field={fields.phone}
+                      value={fields.phone.value}
+                      eventHandler={(value) => handleInputChange(fields.phone, value)}
+                      valid={fields.phone.valid}>
             <p className="invalid-caption">유효하지 않은 휴대폰 번호 형식입니다.</p>
           </InputField>
           <Button type="submit" className="sign-up-button">가입하기</Button>
