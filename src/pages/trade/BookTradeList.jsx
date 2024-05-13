@@ -32,9 +32,9 @@ export default function BookTradeList() {
         <table>
           <tbody>
           {trades.map(trade => {
-            const tradeType = trade.tradeType == 'BORROW' ? "빌려요" : "빌려드려요"
+            const tradeType = trade.tradeType === 'BORROW' ? "빌려요" : "빌려드려요"
             const tradeTypeColor = trade.tradeType === 'BORROW' ? "red" : "blue";
-            const tradeYn = trade.tradeYn == 'Y' ? "거래완료" : "거래중"
+            const tradeYn = trade.tradeYn === 'Y' ? "거래완료" : "거래중"
 
             return (
                 <tr key={trade.id}>
