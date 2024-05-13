@@ -11,7 +11,7 @@ export default function Header(){
             <Link to="/requestBook" className={"menu"}>도서 요청</Link>
           </div>
           <div>
-            <Link to="" className={"menu"}>메뉴명2</Link>
+            <Link to="/tradeList" className={"menu"}>지역 게시판</Link>
           </div>
           <div>
             <Link to="" className={"menu"}>메뉴명3</Link>

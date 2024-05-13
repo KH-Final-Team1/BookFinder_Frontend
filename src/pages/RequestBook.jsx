@@ -11,7 +11,7 @@ const clickCancel = () => {
 }
 export default function RequestBook() {
   return (
-      <div className={'requestBook'}>
+      <div className={'request-book'}>
         <input className={'search-isbn'} placeholder={'ISBN 번호를 입력하세요'}/>
         <hr/>
         <div className={'book'}>

@@ -1,4 +1,4 @@
-* { font-family: "Jua", sans-serif; }
+* { font-family: "Jua", sans-serif; } 
 /*헤더 영역*/
 .header { height: 75px; border-bottom: solid gray 1px; display: flex; color: #ffffff; background-color: #000000; font-size: 24px } 
 .header .logo { justify-content: center; align-content: center; text-align: center; margin-left: 50px; } 
@@ -7,32 +7,17 @@
 /*헤더 영역*/
 
 /*메인 화면*/
-.main { display: flex; justify-content: center; align-items: center; height: 100vh; flex-direction: column; }
+.main { display: flex; justify-content: center; align-items: center; height: 100vh; flex-direction: column; } 
 .main .main-text { font-size: 40px; margin-bottom: 12px; } 
 .main .main-search { display: flex; align-items: center; justify-content: center; align-content: center; border: solid 1px; padding: 0; } 
 .main .main-search .search-div { padding-right: 5px; border-right: 1px solid black; } 
 .main .main-search .search-select { padding: 8px; border: none; height: 50px; font-size: 18px; } 
-.main .main-search input { width: 500px; height: 50px; font-size: 20px; padding: 0 0 0 15px; border: none; border-right: 1px solid black; }
+.main .main-search input { width: 500px; height: 50px; font-size: 20px; padding: 0 0 0 15px; border: none; border-right: 1px solid black; } 
 .main .main-search .search-button { border: none; background-color: white; } 
 .main .main-search .search-button img { display: flex; justify-content: center; align-items: center; width: 40px; } 
 /*메인 화면*/
 
-/* 도서 요청*/
-.requestBook { display: flex; justify-content: center; align-items: center; height: 100vh; flex-direction: column; }
-.requestBook .search-isbn { margin-bottom: 30px; width: 250px; height: 40px; font-size: 24px; border: none; border-bottom: 2px solid black; text-align:center; padding-left: 15px}
-.requestBook hr{ border: solid 1px #a4a4a4; width: 700px}
-.requestBook .book { display: flex; justify-content: center; align-items: center; }
-.requestBook .book .book-img { align-items: center; justify-content: center; } 
-.requestBook .book .book-info { align-items: center; justify-content: center; } 
-.requestBook .book .book-info dl { font-size: 13px; margin: 0 0 10px 7px; }
-.requestBook .book .book-info dt { float: left; width: 80px; font-weight: bold; color: #000; text-align: left; }
-.requestBook .book .book-info dd { margin-left: 90px }
-.requestBook .book .book-info .book-title { font-size: 24px; }
-.requestBook .book .book-info .book-class,
-.requestBook .book .book-info .book-author,
-.requestBook .book .book-info .book-publisher,
-.requestBook .book .book-info .book-publication-year { font-size: 18px; }
-.requestBook .buttons {display: flex; justify-content: flex-end;  width: 100%; margin: 30px 40% 0 0;}
-.requestBook .buttons .cancel-button { width: 100px; height: 50px; background-color: white; border: 1px solid black; border-radius: 10px; margin-right: 8px; font-size: 20px; }
-.requestBook .buttons .submit-button { width: 100px; height: 50px; background-color: black; border: none; border-radius: 10px; font-size: 20px; color: white}
-/* 도서 요청*/
+/*버튼*/
+.submit-button { width: 100px; height: 50px; background-color: black; border: none; border-radius: 10px; font-size: 20px; color: white } 
+.cancel-button { width: 100px; height: 50px; background-color: white; border: 1px solid black; border-radius: 10px; margin-right: 8px; font-size: 20px; } 
+/*버튼*/

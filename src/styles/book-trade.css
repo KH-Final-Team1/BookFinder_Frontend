@@ -1,0 +1,24 @@
+/* 사용자간 대출 목록*/
+.book-trades { display: flex; align-items: center; height: 100vh; flex-direction: column; margin-top: 50px; } 
+.book-trades hr { border: solid 1px #a4a4a4; width: 350px; margin: 8px 0 70px 0; } 
+.book-trades .go-write-page { position: relative } 
+.book-trades .write-button { position: absolute; right: -450px; top: -55px; } 
+.book-trades .write-button Button { width: 80px; height: 40px; font-size: 18px; } 
+.book-trades table { width: 900px; border-collapse: collapse; } 
+.book-trades table td,
+.book-trades table th { border-bottom: 1px dashed black; padding: 0 20px 20px 20px; } 
+.book-trades table .book-img-border { text-align: center; vertical-align: middle; padding: 10px; } 
+.book-trades table .book-img-border img { height: 220px; } 
+.book-trades table .book-title { font-size: 24px; } 
+.book-trades table .trade-info { padding-left: 25px; } 
+.book-trades table .trade-info .trade-type { margin: 0 0 5px 0; } 
+.book-trades table .trade-info .book-title { margin: 0; } 
+.book-trades table .trade-info .book-info { color: gray; font-size: 14px; margin: 3px 0 0 15px; } 
+.book-trades table .trade-info .trade-price { margin: 0 } 
+.book-trades table .trade-info .trade-price img { vertical-align: text-top; width: 15px; margin-right: 5px; } 
+.book-trades table .trade-info .writer-info { margin-bottom: 8px; } 
+.book-trades table .trade-info .writer-info img { vertical-align: text-top; width: 15px; margin-right: 5px; } 
+.book-trades table .trade-info .trade-yn { margin-bottom: 0; font-size: 14px; } 
+.book-trades table .trade-info .create-date { float: right; font-size: 14px; margin-bottom: 0 } 
+.book-trades table .trade-info div { display: flex; justify-content: space-between; } 
+/* 사용자간 대출 목록*/
