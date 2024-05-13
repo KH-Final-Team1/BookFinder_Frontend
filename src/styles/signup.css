@@ -1,0 +1,35 @@
+.main { display: flex; flex-direction: column; -webkit-box-pack: center; justify-content: center; -webkit-box-align: center; align-items: center; height: 100%; width: 100%; margin: 24px auto 80px; }
+
+/** Back 영역 시작**/
+div.back { width: 100%; max-width: 1060px; padding-left: 20px; margin-bottom: 20px; }
+button.back { font-size: 18px; color: #a4a4a4; background-color: transparent; border: none; display: flex; -webkit-box-align: center; align-items: center; gap: 6px; cursor: pointer; height: 32px; padding: 4px 7px; }
+span.back, p.back { font-size: 24px; }
+/** Back 영역 끝**/
+
+/** 회원가입 Title 영역 시작 **/
+div.title { width: 100%; max-width: 500px; background-color: #ffffff; }
+h1.title { text-align: center; font-size: 36px; }
+/** 회원가입 Title 영역 끝 **/
+
+/* 회원가입 Form 영역 시작*/
+div.sign-up { width: 100%; max-width: 500px; background-color: #ffffff; }
+form.sign-up { margin-top: 56px; display: flex; flex-direction: column; gap: 30px; padding: 0 30px; }
+div.sign-up-input { position: relative; box-sizing: border-box; margin: 0; padding: 0; }
+div.sign-up-input div { position: relative; box-sizing: border-box; margin: 0; padding: 0; }
+
+/* Label, Input */
+label.input-label { font-size: 18px; text-align: left; }
+.valid-input { width: 100%; height: 48px; min-height: 48px; outline: none; background-color: transparent; border: none; border-bottom: 2px solid #a4a4a4; font-size: 18px; font-weight: 400; }
+.valid-input:focus { border-bottom: 2px solid #000000; outline: none; }
+.valid-input::placeholder { color: #a4a4a4; }
+.invalid-input { width: 100%; height: 48px; min-height: 48px; outline: none; background-color: transparent; border: none; border-bottom: 2px solid #ff0000; font-size: 18px; font-weight: 400; }
+
+/* 중복확인, 주소찾기 버튼 */
+.checking-verification, .finding-address { position: absolute; z-index: 1; top: 50%; right: -10px; transform: translateY(-21%); width: fit-content; height: fit-content; min-height: initial; background-color: transparent; padding: 10px; border-radius: 10px; font-size: 18px; border: none; cursor: pointer; color: #000000; }
+.checking-verification:disabled, .valid-input:disabled { cursor: default; color: #dddddd; }
+.invalid-caption { font-size: 16px; color: #ff0000; margin: 5px 0 0 0; }
+
+/* 회원 가입 버튼*/
+.sign-up-button { width: 100%; height: 50px; background-color: black; border: none; border-radius: 10px; font-size: 20px; color: white; cursor: pointer; }
+
+/** 회원 가입 Form 영역 끝 **/
