@@ -20,7 +20,6 @@ function App() {
           <Route path="/requestBook" element={<RequestBook/>}/>
           <Route path="/login" element={<Login/>}/>
           <Route path="/sign-up" element={<SignUp/>}/>
-          <Route path="/requestBook" element={<RequestBook />} />
           <Route path="/trade/list" element={<BookTradeList />} />
           <Route path="/trade" element={<BookTradeDetail />} />
         </Routes>

@@ -55,7 +55,7 @@ export default function TradeDetails() {
                   </div>
                 </div>
                 <div className="write-date">
-                  {new Date(trade.createDate).toISOString().slice(0, 10)}
+                  {trade.createDate}
                 </div>
               </div>
               <div className="book-info">
