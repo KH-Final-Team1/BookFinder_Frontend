@@ -54,9 +54,7 @@ export default function BookTradeList() {
                     </p>
                     <div>
                       <p className='trade-yn'>{tradeYn}</p>
-                      <p className="create-date">
-                        {new Date(trade.createDate).toISOString().slice(0, 10)}
-                      </p>
+                      <p className="create-date">{trade.createdDate}</p>
                     </div>
                   </td>
                 </tr>
