@@ -1,4 +1,4 @@
-const kakaoMap = (trade, mapRef, setAddressInfo) => {
+export const kakaoMap = (trade, mapRef, setAddressInfo) => {
     const kakaoMaps = window.kakao.maps;
 
     if (trade && kakaoMaps) {
@@ -33,5 +33,3 @@ const kakaoMap = (trade, mapRef, setAddressInfo) => {
         marker.setMap(map);
     }
 };
-
-export default kakaoMap;
