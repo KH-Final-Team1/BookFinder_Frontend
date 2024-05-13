@@ -48,3 +48,25 @@
 .trade-details .trade-info .map-area { height: 300px; width: 100%; margin: 10px 0; } 
 .trade-details .trade-info .comment-area { height: 300px; width: 100%; } 
 /*사용자간 대출 상세보기*/
+
+/*사용자간 대출 글작성*/
+.trade-edit { display: flex; align-items: center; flex-direction: column; margin-top: 50px; } 
+.trade-edit hr { margin: 20px 0; border: dashed 1px #a4a4a4; width: 100% } 
+.trade-edit .edit-info { margin-top: 30px; width: 40%; justify-content: center; align-content: center; } 
+.trade-edit .edit-info .book-search .ISBN { width: 220px; font-size: 20px; padding-left: 8px; outline: none; background-color: transparent; border: none; border-bottom: 2px solid #000; margin-bottom: 20px; } 
+.trade-edit .edit-info .book-search .book-title { width: 100%; height: 40px; font-size: 20px; padding-left: 10px; outline: none; background-color: transparent; border: 2px solid #000; box-sizing: border-box; border-radius: 10px; } 
+.trade-edit .book-info { display: flex; align-items: center; } 
+.trade-edit .book-info .book-img { margin-right: 24px; } 
+.trade-edit .book-info .book-img img { height: 180px; } 
+.trade-edit .book-info .book-details { display: flex; flex-direction: column; } 
+.trade-edit .book-info .book-details dl { font-size: 20px; margin: 0 0 10px 7px; } 
+.trade-edit .book-info .book-details dt { float: left; width: 80px; font-weight: bold; color: #000; text-align: left; } 
+.trade-edit .book-info .book-details dd { margin-left: 90px; } 
+.trade-edit .trade .trade-section-title { font-size: 18px; margin-bottom: 5px; } 
+.trade-edit .trade .lend { font-size: 18px; border-radius: 18px; background-color: transparent; border-color: red; color: red; padding: 5px 13px 2px 13px; margin: 0 7px 20px 0; } 
+.trade-edit .trade .borrow { font-size: 18px; border-radius: 18px; background-color: transparent; border-color: blue; color: blue; padding: 5px 13px 2px 13px; } 
+.trade-edit .trade .trade-price { width: 200px; padding: 10px; font-size: 16px; box-sizing: border-box; border: none; border-bottom: 2px solid black; outline: none; margin-bottom: 20px; } 
+.trade-edit .trade .trade-content { resize: none; width: 100%; padding: 15px; font-size: 16px; box-sizing: border-box; border: 2px solid black; outline: none; border-radius: 10px; margin-bottom: 20px; } 
+.trade-edit .map-area { height: 300px; width: 100%; margin: 10px 0 40px 0; } 
+.trade-edit .buttons { float: right; margin-bottom: 30px; } 
+/*사용자간 대출 글작성*/

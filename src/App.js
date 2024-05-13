@@ -10,6 +10,7 @@ import BookTradeDetail from "./pages/trade/BookTradeDetail";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import "./styles/signup.css"
+import BookTradeEdit from "./pages/trade/BookTradeEdit";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/sign-up" element={<SignUp/>}/>
           <Route path="/trade/list" element={<BookTradeList />} />
           <Route path="/trade" element={<BookTradeDetail />} />
+          <Route path="/trade/edit" element={<BookTradeEdit /> } />
         </Routes>
         <Footer/>
       </BrowserRouter>
