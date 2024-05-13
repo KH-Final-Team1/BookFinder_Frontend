@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Button from "../../components/ui/Button";
+import Title from "../../components/ui/Title";
 
 export default function BookTradeList() {
   const boroughId = 1;
@@ -20,7 +21,7 @@ export default function BookTradeList() {
 
   return (
       <div className="book-trades">
-        <h1>{trades.length > 0 ? `${trades[0].borough.name} 거래 목록` : ""}</h1>
+        <Title>{trades.length > 0 ? `${trades[0].borough.name} 거래 목록` : ""}</Title>
         <hr />
         <div className='go-write-page'>
           <div className='write-button'>
