@@ -7,8 +7,8 @@ import Footer from "./components/Footer";
 import RequestBook from "./pages/RequestBook";
 import BookTradeList from "./pages/trade/BookTradeList";
 import BookTradeDetail from "./pages/trade/BookTradeDetail";
-import Login from "./pages/Login";
-import SignUp from "./pages/SignUp";
+import Login from "./pages/user/Login";
+import SignUp from "./pages/user/SignUp";
 import "./styles/signup.css"
 import BookTradeList from "./pages/BookTradeList";
 
