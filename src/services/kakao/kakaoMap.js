@@ -50,7 +50,7 @@ export const viewMap = (trade, mapRef, setAddressInfo) => {
   marker.setMap(map);
 };
 
-export const moveMarker = (latitude, longitude) => {
+export const moveMarker = (latitude, longitude, onMarkerMove) => {
   const map = kakaoMap(latitude, longitude);
 
   if (!map) {
@@ -60,7 +60,18 @@ export const moveMarker = (latitude, longitude) => {
   const markerPosition = new kakaoMaps.LatLng(latitude, longitude);
   const marker = new kakaoMaps.Marker({
     position: markerPosition,
-    draggable: true // 드래그 가능하도록 설정
+    draggable: true
   });
   marker.setMap(map);
-}
+
+  kakaoMaps.event.addListener(marker, 'dragend', function () {
+    const newPosition = marker.getPosition(); // 변경된 마커의 위치 얻기
+    const newLatitude = newPosition.getLat();
+    const newLongitude = newPosition.getLng();
+
+    // 콜백 함수
+    if (onMarkerMove) {
+      onMarkerMove(newLatitude, newLongitude);
+    }
+  });
+};

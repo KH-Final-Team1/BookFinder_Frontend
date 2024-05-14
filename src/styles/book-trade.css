@@ -1,16 +1,16 @@
 /* 사용자간 대출 목록*/
 .book-trades { display: flex; align-items: center; height: 100vh; flex-direction: column; margin-top: 50px; } 
+.book-trades .link { text-decoration: none; color: inherit; } 
 .book-trades hr { border: solid 1px #a4a4a4; width: 350px; margin: 8px 0 70px 0; } 
 .book-trades .go-write-page { position: relative } 
 .book-trades .write-button { position: absolute; right: -450px; top: -55px; } 
 .book-trades .write-button Button { width: 80px; height: 40px; font-size: 18px; } 
 .book-trades table { width: 900px; border-collapse: collapse; } 
-.book-trades table td,
-.book-trades table th { border-bottom: 1px dashed black; padding: 0 20px 20px 20px; } 
-.book-trades table .book-img-border { text-align: center; vertical-align: middle; padding: 10px; } 
+.book-trades table td { width: 900px; border-bottom: 1px dashed black; padding: 20px 20px 20px 20px; } 
+.book-trades table .book-img-border { width: 29%; text-align: center; vertical-align: middle; } 
 .book-trades table .book-img-border img { height: 220px; } 
 .book-trades table .book-title { font-size: 24px; } 
-.book-trades table .trade-info { padding-left: 25px; } 
+.book-trades table .trade-info { padding: 26px 20px 20px 25px; } 
 .book-trades table .trade-info .trade-type { margin: 0 0 5px 0; } 
 .book-trades table .trade-info .book-title { margin: 0; } 
 .book-trades table .trade-info .book-info { color: gray; font-size: 14px; margin: 3px 0 0 15px; } 
@@ -66,8 +66,12 @@
 .trade-edit .book-info .book-details dt { float: left; width: 80px; font-weight: bold; color: #000; text-align: left; } 
 .trade-edit .book-info .book-details dd { margin-left: 90px; } 
 .trade-edit .trade-section-title { font-size: 20px; margin-bottom: 10px; } 
-.trade-edit .trade .lend { font-size: 18px; border-radius: 18px; background-color: transparent; border-color: red; color: red; padding: 5px 13px 2px 13px; margin: 0 7px 20px 0; } 
-.trade-edit .trade .borrow { font-size: 18px; border-radius: 18px; background-color: transparent; border-color: blue; color: blue; padding: 5px 13px 2px 13px; } 
+.trade-edit .trade .cost-date-area { display: flex; } 
+.trade-edit .trade .cost-date-area .cost-area { width: 40%; } 
+.trade-edit .trade .lend { font-size: 18px; border-radius: 18px; background-color: white; border-color: black; color: black; padding: 5px 13px 2px 13px; margin: 0 7px 20px 0; } 
+.trade-edit .trade .borrow { font-size: 18px; border-radius: 18px; background-color: transparent; border-color: black; color: black; padding: 5px 13px 2px 13px; } 
+.trade-edit .trade .lend-active { font-size: 18px; border-radius: 18px; background-color: black; color: white; padding: 5px 13px 2px 13px; margin: 0 7px 20px 0; } 
+.trade-edit .trade .borrow-active { font-size: 18px; border-radius: 18px; background-color: black; color: white; padding: 5px 13px 2px 13px; } 
 .trade-edit .trade .trade-price { width: 150px; padding: 10px; font-size: 16px; box-sizing: border-box; border: none; border-bottom: 2px solid black; outline: none; margin-bottom: 20px; text-align: right; } 
 .trade-edit .trade .trade-content { resize: none; width: 100%; padding: 15px; font-size: 16px; box-sizing: border-box; border: 2px solid black; outline: none; border-radius: 10px; margin-bottom: 20px; } 
 .trade-edit .map-area { height: 300px; width: 100%; margin: 10px 0 40px 0; } 

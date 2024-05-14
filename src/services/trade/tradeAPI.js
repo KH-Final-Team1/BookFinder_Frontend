@@ -17,9 +17,17 @@ export const deleteTrade = async (tradeId) => {
 
 export const getTrade = async (tradeId) => {
   return await axios.get(`http://localhost:8080/api/v1/trades/${tradeId}`)
-  .then( response => {
-    // console.log(response.data)
+  .then(response => {
     return response.data;
   })
-  .catch(error => console.error("Error fetching trade:", error));
+  .catch(error => console.error("게시물을 불러오는 중 오류가 발생했습니다.:", error));
 }
+
+export const enrollTrade = async (newTrade) => {
+  try {
+    await axios.post('http://localhost:8080/api/v1/trades', newTrade);
+    return true;
+  } catch (error) {
+    return false;
+  }
+};
