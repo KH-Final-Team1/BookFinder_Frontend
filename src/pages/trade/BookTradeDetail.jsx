@@ -2,7 +2,7 @@ import React, {useEffect, useRef, useState} from "react";
 import { useNavigate } from 'react-router-dom';
 import Button from "../../components/ui/Button";
 import { deleteTrade, getTrade } from "../../services/trade/tradeAPI";
-import {kakaoMap} from "../../services/kakao/kakaoMap";
+import {viewMap} from "../../services/kakao/kakaoMap";
 
 export default function TradeDetails() {
   const tradeId = 3;
@@ -27,16 +27,18 @@ export default function TradeDetails() {
   };
 
   useEffect(() => {
-    const handleResize = () => {
-      kakaoMap(trade, mapRef, setAddressInfo);
-    };
+    if (trade) {
+      const handleResize = () => {
+        viewMap(trade, mapRef, setAddressInfo);
+      };
 
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, [trade]);
+      handleResize();
+      window.addEventListener('resize', handleResize);
+      return () => {
+        window.removeEventListener('resize', handleResize);
+      };
+    }
+  }, [trade, mapRef, setAddressInfo]);
 
   return (
       <div className="trade-details">

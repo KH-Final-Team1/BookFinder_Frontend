@@ -2,6 +2,7 @@ import Title from "../../components/ui/Title";
 import React, {useEffect, useState} from "react";
 import {getBookByISBN} from "../../services/book/bookAPI";
 import Button from "../../components/ui/Button";
+import {moveMarker} from "../../services/kakao/kakaoMap";
 
 export default function BookTradeEdit() {
   const [book, setBook] = useState();
@@ -41,30 +42,7 @@ export default function BookTradeEdit() {
 
   useEffect(() => {
     const success = (pos) => {
-      const lat = pos.coords.latitude;
-      const lng = pos.coords.longitude;
-      console.log(`현위치 : ${lat}, ${lng}`);
-
-      const kakaoMaps = window.kakao.maps;
-      if (kakaoMaps) {
-        const mapContainer = document.getElementById('map');
-
-        const mapOption = {
-          center: new kakaoMaps.LatLng(lat, lng),
-          level: 3
-        };
-
-        const map = new kakaoMaps.Map(mapContainer, mapOption);
-
-        // 현재 위치에 마커 생성
-        const markerPosition = new kakaoMaps.LatLng(lat, lng);
-        const marker = new kakaoMaps.Marker({
-          position: markerPosition,
-          draggable: true // 드래그 가능하도록 설정
-        });
-
-        marker.setMap(map);
-      }
+      moveMarker(pos.coords.latitude, pos.coords.longitude);
     };
 
     const fail = (err) => {
@@ -79,23 +57,26 @@ export default function BookTradeEdit() {
         <Title>거래 등록</Title>
         <div className={'edit-info'}>
           <div className={'book-search'}>
-            <div>
-              <input className={'ISBN'}
+            <div className={'input-area'}>
+              <div className={'text'}>ISBN</div>
+              <input className={'input-isbn'}
                      placeholder={'ISBN 번호를 입력하세요'}
                      value={ISBN}
                      onChange={handleISBNChange}
               />
             </div>
-            <div>
-              <input className={'book-title'}
-                     placeholder={'도서 제목을 입력하세요'}
-              />
+            <div className={'title-area'}>
+              <div className={'input-area'}>
+                <div className={'text'}>도서 제목</div>
+                <input className={'book-title'}
+                       placeholder={'도서 제목을 입력하세요'}
+                />
+              </div>
             </div>
           </div>
           <div>
             {!loading && book && (
                 <div>
-                  <hr/>
                   <div className="book-info">
                     {book.imageUrl && (
                         <div className="book-img">
@@ -121,13 +102,13 @@ export default function BookTradeEdit() {
                       </dl>
                     </div>
                   </div>
+                  <hr/>
                 </div>
             )}
             {!loading && !book && notFoundMessage && (
                 <p>도서 정보를 찾을 수 없습니다.</p>
             )}
           </div>
-          <hr/>
           <div className={'trade'}>
             <div className={'trade-section-title'}>거래 방식</div>
             <Button className={'lend'}>빌려주기</Button>
@@ -135,7 +116,7 @@ export default function BookTradeEdit() {
             <div>
               <div className={'trade-section-title'}>금액</div>
               <input className={'trade-price'}
-                     placeholder={'₩ 가격을 입력해주세요'}
+                     placeholder={'금액을 입력해주세요'}
               />
             </div>
             <div>
