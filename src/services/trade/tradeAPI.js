@@ -23,6 +23,15 @@ export const getTrade = async (tradeId) => {
   .catch(error => console.error("게시물을 불러오는 중 오류가 발생했습니다.:", error));
 }
 
+export const getTrades = async (boroughId) => {
+  return await axios.get(`http://localhost:8080/api/v1/trades/list/${boroughId}`)
+  .then(response => {
+    console.log(response.data)
+    return response.data;
+  })
+  .catch(error => console.error("목록을 불러오는 중 오류가 발생했습니다.:", error));
+}
+    
 export const enrollTrade = async (newTrade) => {
   try {
     await axios.post('http://localhost:8080/api/v1/trades', newTrade);

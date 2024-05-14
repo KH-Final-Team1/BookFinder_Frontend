@@ -1,11 +1,11 @@
 import React, {useEffect, useRef, useState} from "react";
-import { useNavigate } from 'react-router-dom';
 import Button from "../../components/ui/Button";
+import { useParams, useNavigate } from 'react-router-dom';
 import { deleteTrade, getTrade } from "../../services/trade/tradeAPI";
 import {viewMap} from "../../services/kakao/kakaoMap";
 
 export default function TradeDetails() {
-  const tradeId = 3;
+  const { tradeId } = useParams();
   const [trade, setTrade] = useState(null);
   const [addressInfo, setAddressInfo] = useState('');
   const mapRef = useRef(null); // Ref to store the map instance
@@ -17,7 +17,7 @@ export default function TradeDetails() {
       setTrade(result);
     }
     fetchData();
-  }, []);
+  }, [tradeId]);
 
   const deleteTradeClick = async () => {
     const result = await deleteTrade(tradeId);
@@ -57,7 +57,7 @@ export default function TradeDetails() {
                   </div>
                 </div>
                 <div className="write-date">
-                  {trade.createDate}
+                  {trade.createdDate}
                 </div>
               </div>
               <div className="book-info">
