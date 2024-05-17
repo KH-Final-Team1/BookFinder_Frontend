@@ -8,8 +8,6 @@ export default function NoResult() {
         <hr />
         <div className={'buttons'}>
           <button className={'requestISBN'}>ISBN 번호로 검색</button>
-          &nbsp;&nbsp;
-          <button className={'request'}>도서 요청하기</button>
         </div>
       </div>
   )
