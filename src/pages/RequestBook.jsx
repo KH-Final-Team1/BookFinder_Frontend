@@ -29,8 +29,8 @@ export default function RequestBook() {
 
   const getBookInfo = async () => {
     const data = await fetchBookInfo(isbn);
-    if (data.response.docs && data.response.docs.length > 0) {
-      setBookInfo(data.response.docs[0].doc);
+    if (data.response.detail && data.response.detail.length > 0) {
+      setBookInfo(data.response.detail[0].book);
       setErrorMessage('');
     } else {
       setErrorMessage('유효하지 않은 ISBN 번호 입니다.');
@@ -39,35 +39,35 @@ export default function RequestBook() {
   };
 
   const clickSubmit = async () => {
-    if (isbn.length === 13) {
-      if (isbn.length !== 13) {
-        setErrorMessage('ISBN 번호는 13자리의 숫자만 입력 가능합니다.');
-        return;
-      }
+    if (isbn.length !== 13) {
+      setErrorMessage('ISBN 번호는 13자리의 숫자만 입력 가능합니다.');
+      return;
+    }
 
-      if (!bookInfo) {
-        setErrorMessage('도서 정보를 먼저 검색해주세요.');
-        return;
-      }
-      try {
-        const response = await createBook({
-          isbn,
-          imageUrl: bookInfo.bookImageURL,
-          name: bookInfo.bookname,
-          authors: bookInfo.authors,
-          publisher: bookInfo.publisher,
-          publicationYear: bookInfo.publication_year
-        });
-        setIsbn('');
-        setBookInfo(null);
-        setErrorMessage('');
-        alert(response.message);
-      } catch (error) {
-        const errorMsg = error.response.data.detail;
-        alert(errorMsg);
-      }
-    } else {
+    if (!bookInfo) {
       setErrorMessage('도서 정보를 먼저 검색해주세요.');
+      return;
+    }
+
+    try {
+      const response = await createBook({
+        isbn,
+        imageUrl: bookInfo.bookImageURL,
+        name: bookInfo.bookname,
+        className: bookInfo.class_nm,
+        authors: bookInfo.authors,
+        publisher: bookInfo.publisher,
+        publicationYear: bookInfo.publication_year,
+        classNo: bookInfo.class_no,
+        description: bookInfo.description
+      });
+      setIsbn('');
+      setBookInfo(null);
+      setErrorMessage('');
+      alert(response.message);
+    } catch (error) {
+      const errorMsg = error.response.data.detail;
+      alert(errorMsg);
     }
   };
 
@@ -91,6 +91,10 @@ export default function RequestBook() {
                 <dl className={'book-title'}>
                   <dt>도서명</dt>
                   <dd>{bookInfo.bookname}</dd>
+                </dl>
+                <dl className={'book-class'}>
+                  <dt>주제 분류</dt>
+                  <dd>{bookInfo.class_nm}</dd>
                 </dl>
                 <dl className={'book-author'}>
                   <dt>저자</dt>
