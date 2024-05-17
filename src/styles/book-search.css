@@ -10,6 +10,12 @@ dt { flex: 0 0 70px; text-align: left; }
 dd { flex: 1; max-width: 30ch; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-align: left; } 
 /* 도서 검색 결과 */
 
-.noResult { width: 100%; height: 300px; display: flex; justify-content: center; align-items: center; flex-direction: column; text-align: center; } 
+.noResult { width: 100%; height: 300px; display: flex; justify-content: center; align-items: center; flex-direction: column; text-align: center; }
 .noResult h4 { color: #a4a4a4; }
-.noResult .buttons { display: flex; } 
+.noResult hr { border: solid 1px #a4a4a4; width: 500px; }
+.noResult .buttons { display: flex; }
+.noResult .buttons button {font-size: 20px;}
+.noResult .buttons .requestISBN,
+.noResult .buttons .request { width: 200px; height: 60px; border-radius: 10px; }
+.noResult .buttons .requestISBN { background-color: #FFE872; border: #FFE872; }
+.noResult .buttons .request { background-color: #ADD8FF; border: #ADD8FF; }
