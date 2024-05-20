@@ -54,7 +54,10 @@
 .trade-details .trade-info tr > td { box-sizing: border-box; }
 .trade-details .trade-info .comment-table .user-name { text-align: left }
 .trade-details .trade-info .comment-table .create-date { text-align: right }
+.trade-details .trade-info .comment-table .delete-comment img { float: right; width: 18px; cursor: pointer; }
 .trade-details .trade-info textarea { resize: none; width: 100%; padding: 15px; font-size: 16px; box-sizing: border-box; border: 2px solid #a4a4a4; outline: none; border-radius: 10px; }
+.trade-details .trade-info .input-comment .select-secret { display: flex; }
+.trade-details .trade-info .input-comment p { margin: 0; }
 .trade-details .trade-info .submit-button { float: right; height: 45px; width: 75px; font-size: 18px; }
 /*사용자간 대출 상세보기*/
 
