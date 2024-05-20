@@ -25,3 +25,12 @@ export const deleteComment = async (commentId) => {
         .then(response => { return true; }        )
         .catch(error => { return false; })
 }
+
+export const modifyComment = async (commentId, modifiedComment) => {
+    try {
+        await axios.put(`http://localhost:8080/api/v1/comments/${commentId}`, modifiedComment);
+        return true;
+    } catch (error) {
+        return false;
+    }
+}
