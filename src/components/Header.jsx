@@ -4,7 +4,9 @@ export default function Header(){
   return(
       <div className={"header"}>
         <div className={'logo'}>
-          프로그램 로고
+          <Link to="/">
+            <img src={'/logo.png'} alt="logo"/>
+          </Link>
         </div>
         <div className={"menu-bar"}>
           <div>

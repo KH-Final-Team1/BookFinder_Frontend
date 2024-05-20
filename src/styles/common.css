@@ -4,7 +4,8 @@ html,body,#root {height:100%;}
 /*헤더 영역*/
 .header { height: 75px; border-bottom: solid gray 1px; display: flex; color: #ffffff; background-color: #000000; font-size: 24px } 
 .header .logo { justify-content: center; align-content: center; text-align: center; margin-left: 50px; } 
-.header .menu-bar { display: flex; gap: 15px; margin-left: auto; align-items: center; justify-content: center; margin-right: 50px; } 
+.header .logo img { height: 50px; margin-top: 10px;}
+.header .menu-bar { display: flex; gap: 15px; margin-left: auto; align-items: center; justify-content: center; margin-right: 50px; }
 .header .menu-bar .menu { color: white; text-decoration: none; margin-right: 20px; } 
 /*헤더 영역*/
 
