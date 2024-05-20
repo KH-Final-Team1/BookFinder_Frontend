@@ -3,6 +3,7 @@ import Button from "../../components/ui/Button";
 import { useParams, useNavigate } from 'react-router-dom';
 import { deleteTrade, getTrade } from "../../services/trade/tradeAPI";
 import {viewMap} from "../../services/kakao/kakaoMap";
+import CommentList from "./CommentList";
 
 export default function TradeDetails() {
   const { tradeId } = useParams();
@@ -74,7 +75,6 @@ export default function TradeDetails() {
               <div className={'trade-content'}>
                 {trade.content}
               </div>
-              <hr/>
               <h3>거래 희망 위치</h3>
               <div id="map" className={'map-area'}></div>
               <p>{addressInfo}</p>
@@ -84,10 +84,9 @@ export default function TradeDetails() {
                       className={'cancel-button'}>수정</Button>
                 <Button className={'submit-button'} onClick={deleteTradeClick}>삭제</Button>
               </div>
-              <hr/>
               <div className={'comment-area'}>
                 <h3>댓글</h3>
-                <div>댓글 필드 추가 예정</div>
+                <CommentList tradeId={tradeId} />
               </div>
             </div>
         )}
