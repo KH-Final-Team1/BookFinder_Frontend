@@ -8,7 +8,7 @@ export default function CommentList({tradeId}) {
   const [content, setContent] = useState("");
   const [secret, setSecret] = useState(false);
   const [isModifying, setIsModifying] = useState(false);
-  const [editCommentId, setEditCommentId] = useState(null); // 추가: 수정할 댓글 ID
+  const [editCommentId, setEditCommentId] = useState(null);
   const getSecretValue = (isChecked) => { return isChecked ? 'Y' : 'N'; };
 
   useEffect(() => {
@@ -90,63 +90,71 @@ export default function CommentList({tradeId}) {
             return (
                 <div key={comment.id}>
                   <div className={'comment-detail'}>
-                    <tr>
-                      <td className="user-name">{comment.user.nickname}</td>
-                      <td className="create-date">{comment.createDate}</td>
-                    </tr>
-                    <tr>
-                      {isModifying && editCommentId === comment.id ? (
-                          <td colSpan={2}>
+                    {comment.secretYn === 'Y' ? (
+                        <tr>
+                          <td colSpan={2} className="content">비밀댓글입니다</td>
+                        </tr>
+                    ) : (
+                        <>
+                          <tr>
+                            <td className="user-name">{comment.user.nickname}</td>
+                            <td className="create-date">{comment.createDate}</td>
+                          </tr>
+                          <tr>
+                            {isModifying && editCommentId === comment.id ? (
+                                <td colSpan={2}>
                         <textarea
                             value={content}
                             onChange={(event) => setContent(event.target.value)}
                         />
-                            <div className={'select-secret'}>
-                              <p>비밀댓글</p>
-                              <input type="checkbox" checked={secret}
-                                     onChange={(event) => setSecret(
-                                         event.target.checked)}/>
-                            </div>
-                          </td>
-                      ) : (
-                          <td colSpan={2}
-                              className="content">{comment.content}
-                          </td>
-                      )}
-                    </tr>
-                    <tr>
-                      <td>
-                        {!isModifying && editCommentId !== comment.id && (
-                            <button>답글</button>
-                        )}
-                      </td>
-                      <td className="delete-comment">
-                        {!isModifying || editCommentId !== comment.id ? (
-                            <div>
-                              <img
-                                  src={'https://cdn.icon-icons.com/icons2/2715/PNG/512/x_icon_172101.png'}
-                                  alt={'delete-icon'}
-                                  className={'delete-icon'}
-                                  onClick={() => handleDeleteComment(
-                                      comment.id)}
-                              />
-                              <img
-                                  src={'https://cdn.icon-icons.com/icons2/2098/PNG/512/edit_icon_128873.png'}
-                                  className={'modify-icon'}
-                                  alt={'modify-icon'}
-                                  onClick={() => handleEditComment(comment.id,
-                                      comment.content)}
-                              />
-                            </div>
-                        ) : (
-                            // 수정 중인 댓글이고 현재 편집하려는 댓글인 경우
-                            <div className={'modify-buttons'}>
-                              <button onClick={handleCancelEdit}>취소</button>
-                              <button onClick={handleSubmitComment}>저장</button>
-                            </div>
-                        )}
-                      </td>
-                    </tr>
+                                  <div className={'select-secret'}>
+                                    <p>비밀댓글</p>
+                                    <input type="checkbox" checked={secret}
+                                           onChange={(event) => setSecret(
+                                               event.target.checked)}/>
+                                  </div>
+                                </td>
+                            ) : (
+                                <td colSpan={2} className="content">
+                                  {comment.content}
+                                </td>
+                            )}
+                          </tr>
+                          <tr>
+                            <td>
+                              {!isModifying && editCommentId !== comment.id && (
+                                  <button>답글</button>
+                              )}
+                            </td>
+                            <td className="delete-comment">
+                              {!isModifying || editCommentId !== comment.id ? (
+                                  <div>
+                                    <img
+                                        src={'https://cdn.icon-icons.com/icons2/2715/PNG/512/x_icon_172101.png'}
+                                        alt={'delete-icon'}
+                                        className={'delete-icon'}
+                                        onClick={() => handleDeleteComment(
+                                            comment.id)}
+                                    />
+                                    <img
+                                        src={'https://cdn.icon-icons.com/icons2/2098/PNG/512/edit_icon_128873.png'}
+                                        className={'modify-icon'}
+                                        alt={'modify-icon'}
+                                        onClick={() => handleEditComment(comment.id, comment.content)}
+                                    />
+                                  </div>
+                              ) : (
+                                  <div className={'modify-buttons'}>
+                                    <button onClick={handleCancelEdit}>취소
+                                    </button>
+                                    <button onClick={handleSubmitComment}>저장
+                                    </button>
+                                  </div>
+                              )}
+                            </td>
+                          </tr>
+                        </>
+                    )}
                   </div>
                   <hr/>
                 </div>
@@ -155,14 +163,16 @@ export default function CommentList({tradeId}) {
           </tbody>
         </table>
         <div className="input-comment">
-          {!isModifying && ( // 수정 모드가 아닌 경우에만 입력 폼을 표시
+          {!isModifying && (
+              // 수정 모드가 아닌 경우에만 입력 폼을 표시
               <textarea
                   placeholder={'댓글 내용을 입력하세요.'}
                   value={content}
                   onChange={(event) => setContent(event.target.value)}
               />
           )}
-          {!isModifying && ( // 수정 모드가 아닌 경우에만 작성 버튼 표시
+          {!isModifying && (
+              // 수정 모드가 아닌 경우에만 작성 버튼 표시
               <>
                 <div className={'select-secret'}>
                   <p>비밀댓글</p>
