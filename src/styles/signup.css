@@ -1,4 +1,4 @@
-.main { display: flex; flex-direction: column; -webkit-box-pack: center; justify-content: center; -webkit-box-align: center; align-items: center; height: 100%; width: 100%; margin: 24px auto 80px; }
+.main { display: flex; flex-direction: column; -webkit-box-pack: center; justify-content: center; -webkit-box-align: center; align-items: center; width: 100%; margin: 24px auto 80px; }
 
 /** Back 영역 시작**/
 div.back { width: 100%; max-width: 1060px; padding-left: 20px; margin-bottom: 20px; }
