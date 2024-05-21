@@ -1,8 +1,13 @@
 import React, {useEffect, useRef, useState} from "react";
 import Button from "../../components/ui/Button";
 import { useParams, useNavigate } from 'react-router-dom';
-import { deleteTrade, getTrade } from "../../services/trade/tradeAPI";
+import {
+  changeTradeType,
+  deleteTrade,
+  getTrade
+} from "../../services/trade/tradeAPI";
 import {viewMap} from "../../services/kakao/kakaoMap";
+import CommentList from "./CommentList";
 
 export default function TradeDetails() {
   const { tradeId } = useParams();
@@ -23,6 +28,16 @@ export default function TradeDetails() {
     const result = await deleteTrade(tradeId);
     if (result) {
       navigate('/trade/list');
+    }
+  };
+
+  const handleChangeTradeType = async (event) => {
+    const tradeYn = event.target.checked ? 'Y' : 'N';
+    const success = await changeTradeType(tradeId, { tradeYn });
+    if (success) {
+      alert('거래 상태가 변경되었습니다.');
+    } else {
+      alert('거래 상태 변경 중 오류가 발생했습니다.');
     }
   };
 
@@ -74,20 +89,26 @@ export default function TradeDetails() {
               <div className={'trade-content'}>
                 {trade.content}
               </div>
-              <hr/>
               <h3>거래 희망 위치</h3>
               <div id="map" className={'map-area'}></div>
               <p>{addressInfo}</p>
               {/*로그인한 사용자가 글 작성자와 일치할 경우에만 보이도록 수정 예정*/}
-              <div className={'buttons'}>
-                <Button type={'submit'}
-                      className={'cancel-button'}>수정</Button>
-                <Button className={'submit-button'} onClick={deleteTradeClick}>삭제</Button>
+              <div className={'login-user-field'}>
+                <div className={'change-trade-type'}>
+                  <input type="checkbox" id="tradeComplete" onChange={handleChangeTradeType} />
+                  <label className="custom-checkbox"
+                         htmlFor="tradeComplete"></label>
+                  <div className={'trade-type'}>거래완료</div>
+                </div>
+                <div className={'buttons'}>
+                  <Button type={'submit'}
+                          className={'cancel-button'}>수정</Button>
+                  <Button className={'submit-button'} onClick={deleteTradeClick}>삭제</Button>
+                </div>
               </div>
-              <hr/>
               <div className={'comment-area'}>
                 <h3>댓글</h3>
-                <div>댓글 필드 추가 예정</div>
+                <CommentList tradeId={tradeId} />
               </div>
             </div>
         )}
