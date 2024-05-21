@@ -15,7 +15,7 @@ export const requestDuplicate = async (field) => {
     });
     return response.data.message;
   } catch (error) {
-    throw error.response.data.details[field.name];
+    throw error;
   }
 }
 
@@ -26,7 +26,7 @@ export const requestAuthEmail = async (email) => {
     });
     return response.data.signingToken;
   } catch (error) {
-    throw error.response.data.details
+    throw error
   }
 }
 
@@ -38,7 +38,7 @@ export const requestCheckingVerification = async (authCode, signingToken) => {
     });
     return response.data.signingToken;
   } catch (error) {
-    throw error.response.data
+    throw error;
   }
 }
 export const requestSignUp = async (fields) => {
@@ -54,6 +54,19 @@ export const requestSignUp = async (fields) => {
     const response = await axios.post(BASE_URL + SIGN_UP, data);
     return response.data.message
   } catch (error) {
-    throw error.response.data
+    throw error
+  }
+}
+
+export const requestLogin = async (fields) => {
+  let data = {
+    email: fields.email.value,
+    password: fields.password.value
+  }
+  try {
+    const response = await axios.post(BASE_URL+LOGIN, data);
+    return response;
+  } catch (error) {
+    throw error;
   }
 }

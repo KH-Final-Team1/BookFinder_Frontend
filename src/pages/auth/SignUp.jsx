@@ -4,7 +4,7 @@ import SignUpForm from "../../components/auth/SignUpForm";
 
 export default function SignUp() {
   return (
-      <section className="main">
+      <section className="sign-up-main">
         <Back/>
         <Title>회원가입</Title>
         <SignUpForm/>

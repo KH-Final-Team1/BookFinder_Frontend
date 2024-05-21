@@ -1,21 +1,19 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import InputField from "./InputField";
 import Button from "../ui/Button";
 import {useDaumPostcodePopup} from 'react-daum-postcode'
-import {testRegExp} from "../../services/auth/regexp";
-import {requestAuthEmail, requestCheckingVerification, requestDuplicate, requestSignUp} from "../../services/auth/authAPI";
+import {
+  requestAuthEmail,
+  requestCheckingVerification,
+  requestDuplicate,
+  requestSignUp
+} from "../../services/auth/authAPI";
+import {buttonValid, handleInputChange, initialInputFields} from "../../services/auth/utils";
 import {useNavigate} from "react-router-dom";
+import {testRegExp} from "../../services/auth/regexp";
 
 let signingToken = "";
 export default function SignUpForm() {
-  const initialInputFields = (name) => {
-    return {
-      name: name,
-      value: "",
-      valid: true,
-      disabled: false
-    }
-  }
   const navigate = useNavigate();
   const open = useDaumPostcodePopup();
   let [fields, setFields] = useState({
@@ -28,23 +26,11 @@ export default function SignUpForm() {
     authCode: initialInputFields("authCode")
   })
   let [isEmailSent, setIsEmailSent] = useState(false)
-  const handleInputChange = (field, value) => {
-    setFields(prevState => ({
-      ...prevState,
-      [field.name]: {
-        ...prevState[field.name],
-        value: value,
-        valid: isValid(field.name, value),
-        duplicate: false
-      }
-    }))
-  }
-  const isValid = (fieldName, value) => {
-    if (fieldName === "passwordConfirm") {
-      return value === fields.password.value;
-    }
-    return testRegExp(fieldName, value);
-  }
+  let [isFormValid, setIsFormValid] = useState(false)
+  useEffect(() => {
+    const isValid = buttonValid(fields)
+    setIsFormValid(isValid);
+  }, [fields]);
   const isConfirmation = (field) => {
     return field.disabled || field.value === "" || !field.valid;
   }
@@ -56,7 +42,10 @@ export default function SignUpForm() {
       alert(result);
       navigate("/login")
     } catch (error) {
-      updateFields("email", {valid: false})
+      let details = error.response.data.details;
+      Object.values(details).forEach((key, value) => {
+        updateFields(key, {valid: false, value: value})
+      })
     }
   }
   const handleEmailCheck = async () => {
@@ -68,7 +57,7 @@ export default function SignUpForm() {
         signingToken = await requestAuthEmail(fields.email.value);
       }
     } catch (error) {
-      updateFields("email", {valid: false, caption: error, duplicate: true})
+      updateFields("email", {valid: false, caption: error.response.data.details.email, duplicate: true})
     }
   }
   const handleAuthCodeCheck = async () => {
@@ -76,8 +65,7 @@ export default function SignUpForm() {
       signingToken = await requestCheckingVerification(fields.authCode.value, signingToken);
       updateFields("authCode", {disabled: true})
     } catch (error) {
-      alert(error)
-      window.location.reload()
+      updateFields("authCode", {valid: false})
     }
   }
   const handleNicknameCheck = async () => {
@@ -87,13 +75,15 @@ export default function SignUpForm() {
         updateFields("nickname", {disabled: true})
       }
     } catch (error) {
-      updateFields("nickname", {valid: false, caption: error, duplicate: true})
+      updateFields("nickname", {valid: false, caption: error.response.data.details.nickname, duplicate: true})
     }
   }
   const handleAddress = () => {
     open({
       onComplete: (data) => {
-        updateFields("address", {value: data.address, valid: true})
+        let valid = testRegExp("address", data.address);
+        console.log(valid);
+        updateFields("address", {value: data.address, valid: testRegExp("address", data.address)})
       }
     })
   }
@@ -112,7 +102,7 @@ export default function SignUpForm() {
         <form onSubmit={submitSignUpForm} className="sign-up">
           <InputField field={fields.email}
                       value={fields.email.value}
-                      eventHandler={(value) => handleInputChange(fields.email, value)}
+                      eventHandler={(value) => handleInputChange(fields.email, setFields, value)}
                       valid={fields.email.valid}
                       button={
                         <Button type="button" className="checking-verification"
@@ -126,32 +116,32 @@ export default function SignUpForm() {
           {isEmailSent && (
               <InputField field={fields.authCode}
                           value={fields.authCode.value}
-                          eventHandler={(value) => handleInputChange(fields.authCode, value)}
-                          valid={true}
+                          eventHandler={(value) => handleInputChange(fields.authCode, setFields, value)}
+                          valid={fields.authCode.valid}
                           button={
                             <Button type="button" className="checking-verification"
                                     disabled={fields.authCode.disabled}
                                     onClick={handleAuthCodeCheck}>
                               코드 확인
-                            </Button>}
-              >
+                            </Button>}>
+                <p className="invalid-caption">유효하지 않은 인증코드입니다.</p>
               </InputField>
           )}
           <InputField field={fields.password}
                       value={fields.password.value}
-                      eventHandler={(value) => handleInputChange(fields.password, value)}
+                      eventHandler={(value) => handleInputChange(fields.password, setFields, value)}
                       valid={fields.password.valid}>
             <p className="invalid-caption">영문, 숫자, 특수기호를 포함하여 8자 이상 20자 이하로 입력해주세요.</p>
           </InputField>
           <InputField field={fields.passwordConfirm}
                       value={fields.passwordConfirm.value}
-                      eventHandler={(value) => handleInputChange(fields.passwordConfirm, value)}
+                      eventHandler={(value) => handleInputChange(fields.passwordConfirm, setFields, value)}
                       valid={fields.passwordConfirm.valid}>
             <p className="invalid-caption">비밀번호와 비밀번호 확인이 일치하지 않습니다.</p>
           </InputField>
           <InputField field={fields.nickname}
                       value={fields.nickname.value}
-                      eventHandler={(value) => handleInputChange(fields.nickname, value)}
+                      eventHandler={(value) => handleInputChange(fields.nickname, setFields, value)}
                       valid={fields.nickname.valid}
                       button={
                         <Button type="button" className="checking-verification"
@@ -165,21 +155,22 @@ export default function SignUpForm() {
           </InputField>
           <InputField field={fields.address}
                       value={fields.address.value}
-                      eventHandler={(value) => handleInputChange(fields.address, value)}
                       valid={fields.address.valid}
                       button={
                         <Button type="button" className="finding-address" onClick={handleAddress}>
                           주소 찾기
                         </Button>
-                      }>
+                      }
+                      onClick={handleAddress}>
+            <p className="invalid-caption">현재는 서울시만 등록가능합니다.</p>
           </InputField>
           <InputField field={fields.phone}
                       value={fields.phone.value}
-                      eventHandler={(value) => handleInputChange(fields.phone, value)}
+                      eventHandler={(value) => handleInputChange(fields.phone, setFields, value)}
                       valid={fields.phone.valid}>
             <p className="invalid-caption">유효하지 않은 휴대폰 번호 형식입니다.</p>
           </InputField>
-          <Button type="submit" className="sign-up-button">가입하기</Button>
+          <Button type="submit" className="auth-button" disabled={!isFormValid}>가입하기</Button>
         </form>
       </div>
   )
