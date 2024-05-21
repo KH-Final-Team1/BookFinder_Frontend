@@ -10,6 +10,7 @@ import {
 } from "../../services/trade/tradeAPI";
 import {useParams, useNavigate} from "react-router-dom";
 import BookInfo from "../../components/trade/BookInfo";
+import PriceInput from "../../components/trade/PriceInput";
 
 export default function BookTradeEdit() {
 	const {tradeId} = useParams();
@@ -221,13 +222,7 @@ export default function BookTradeEdit() {
 						<div className={'cost-date-area'}>
 							<div className={'cost-area'}>
 								<div className={'trade-section-title'}>금액</div>
-
-								<input className={'trade-price'}
-											 placeholder={'금액을 입력해주세요'}
-											 value={rentalCost}
-											 onChange={(event) => setRentalCost(
-													 event.target.value)}
-								/>
+								<PriceInput value={rentalCost} onChange={setRentalCost} />
 							</div>
 							<div>
 								<div className={'trade-section-title'}>반납일</div>
