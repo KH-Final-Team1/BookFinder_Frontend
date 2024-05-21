@@ -1,4 +1,4 @@
-export default function InputField({field, value, eventHandler, valid, button, children}) {
+export default function InputField({field, value, eventHandler, valid, button, children, onClick}) {
   const fieldConfig = {
     email: {label: "이메일", placeholder: "이메일을 입력해주세요.", type: "email"},
     password: {label: "비밀번호", placeholder: "비밀번호를 입력해주세요.", type: "password"},
@@ -17,7 +17,8 @@ export default function InputField({field, value, eventHandler, valid, button, c
                  placeholder={fieldConfig[field.name].placeholder}
                  onChange={(e) => eventHandler(e.target.value)}
                  readOnly={fieldConfig[field.name].readOnly}
-                 disabled={field.disabled}/>
+                 disabled={field.disabled}
+                 onClick={onClick}/>
           {button}
         </div>
         {valid ? "" : children}

@@ -7,9 +7,10 @@ import Footer from "./components/Footer";
 import RequestBook from "./pages/RequestBook";
 import BookTradeList from "./pages/trade/BookTradeList";
 import BookTradeDetail from "./pages/trade/BookTradeDetail";
-import Login from "./pages/Login";
-import SignUp from "./pages/SignUp";
-import "./styles/signup.css"
+import Login from "./pages/auth/Login";
+import EmailLogin from "./pages/auth/EmailLogin";
+import SignUp from "./pages/auth/SignUp";
+import "./styles/auth.css"
 import BookTradeEdit from "./pages/trade/BookTradeEdit";
 import RequestBookList from "./pages/RequestBookList";
 
@@ -21,10 +22,12 @@ function App() {
           <Route path="/" element={<Main/>}/>
           <Route path="/requestBook" element={<RequestBook/>}/>
           <Route path="/login" element={<Login/>}/>
+          <Route path="/login/email" element={<EmailLogin/>}/>
           <Route path="/sign-up" element={<SignUp/>}/>
           <Route path="/trade/list" element={<BookTradeList />} />
           <Route path="/trade/:tradeId" element={<BookTradeDetail />} />
           <Route path="/trade/edit/:tradeId" element={<BookTradeEdit /> } />
+          <Route path="/trade/edit" element={<BookTradeEdit /> } />
           <Route path="/requestBook/list" element={<RequestBookList/>} />
         </Routes>
         <Footer/>
