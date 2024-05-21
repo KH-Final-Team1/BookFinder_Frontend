@@ -16,6 +16,10 @@ export default function TradeDetails() {
   const mapRef = useRef(null); // Ref to store the map instance
   const navigate = useNavigate();
 
+  const handleEditClick = () => {
+    navigate(`/trade/edit/${tradeId}`);
+  };
+
   useEffect(()=>{
     const fetchData = async () => {
       const result = await getTrade(tradeId);
@@ -102,7 +106,7 @@ export default function TradeDetails() {
                 </div>
                 <div className={'buttons'}>
                   <Button type={'submit'}
-                          className={'cancel-button'}>수정</Button>
+                          className={'cancel-button'} onClick={handleEditClick}>수정</Button>
                   <Button className={'submit-button'} onClick={deleteTradeClick}>삭제</Button>
                 </div>
               </div>
