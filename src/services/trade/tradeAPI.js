@@ -50,3 +50,13 @@ export const changeTradeType = async (tradeId, tradeYn) => {
     return false;
   }
 }
+
+export const updateTrade = async (tradeId, changedTrade) => {
+  try{
+    await axios.put(`http://localhost:8080/api/v1/trades/${tradeId}`, changedTrade);
+    return true;
+  } catch (error) {
+    console.error('Error changing trade type:', error);
+    return false;
+  }
+}

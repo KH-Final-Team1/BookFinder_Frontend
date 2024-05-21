@@ -63,7 +63,7 @@ export default function BookTradeList() {
                         <img
                             src="https://cdn-icons-png.flaticon.com/512/5633/5633965.png"
                             alt="Price Icon"/>
-                        {trade.rentalCost} 원
+                        {trade.rentalCost.toLocaleString()} 원
                       </p>
                       <div>
                         <p className='trade-yn'>{tradeYn}</p>
