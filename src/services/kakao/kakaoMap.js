@@ -36,7 +36,6 @@ export const viewMap = (trade, mapRef, setAddressInfo) => {
           (result, status) => {
             if (status === kakaoMaps.services.Status.OK) {
               const address = result[0]?.road_address?.address_name
-                  || '장소를 표시할 수 없습니다.';
               setAddressInfo(address);
             } else {
               setAddressInfo('주소를 가져올 수 없습니다.');

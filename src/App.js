@@ -12,6 +12,7 @@ import EmailLogin from "./pages/auth/EmailLogin";
 import SignUp from "./pages/auth/SignUp";
 import "./styles/auth.css"
 import BookTradeEdit from "./pages/trade/BookTradeEdit";
+import RequestBookList from "./pages/RequestBookList";
 
 function App() {
   return (
@@ -23,9 +24,10 @@ function App() {
           <Route path="/login" element={<Login/>}/>
           <Route path="/login/email" element={<EmailLogin/>}/>
           <Route path="/sign-up" element={<SignUp/>}/>
-          <Route path="/trade/list" element={<BookTradeList/>}/>
-          <Route path="/trade/:tradeId" element={<BookTradeDetail/>}/>
-          <Route path="/trade/edit" element={<BookTradeEdit/>}/>
+          <Route path="/trade/list" element={<BookTradeList />} />
+          <Route path="/trade/:tradeId" element={<BookTradeDetail />} />
+          <Route path="/trade/edit/:tradeId" element={<BookTradeEdit /> } />
+          <Route path="/requestBook/list" element={<RequestBookList/>} />
         </Routes>
         <Footer/>
       </BrowserRouter>

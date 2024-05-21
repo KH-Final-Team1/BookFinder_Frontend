@@ -1,12 +1,13 @@
 import axios from 'axios';
 
-export const searchBookList = async (filter, keyword) => {
+export const searchBookList = async (filter, keyword, approvalStatus) => {
   try {
     const response = await axios.get(`http://localhost:8080/api/v1/books/list`,
         {
           params: {
             filter: filter,
-            keyword: keyword
+            keyword: keyword,
+            approvalStatus: approvalStatus
           }
         })
     return response.data;
@@ -31,4 +32,17 @@ export const getBookByISBN = async (ISBN) => {
     return response.data;
   })
   .catch(error => console.error("Error fetching trade:", error));
+}
+
+export async function updateBookStatus(isbn, approvalStatus) {
+  try {
+    const response = await axios.patch(`http://localhost:8080/api/v1/books/${isbn}`, null,{
+      params:{
+        approvalStatus
+      }
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
 }

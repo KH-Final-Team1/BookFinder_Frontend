@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import { useNavigate } from "react-router-dom";
+import React, { useState } from 'react';
+import { Link, useNavigate } from "react-router-dom";
+import Button from "../components/ui/Button";
 import { createBook } from "../services/book/bookAPI";
 import { fetchBookInfo } from "../services/book/booklibraryAPI";
-import Button from "../components/ui/Button";
 
 export default function RequestBook() {
   const [isbn, setIsbn] = useState('');
@@ -118,6 +118,9 @@ export default function RequestBook() {
           <Button type={'submit'} onClick={clickSubmit} className={'submit-button'}>
             등록
           </Button>
+        </div>
+        <div>
+          <Link to="/requestBook/list">도서 요청 게시판</Link>
         </div>
       </div>
   );
