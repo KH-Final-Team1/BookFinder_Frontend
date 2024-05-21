@@ -88,10 +88,14 @@ export default function TradeDetails() {
                 </div>
               </div>
               <div className={'trade-price'}>
-                {trade.rentalCost} 원
+                {trade.rentalCost.toLocaleString()} 원
               </div>
               <div className={'trade-content'}>
                 {trade.content}
+                <h3>반납 일자</h3>
+                <div className={'limited-date'}>
+                  {trade.limitedDate}
+                </div>
               </div>
               <h3>거래 희망 위치</h3>
               <div id="map" className={'map-area'}></div>
@@ -99,20 +103,23 @@ export default function TradeDetails() {
               {/*로그인한 사용자가 글 작성자와 일치할 경우에만 보이도록 수정 예정*/}
               <div className={'login-user-field'}>
                 <div className={'change-trade-type'}>
-                  <input type="checkbox" id="tradeComplete" onChange={handleChangeTradeType} />
+                  <input type="checkbox" id="tradeComplete"
+                         onChange={handleChangeTradeType}/>
                   <label className="custom-checkbox"
                          htmlFor="tradeComplete"></label>
                   <div className={'trade-type'}>거래완료</div>
                 </div>
                 <div className={'buttons'}>
                   <Button type={'submit'}
-                          className={'cancel-button'} onClick={handleEditClick}>수정</Button>
-                  <Button className={'submit-button'} onClick={deleteTradeClick}>삭제</Button>
+                          className={'cancel-button'}
+                          onClick={handleEditClick}>수정</Button>
+                  <Button className={'submit-button'}
+                          onClick={deleteTradeClick}>삭제</Button>
                 </div>
               </div>
               <div className={'comment-area'}>
                 <h3>댓글</h3>
-                <CommentList tradeId={tradeId} />
+                <CommentList tradeId={tradeId}/>
               </div>
             </div>
         )}
