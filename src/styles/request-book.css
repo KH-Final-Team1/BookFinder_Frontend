@@ -1,17 +1,36 @@
 /* 도서 요청*/
-.request-book { display: flex; justify-content: center; align-items: center; height: 100vh; flex-direction: column; } 
-.request-book .search-isbn { margin-bottom: 30px; width: 250px; height: 40px; font-size: 24px; border: none; border-bottom: 2px solid black; text-align:center; padding-left: 15px } 
-.request-book hr { border: solid 1px #a4a4a4; width: 700px } 
-.request-book .book { display: flex; justify-content: center; align-items: center; } 
-.request-book .book .book-img { align-items: center; justify-content: center; } 
-.request-book .book .book-info { align-items: center; justify-content: center; } 
-.request-book .book .book-info dl { font-size: 13px; margin: 0 0 10px 7px; } 
-.request-book .book .book-info dt { float: left; width: 80px; font-weight: bold; color: #000; text-align: left; } 
-.request-book .book .book-info dd { margin-left: 90px } 
-.request-book .book .book-info .book-title { font-size: 24px; } 
+.request-book { display: flex; justify-content: center; align-items: center; height: 100vh; flex-direction: column; }
+.request-book .search-isbn { margin-bottom: 30px; width: 250px; height: 40px; font-size: 24px; border: none; border-bottom: 2px solid black; text-align:center; padding-left: 15px }
+.request-book hr { border: solid 1px #a4a4a4; width: 700px }
+.request-book .book { display: flex; justify-content: center; align-items: center; }
+.request-book .book .book-img { align-items: center; justify-content: center; }
+.request-book .book .book-info { align-items: center; justify-content: center; }
+.request-book .book .book-info dl { font-size: 13px; margin: 0 0 10px 7px; }
+.request-book .book .book-info dt { float: left; width: 80px; font-weight: bold; color: #000; text-align: left; }
+.request-book .book .book-info dd { margin-left: 90px }
+.request-book .book .book-info .book-title { font-size: 24px; }
 .request-book .book .book-info .book-class,
 .request-book .book .book-info .book-author,
 .request-book .book .book-info .book-publisher,
-.request-book .book .book-info .book-publication-year { font-size: 18px; } 
-.request-book .buttons { display: flex; justify-content: flex-end; width: 100%; margin: 30px 40% 0 0; } 
+.request-book .book .book-info .book-publication-year { font-size: 18px; }
+.request-book .buttons { display: flex; justify-content: flex-end; width: 100%; margin: 30px 40% 0 0; }
 /* 도서 요청*/
+
+/* 도서 요청 게시판*/
+.request-books { display: flex; align-items: center; height: 100vh; flex-direction: column; margin-top: 50px; }
+.request-books .request-search { display: flex; align-items: center; justify-content: center; align-content: center; border: solid 1px; padding: 0; }
+.request-books .request-search .search-div { padding-right: 5px; border-right: 1px solid black; }
+.request-books .request-search .search-select { padding: 8px; border: none; height: 50px; font-size: 18px; }
+.request-books .request-search input { width: 500px; height: 50px; font-size: 20px; padding: 0 0 0 15px; border: none; border-right: 1px solid black; }
+.request-books .request-search .search-button { border: none; background-color: white; cursor: pointer; }
+.request-books .request-search .search-button img { display: flex; justify-content: center; align-items: center; width: 40px; }
+.request-books table { width: 1200px; border-collapse: collapse; }
+.request-books table td { border-bottom: 1px dashed black; padding: 0 10px 20px 20px; }
+.request-books table td .book-title { font-size: 24px; }
+.request-books table td span { font-weight: bold; }
+.request-books table .book-img-border { text-align: center; vertical-align: middle; padding: 10px; }
+.request-books table .book-img-border img { height: 220px; }
+.request-books table .book-info { padding-left: 25px; }
+.request-books table .book-info .buttons { float: right; }
+/* 도서 요청 게시판*/
+.buttons Button { cursor: pointer; }
