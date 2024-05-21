@@ -2,8 +2,8 @@ import {useState} from "react";
 import InputField from "./InputField";
 import Button from "../ui/Button";
 import {useDaumPostcodePopup} from 'react-daum-postcode'
-import {testRegExp} from "../regexp";
-import {requestAuthEmail, requestCheckingVerification, requestDuplicate, requestSignUp} from "../axios";
+import {testRegExp} from "../../services/signup/regexp";
+import {requestAuthEmail, requestCheckingVerification, requestDuplicate, requestSignUp} from "../../services/signup/signupAPI";
 import {useNavigate} from "react-router-dom";
 
 let signingToken = "";
