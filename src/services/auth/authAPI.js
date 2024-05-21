@@ -5,6 +5,7 @@ const SIGN_UP = "/api/v1/auth"
 const DUPLICATE = "/duplicate"
 const AUTH_EMAIL = "/email"
 const VERIFICATION_CODE = "/verification-code";
+const LOGIN = "/api/v1/login"
 export const requestDuplicate = async (field) => {
   try {
     const response = await axios.get(BASE_URL + SIGN_UP + DUPLICATE, {
