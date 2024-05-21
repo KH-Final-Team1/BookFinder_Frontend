@@ -27,6 +27,7 @@ function App() {
           <Route path="/trade/list" element={<BookTradeList />} />
           <Route path="/trade/:tradeId" element={<BookTradeDetail />} />
           <Route path="/trade/edit/:tradeId" element={<BookTradeEdit /> } />
+          <Route path="/trade/edit" element={<BookTradeEdit /> } />
           <Route path="/requestBook/list" element={<RequestBookList/>} />
         </Routes>
         <Footer/>
