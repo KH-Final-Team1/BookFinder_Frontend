@@ -7,9 +7,9 @@ import Footer from "./components/Footer";
 import RequestBook from "./pages/RequestBook";
 import BookTradeList from "./pages/trade/BookTradeList";
 import BookTradeDetail from "./pages/trade/BookTradeDetail";
-import Login from "./pages/Login";
-import SignUp from "./pages/SignUp";
-import "./styles/signup.css"
+import Login from "./pages/auth/Login";
+import SignUp from "./pages/auth/SignUp";
+import "./styles/auth.css"
 import BookTradeEdit from "./pages/trade/BookTradeEdit";
 
 function App() {
