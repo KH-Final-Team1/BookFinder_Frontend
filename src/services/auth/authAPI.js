@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const BASE_URL = "http://localhost:8080"
-const SIGN_UP = "/api/v1/auth"
+const SIGN_UP = "/api/v1/signup"
 const DUPLICATE = "/duplicate"
 const AUTH_EMAIL = "/email"
 const VERIFICATION_CODE = "/verification-code";
