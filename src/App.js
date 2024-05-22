@@ -5,6 +5,7 @@ import Header from "./components/Header";
 import Main from "./pages/Main";
 import Footer from "./components/Footer";
 import RequestBook from "./pages/RequestBook";
+import LibraryList from "./pages/LibraryList";
 import BookTradeList from "./pages/trade/BookTradeList";
 import BookTradeDetail from "./pages/trade/BookTradeDetail";
 import Login from "./pages/auth/Login";
@@ -25,6 +26,7 @@ function App() {
           <Route path="/login/email" element={<EmailLogin/>}/>
           <Route path="/sign-up" element={<SignUp/>}/>
           <Route path="/trade/list" element={<BookTradeList />} />
+          <Route path={"/book/detail/:isbn"} element={<LibraryList />} />
           <Route path="/trade/:tradeId" element={<BookTradeDetail />} />
           <Route path="/trade/edit/:tradeId" element={<BookTradeEdit /> } />
           <Route path="/trade/edit" element={<BookTradeEdit /> } />

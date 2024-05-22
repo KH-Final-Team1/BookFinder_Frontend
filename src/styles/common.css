@@ -1,5 +1,6 @@
 * { font-family: "Jua", sans-serif; } 
-html,body,#root {height:100%;}
+html,body,#root {height:100%; overflow: hidden;}
+#root > div:nth-child(2) { overflow-y: auto; }
 
 /*헤더 영역*/
 .header { height: 75px; border-bottom: solid gray 1px; display: flex; color: #ffffff; background-color: #000000; font-size: 24px } 
