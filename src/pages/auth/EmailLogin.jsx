@@ -3,7 +3,7 @@ import InputField from "../../components/auth/InputField";
 import {useEffect, useState} from "react";
 import Button from "../../components/ui/Button";
 import {handleInputChange, initialInputFields} from "../../services/auth/utils";
-import {Link, useNavigate} from "react-router-dom";
+import {Link, Navigate, useNavigate} from "react-router-dom";
 import {requestLogin} from "../../services/auth/authAPI";
 import {testRegExp} from "../../services/auth/regexp";
 
@@ -20,6 +20,9 @@ export default function EmailLogin() {
     setIsFormValid(isValid)
     setFailCaption("")
   }, [fields]);
+  if (sessionStorage.getItem("accessToken")) {
+    return <Navigate to="/error/403" replace/>
+  }
 
   const submitLoginForm = async (e) => {
     e.preventDefault()

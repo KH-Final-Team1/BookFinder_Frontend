@@ -1,13 +1,13 @@
 import {useEffect} from "react";
-import {requestAccessTokenForOAuth2Login, requestOauthSignUp} from "../../services/auth/authAPI";
-import {useNavigate} from "react-router-dom";
+import {requestAccessTokenForOAuth2Login} from "../../services/auth/authAPI";
+import {Navigate, useNavigate} from "react-router-dom";
 
 export default function OAuth2Login() {
   const navigate = useNavigate();
   useEffect(() => {
     const awaitToken = async () => {
       try {
-        let result =await requestAccessTokenForOAuth2Login();
+        let result = await requestAccessTokenForOAuth2Login();
         sessionStorage.setItem("accessToken", result.data.accessToken);
         navigate("/")
       } catch (error) {
@@ -16,6 +16,9 @@ export default function OAuth2Login() {
     }
     awaitToken()
   }, []);
+  if (sessionStorage.getItem("accessToken")) {
+    return <Navigate to="/error/403" replace/>
+  }
 
   return <div>로그인 중입니다 잠시만 기다려주세요.</div>
 }

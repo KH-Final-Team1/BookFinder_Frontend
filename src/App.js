@@ -17,6 +17,7 @@ import OAuth2SignUp from "./pages/auth/OAuth2SignUp";
 import OAuth2Login from "./pages/auth/OAuth2Login";
 import Error404 from "./pages/common/Error404";
 import PrivateRoute from "./components/common/PrivateRoute";
+import ErrorWithExistAuthorization from "./pages/auth/ErrorWithExistAuthorization";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Header/>
         <Routes>
           <Route path="*" element={<Error404 />} />
+          <Route path="/error/403" element={<ErrorWithExistAuthorization/>}/>
           <Route path="/" element={<Main/>}/>
           {/*사용자 관련*/}
           <Route path="/sign-up" element={<SignUp/>}/>
