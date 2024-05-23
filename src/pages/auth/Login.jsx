@@ -1,8 +1,12 @@
 import {Link} from "react-router-dom";
 import Title from "../../components/ui/Title";
 import Button from "../../components/ui/Button";
+import OAuth2LoginLink from "../../components/auth/OAuth2LoginLink";
 
 export default function Login() {
+  if (sessionStorage.getItem("accessToken")) {
+    return <Navigate to="/error/403" replace/>
+  }
   return (<section className="sign-up-main">
     <Title>간편하게 로그인 하세요.</Title>
     <div>
