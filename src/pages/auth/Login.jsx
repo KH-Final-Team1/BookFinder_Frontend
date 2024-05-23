@@ -1,4 +1,4 @@
-import {Link} from "react-router-dom";
+import {Link, Navigate} from "react-router-dom";
 import Title from "../../components/ui/Title";
 import Button from "../../components/ui/Button";
 import OAuth2LoginLink from "../../components/auth/OAuth2LoginLink";
@@ -14,7 +14,7 @@ export default function Login() {
     </div>
     <div className="login-buttons-section">
       <div>
-        <a href="http://localhost:8080/oauth2/authorization/kakao" style={{textDecoration: "none"}}>
+        <OAuth2LoginLink href="http://localhost:8080/oauth2/authorization/kakao">
           <Button className="kakao-login-button">
             <span className="login-svg">
               <svg viewBox="0 0 21 20" width="21" height="20" fill="none" className="login-svg">
@@ -26,10 +26,10 @@ export default function Login() {
             </span>
             <p className="kakao-login-button-text">카카오 계정으로 계속하기</p>
           </Button>
-        </a>
+        </OAuth2LoginLink>
       </div>
       <div>
-        <a href="http://localhost:8080/oauth2/authorization/google" style={{textDecoration: "none"}}>
+        <OAuth2LoginLink href="http://localhost:8080/oauth2/authorization/google">
           <Button className="google-login-button">
             <span className="login-svg">
               <svg viewBox="0 0 16 16" width="16" height="16" fill="none" className="login-svg">
@@ -56,7 +56,7 @@ export default function Login() {
             </span>
             <p className="login-button-text">구글 계정으로 계속하기</p>
           </Button>
-        </a>
+        </OAuth2LoginLink>
       </div>
       <div className="field">
         <Link to="/login/email" style={{textDecoration: "none"}}>
