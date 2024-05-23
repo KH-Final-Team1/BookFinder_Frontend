@@ -1,5 +1,4 @@
 * { font-family: "Jua", sans-serif; } 
-html,body,#root {height:100%;}
 
 /*헤더 영역*/
 .header { height: 75px; border-bottom: solid gray 1px; display: flex; color: #ffffff; background-color: #000000; font-size: 24px } 
@@ -24,3 +23,10 @@ html,body,#root {height:100%;}
 .submit-button { width: 100px; height: 50px; background-color: black; border: none; border-radius: 10px; font-size: 20px; color: white } 
 .cancel-button { width: 100px; height: 50px; background-color: white; border: 1px solid black; border-radius: 10px; margin-right: 8px; font-size: 20px; } 
 /*버튼*/
+
+/*에러페이지*/
+.error { display: flex; justify-content: center; align-items: center; height: calc(100vh - 100px); flex-direction: column; }
+.error .error404 {text-align: center; margin-bottom: 50px; font-size: 50px;}
+.error .error404 h1 {font-size: 120px; margin-bottom: 0; }
+.error .submit-button { width: 140px; height: 70px; padding: 10px 20px; font-size: 24px;}
+/*에러페이지*/
