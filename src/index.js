@@ -5,6 +5,7 @@ import './styles/common.css'
 import './styles/request-book.css'
 import './styles/book-trade.css'
 import './styles/book-search.css'
+import './styles/login-type-b.css'
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
