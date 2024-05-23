@@ -8,8 +8,7 @@ export default function OAuth2Login() {
     const awaitToken = async () => {
       try {
         let result =await requestAccessTokenForOAuth2Login();
-        console.log(result);
-        localStorage.setItem("accessToken", result.data.accessToken);
+        sessionStorage.setItem("accessToken", result.data.accessToken);
         navigate("/")
       } catch (error) {
         console.log(error)
