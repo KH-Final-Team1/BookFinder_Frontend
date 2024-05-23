@@ -5,7 +5,6 @@ import Header from "./components/Header";
 import Main from "./pages/Main";
 import Footer from "./components/Footer";
 import RequestBook from "./pages/RequestBook";
-import LibraryList from "./pages/LibraryList";
 import BookTradeList from "./pages/trade/BookTradeList";
 import BookTradeDetail from "./pages/trade/BookTradeDetail";
 import Login from "./pages/auth/Login";
@@ -16,6 +15,7 @@ import BookTradeEdit from "./pages/trade/BookTradeEdit";
 import RequestBookList from "./pages/RequestBookList";
 import OAuth2SignUp from "./pages/auth/OAuth2SignUp";
 import OAuth2Login from "./pages/auth/OAuth2Login";
+import Error404 from "./pages/common/Error404";
 import PrivateRoute from "./components/common/PrivateRoute";
 
 function App() {
@@ -23,6 +23,7 @@ function App() {
       <BrowserRouter>
         <Header/>
         <Routes>
+          <Route path="*" element={<Error404 />} />
           <Route path="/" element={<Main/>}/>
           {/*사용자 관련*/}
           <Route path="/sign-up" element={<SignUp/>}/>
