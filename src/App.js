@@ -15,12 +15,14 @@ import BookTradeEdit from "./pages/trade/BookTradeEdit";
 import RequestBookList from "./pages/RequestBookList";
 import OAuth2SignUp from "./pages/auth/OAuth2SignUp";
 import OAuth2Login from "./pages/auth/OAuth2Login";
+import Error404 from "./pages/common/Error404";
 
 function App() {
   return (
       <BrowserRouter>
         <Header/>
         <Routes>
+          <Route path="*" element={<Error404 />} />
           <Route path="/" element={<Main/>}/>
           <Route path="/requestBook" element={<RequestBook/>}/>
 
