@@ -2,6 +2,8 @@ import axios from "axios";
 
 const BASE_URL = "http://localhost:8080"
 const SIGN_UP = "/api/v1/signup"
+const OAUTH2_SIGN_UP = "/api/v1/oauth2/signup"
+const OAUTH2_ACCESS_TOKEN = "/api/v1/oauth2/accessToken"
 const DUPLICATE = "/duplicate"
 const AUTH_EMAIL = "/email"
 const VERIFICATION_CODE = "/verification-code";
@@ -58,6 +60,23 @@ export const requestSignUp = async (fields) => {
     throw error
   }
 }
+export const requestOauthSignUp = async (fields, accessToken) => {
+  let data = {
+    nickname: fields.nickname["value"],
+    address: fields.address["value"],
+    phone: fields.phone["value"]
+  }
+  try {
+    const response = await axios.post(BASE_URL + OAUTH2_SIGN_UP, data, {
+      headers: {
+        Authorization: "Bearer " + accessToken
+      }
+    });
+    return response.data.message
+  } catch (error) {
+    throw error
+  }
+}
 
 export const requestLogin = async (fields) => {
   let data = {
@@ -65,7 +84,7 @@ export const requestLogin = async (fields) => {
     password: fields.password.value
   }
   try {
-    const response = await axios.post(BASE_URL+LOGIN, data);
+    const response = await axios.post(BASE_URL + LOGIN, data);
     return response;
   } catch (error) {
     throw error;
