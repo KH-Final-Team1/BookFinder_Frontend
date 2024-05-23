@@ -39,7 +39,7 @@ export default function LibraryList() {
         (scrollTop / (scrollHeight - clientHeight)) * 100
     );
 
-    if (position == 100 && (pageInfo.pageNo == 1 || libList.length < pageInfo.total)) {
+    if (position === 100 && (pageInfo.pageNo === 1 || libList.length < pageInfo.total)) {
       initLibraryList();
     }
   };
