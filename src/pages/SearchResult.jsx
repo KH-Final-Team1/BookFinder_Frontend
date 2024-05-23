@@ -8,9 +8,11 @@ export default function SearchResult(props) {
           {props.bookList.map((book, idx)=> {
             return <li className={'book-detail'} key={"book_"+idx}>
               <div className={'book'}>
-                <img
-                    src={book.imageUrl}
-                    alt={'도서이미지'}/>
+                <a href={"/book/detail/" + book.isbn}>
+                  <img
+                      src={book.imageUrl}
+                      alt={'도서이미지'}/>
+                </a>
               </div>
               <div className={'book-info'}>
                 <dl className={'book-title'}>

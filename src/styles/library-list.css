@@ -1,0 +1,23 @@
+.libraryList { display: flex; justify-content: center; flex-direction:column; align-items: center; height: 130vh; margin: 0 auto; padding: 20px; }
+.libraryList .book { display: flex; justify-content: center; flex-direction: row; }
+.libraryList .book img { width: 200px; height: 270px; }
+.libraryList .book .book-info { padding-left: 20px; font-size: larger; }
+.libraryList .book .book-info dl { display: flex; justify-content: space-between; margin: 5px 0; }
+.libraryList .book .book-info dl dt, dd { margin: 0; }
+.libraryList .book .book-info dl dt { flex: 0 0 120px; text-align: left; }
+.libraryList .book .book-info dl dd { flex: 1; max-width: 55ch; text-align: left; margin: 0 0 15px 0; padding: 0; white-space: normal; word-wrap: break-word; }
+.libraryList hr { border: solid 1px #a4a4a4; width: 1200px; margin: 20px 0 30px 0; }
+.libraryList .library { display: block; justify-content: flex-end; align-items: center; }
+.libraryList .library p { font-size: x-large; }
+.libraryList .library .sort-select { margin-left: auto; width: 75px; height: 30px; font-size: larger; text-align: center; }
+.libraryList .library .libResult { width: 700px; height: 700px; }
+.libraryList .library .libResult .library-list .library-detail { list-style: none; }
+.libraryList .library .libResult .library-list .library-detail hr { width: 100%; border: dashed #a4a4a4 thin; margin: 20px 0;}
+.libraryList .library .libResult .library-list .library-detail .library p { font-size: x-large; }
+.libraryList .library .libResult .library-list .library-detail .library dl { display: flex; justify-content: space-between; margin: 10px 0; }
+.libraryList .library .libResult .library-list .library-detail .library dl dt, dd { margin: 0; }
+.libraryList .library .libResult .library-list .library-detail .library dl dt { flex: 0 0 70px; text-align: left; }
+.libraryList .library .libResult .library-list .library-detail .library dl dd { flex: 1; max-width: 55ch; text-align: left; white-space: normal; word-wrap: break-word; }
+.libraryList .library .libResult .library-list .library-detail .library dl dd a { color: black; }
+.libraryList .library .libResult .library-list .library-detail .library dl dd button { width: 105px; height: 35px; background-color: white; border: black 2px solid; font-size: 16px; color: black; cursor: pointer; }
+.libraryList .library .libResult .library-list .library-detail .library dl .loan { height: 35px; }
