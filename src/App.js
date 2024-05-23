@@ -28,11 +28,7 @@ function App() {
           <Route path="/login/email" element={<EmailLogin/>}/>
           <Route path="/oauth2/sign-up" element={<OAuth2SignUp/>}/>
           <Route path="/sign-up" element={<SignUp/>}/>
-          <Route path="/trade/list" element={<BookTradeList />} />
-          <Route path="/trade/:tradeId" element={<BookTradeDetail />} />
-          <Route path="/trade/edit/:tradeId" element={<BookTradeEdit /> } />
-          <Route path="/trade/edit" element={<BookTradeEdit /> } />
-          <Route path="/requestBook/list" element={<RequestBookList/>} />
+          <Route path="/oauth2/login" element={<OAuth2Login/>}/>
 
           <Route path="/trade/list" element={<BookTradeList/>}/>
           <Route path="/trade/:tradeId" element={<BookTradeDetail/>}/>

@@ -78,6 +78,17 @@ export const requestOauthSignUp = async (fields, accessToken) => {
   }
 }
 
+export const requestAccessTokenForOAuth2Login = async () => {
+  try {
+    const response = await axios.get(BASE_URL + OAUTH2_ACCESS_TOKEN, {
+      withCredentials: true
+    });
+    return response;
+  } catch (error) {
+    return error;
+  }
+}
+
 export const requestLogin = async (fields) => {
   let data = {
     email: fields.email.value,
