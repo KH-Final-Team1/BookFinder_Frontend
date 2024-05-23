@@ -17,17 +17,12 @@ export default function LibraryList() {
 
   const getBookDetail = async () => {
     const bookInfo = await fetchBookInfo(isbn);
-    // console.log(bookInfo);
-    // console.log(bookInfo.response.detail[0].book);
     if (bookInfo.response.detail)
       setBookDetail(bookInfo.response.detail[0].book);
   }
 
   const initLibraryList = async () => {
-    // 1) booklibraryAPI 추가한 함수를 호출 => 데이터 요청 확인
     const libInfo = await getLibraryList(isbn, pageInfo.pageNo);
-    // 2) 응답 데이터를 가지고 화면에 표시
-
     const list = libList;
     if (list.length < libInfo.response.numFound
         && list.length < pageInfo.pageNo * 10) {
@@ -97,7 +92,6 @@ export default function LibraryList() {
           <div className={'libResult'}>
             <ul className={'library-list'}>
               {libList.map((data, idx) => {
-                // console.log(data)
                 return <li className={'library-detail'} key={"lib_" + idx}>
                   <div className={'library'}>
                     <p>{data.lib.libName}</p>
