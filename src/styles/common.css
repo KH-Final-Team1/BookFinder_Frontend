@@ -1,5 +1,4 @@
 * { font-family: "Jua", sans-serif; } 
-html,body,#root {height:100%;}
 
 /*헤더 영역*/
 .header { height: 75px; border-bottom: solid gray 1px; display: flex; color: #ffffff; background-color: #000000; font-size: 24px } 

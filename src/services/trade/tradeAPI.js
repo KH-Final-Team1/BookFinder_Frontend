@@ -2,7 +2,8 @@ import axios from "axios";
 
 export const deleteTrade = async (tradeId) => {
   if (window.confirm('게시물을 삭제하시겠습니까?')) {
-    return await axios.delete(`http://localhost:8080/api/v1/trades/${tradeId}`)
+    return await axios.delete(`http://localhost:8080/api/v1/trades/${tradeId}`,
+        {headers: {'Authorization': `Bearer ${localStorage.getItem("accessToken")}`}})
     .then(response => {
       alert('게시물을 성공적으로 삭제했습니다.');
       return true;
@@ -16,7 +17,8 @@ export const deleteTrade = async (tradeId) => {
 };
 
 export const getTrade = async (tradeId) => {
-  return await axios.get(`http://localhost:8080/api/v1/trades/${tradeId}`)
+  return await axios.get(`http://localhost:8080/api/v1/trades/${tradeId}`,
+      {headers: {'Authorization': `Bearer ${localStorage.getItem("accessToken")}`}})
   .then(response => {
     return response.data;
   })
@@ -24,7 +26,8 @@ export const getTrade = async (tradeId) => {
 }
 
 export const getTrades = async (boroughId) => {
-  return await axios.get(`http://localhost:8080/api/v1/trades/list/${boroughId}`)
+  return await axios.get(`http://localhost:8080/api/v1/trades/list/${boroughId}`,
+      {headers: {'Authorization': `Bearer ${localStorage.getItem("accessToken")}`}})
   .then(response => {
     console.log(response.data)
     return response.data;
@@ -34,7 +37,8 @@ export const getTrades = async (boroughId) => {
     
 export const enrollTrade = async (newTrade) => {
   try {
-    await axios.post('http://localhost:8080/api/v1/trades', newTrade);
+    await axios.post('http://localhost:8080/api/v1/trades', newTrade,
+        {headers: {'Authorization': `Bearer ${localStorage.getItem("accessToken")}`}});
     return true;
   } catch (error) {
     return false;
@@ -53,7 +57,8 @@ export const changeTradeType = async (tradeId, tradeYn) => {
 
 export const updateTrade = async (tradeId, changedTrade) => {
   try{
-    await axios.put(`http://localhost:8080/api/v1/trades/${tradeId}`, changedTrade);
+    await axios.put(`http://localhost:8080/api/v1/trades/${tradeId}`, changedTrade,
+        {headers: {'Authorization': `Bearer ${localStorage.getItem("accessToken")}`}});
     return true;
   } catch (error) {
     console.error('Error changing trade type:', error);
