@@ -1,4 +1,4 @@
-.libraryList { display: flex; justify-content: center; flex-direction:column; align-items: center; height: 130vh; margin: 0 auto; padding: 20px; overflow-y: scroll; }
+.libraryList { display: flex; justify-content: center; flex-direction:column; align-items: center; height: 130vh; margin: 0 auto; padding: 20px; }
 .libraryList .book { display: flex; justify-content: center; flex-direction: row; }
 .libraryList .book img { width: 200px; height: 270px; }
 .libraryList .book .book-info { padding-left: 20px; font-size: larger; }

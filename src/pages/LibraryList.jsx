@@ -1,61 +1,88 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router";
-import { fetchBookInfo, getLibraryList, loanBook } from "../services/book/booklibraryAPI";
+import React, {useState, useEffect, useRef} from "react";
+import {useParams} from "react-router";
+import {
+  fetchBookInfo,
+  getLibraryList,
+  loanBook
+} from "../services/book/booklibraryAPI";
 import Button from "../components/ui/Button";
 
 export default function LibraryList() {
   const {isbn} = useParams();
   const [bookDetail, setBookDetail] = useState({});
   const [libList, setLibList] = useState([]);
-  const [pageInfo, setPageInfo] = useState({pageNo:1});
+  const [page, setPage] = useState(1)
+  const [isLoading, setIsLoading] = useState(false)
   const [loanStatus, setLoanStatus] = useState({});
+  const loader = useRef(null);
+  const isInitialLoad = useRef(true);
+
+  const handleObserver = (entries) => {
+    const target = entries[0];
+    if (target.isIntersecting && !isInitialLoad.current && !isLoading) {
+      setPage(prevState => prevState + 1);
+    }
+  }
 
   useEffect(() => {
     getBookDetail();
-    initLibraryList();
+    const observer = new IntersectionObserver(handleObserver, {threshold: 1})
+    if (loader.current) {
+      observer.observe(loader.current);
+    }
+    return () => {
+      if (loader.current) {
+        observer.unobserve(loader.current);
+      }
+    }
   }, []);
+
+  useEffect(() => {
+    if (isInitialLoad.current) {
+      isInitialLoad.current = false;
+      return;
+    }
+    initLibraryList();
+  }, [page])
 
   const getBookDetail = async () => {
     const bookInfo = await fetchBookInfo(isbn);
-    if (bookInfo.response.detail)
+    if (bookInfo.response.detail) {
       setBookDetail(bookInfo.response.detail[0].book);
+    }
   }
 
   const initLibraryList = async () => {
-    const libInfo = await getLibraryList(isbn, pageInfo.pageNo);
-    const list = libList;
-    if (list.length < libInfo.response.numFound
-        && list.length < pageInfo.pageNo * 10) {
-      list.push(...libInfo.response.libs)
-
+    setIsLoading(true);
+    try {
+      const libInfo = await getLibraryList(isbn, page);
+      const list = libList;
+      list.push(...libInfo.response.libs);
       setLibList(list);
-      setPageInfo({...pageInfo, pageNo: pageInfo.pageNo+1, total: libInfo.response.numFound})
+    } catch (error) {
+      console.log(error);
     }
+    setIsLoading(false);
   }
-
-  const handleScroll = (e) => {
-    const { scrollTop, scrollHeight, clientHeight } = e.target;
-    const position = Math.ceil(
-        (scrollTop / (scrollHeight - clientHeight)) * 100
-    );
-
-    if (position === 100 && (pageInfo.pageNo === 1 || libList.length < pageInfo.total)) {
-      initLibraryList();
-    }
-  };
 
   const loanAvailable = async (libCode) => {
     const loanInfo = await loanBook(libCode, isbn);
-    console.log(loanInfo);
     if (loanInfo.response.result.loanAvailable === "Y") {
-      setLoanStatus((prevStatus) => ({ ...prevStatus, [libCode]: "대출 가능" }));
+      setLoanStatus((prevStatus) => ({...prevStatus, [libCode]: "대출 가능"}));
     } else {
-      setLoanStatus((prevStatus) => ({ ...prevStatus, [libCode]: "대출 불가능" }));
+      setLoanStatus((prevStatus) => ({...prevStatus, [libCode]: "대출 불가능"}));
     }
   }
 
+  const handleBack = () => {
+
+  }
+
   return (
-      <div className={'libraryList'} onScroll={handleScroll}>
+      <div className={'libraryList'}>
+        <div>
+          <Button className={'cancel-button'} onClick={handleBack}>목록</Button>
+        </div>
         <div className={'book'}>
           <img
               src={bookDetail.bookImageURL}/>
@@ -82,7 +109,7 @@ export default function LibraryList() {
             </dl>
           </div>
         </div>
-        <hr />
+        <hr/>
         <div className={'library'}>
           {/*<p>전체 {libList.length}건</p>*/}
           <select className={'sort-select'}>
@@ -119,11 +146,10 @@ export default function LibraryList() {
                     <dl className={'loan-available'}>
                       <dt>대출여부</dt>
                       <dd className={'loan'}>
-                        {loanStatus[data.lib.libCode] ? (
-                            loanStatus[data.lib.libCode]
-                        ) : (
-                            <Button className={'submit-button'} onClick={() => loanAvailable(data.lib.libCode)}>클릭하여 조회</Button>
-                        )}
+                        {loanStatus[data.lib.libCode] ? (loanStatus[data.lib.libCode])
+                            : <Button className={'submit-button'} onClick={() => loanAvailable(data.lib.libCode)}>
+                              클릭하여 조회
+                            </Button>}
                       </dd>
                     </dl>
                   </div>
@@ -131,6 +157,7 @@ export default function LibraryList() {
                 </li>
               })}
             </ul>
+            <div ref={loader} style={{height: "10px"}}>Loading...</div>
           </div>
         </div>
       </div>
