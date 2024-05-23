@@ -25,14 +25,14 @@ export default function EmailLogin() {
     e.preventDefault()
     try {
       let result = await requestLogin(fields);
-      localStorage.setItem("accessToken", result.data.accessToken)
+      sessionStorage.setItem("accessToken", result.data.accessToken)
       navigate("/")
     } catch (error) {
       setFailCaption(error.response.data.detail);
     }
   }
 
-  return (<section className="main">
+  return (<section className="sign-up-main">
     <div className="sign-up">
       <Title>이메일로 로그인</Title>
       <form className="sign-up" onSubmit={submitLoginForm}>
