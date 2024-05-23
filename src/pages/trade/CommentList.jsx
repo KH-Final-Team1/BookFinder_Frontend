@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import { deleteComment, enrollComment, getComments, modifyComment } from "../../services/trade/comment";
+import { deleteComment, enrollComment, getComments, modifyComment } from "../../services/trade/commentAPI";
 import Button from "../../components/ui/Button";
 
 export default function CommentList({tradeId}) {
@@ -25,7 +25,6 @@ export default function CommentList({tradeId}) {
 
   const handleSubmitComment = async () => {
     const commentData = {
-      userId: 1,
       content: content,
       secretYn: getSecretValue(secret),
     };

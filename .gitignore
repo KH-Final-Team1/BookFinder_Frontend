@@ -23,3 +23,4 @@ yarn-debug.log*
 yarn-error.log*
 .idea
 BookFinder_Frontend.iml
+bookfinder.iml
