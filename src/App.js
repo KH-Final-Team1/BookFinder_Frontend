@@ -1,9 +1,9 @@
 import React from 'react';
 import './App.css';
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-import Header from "./components/Header";
+import Header from "./components/common/Header";
 import Main from "./pages/Main";
-import Footer from "./components/Footer";
+import Footer from "./components/common/Footer";
 import RequestBook from "./pages/RequestBook";
 import BookTradeList from "./pages/trade/BookTradeList";
 import BookTradeDetail from "./pages/trade/BookTradeDetail";
