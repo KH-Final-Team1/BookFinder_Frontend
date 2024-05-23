@@ -26,7 +26,7 @@ function App() {
           <Route path="/login/email" element={<EmailLogin/>}/>
           <Route path="/sign-up" element={<SignUp/>}/>
           <Route path="/trade/list" element={<BookTradeList />} />
-          <Route path={"/book/detail/:isbn"} element={<LibraryList />} />
+          <Route path="/book/detail/:isbn" element={<LibraryList />} />
           <Route path="/trade/:tradeId" element={<BookTradeDetail />} />
           <Route path="/trade/edit/:tradeId" element={<BookTradeEdit /> } />
           <Route path="/trade/edit" element={<BookTradeEdit /> } />
