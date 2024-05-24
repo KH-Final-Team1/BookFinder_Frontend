@@ -1,12 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "../components/ui/Button";
 import { searchBookList, updateBookStatus } from "../services/book/bookAPI";
+import { getUserRole } from "../services/auth/token";
 
 export default function RequestBookList() {
   const [keyword, setKeyword] = useState("");
   const [filter, setFilter] = useState("name");
   const [books, setBooks] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
+  const [userRole, setUserRole] = useState("");
+
+  useEffect(() => {
+    const token = sessionStorage.getItem("accessToken");
+    if (token) {
+      setUserRole(getUserRole);
+    }
+  }, []);
 
   const handleSearch = async () => {
     try {
@@ -35,14 +44,22 @@ export default function RequestBookList() {
   const handleApproval = async (isbn) => {
     const response = await updateBookStatus(isbn, "APPROVE");
     const message = response.data?.message || response.message;
-    alert(message);
+    if (message === undefined) {
+      alert("승인 및 거절은 관리자만 가능합니다.");
+    } else {
+      alert(message);
+    }
     await handleSearch();
   }
 
   const handleRejection = async (isbn) => {
     const response = await updateBookStatus(isbn, "REJECT");
     const message = response.data?.message || response.message;
-    alert(message);
+    if (message === undefined) {
+      alert("승인 및 거절은 관리자만 가능합니다.");
+    } else {
+      alert(message);
+    }
     await handleSearch();
   }
 
@@ -91,7 +108,7 @@ export default function RequestBookList() {
                     </p>
                     <p className="book-approvalStatus">
                       <span>요청 상태:</span>&nbsp;&nbsp; {approvalStatus}
-                      {book.approvalStatus === "WAIT" &&/*나중에 관리자만 승인 거절 버튼 보이게 처리할 예정*/(
+                      {userRole === "ROLE_ADMIN" && book.approvalStatus === "WAIT" && (
                           <div className="buttons">
                             <Button type={'submit'} className={'submit-button'} onClick={() => handleApproval(book.isbn)}>승인</Button>
                             <Button type={'submit'} className={'cancel-button'} onClick={() => handleRejection(book.isbn)}>거절</Button>
