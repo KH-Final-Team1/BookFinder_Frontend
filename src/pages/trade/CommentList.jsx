@@ -134,7 +134,9 @@ export default function CommentList({tradeId, tradeWriterId}) {
                                 <td>
                                   {!isModifying && editCommentId !== comment.id
                                       && (
-                                          <button>답글</button>
+                                          <>
+                                            {/*<button>답글</button>*/}
+                                          </>
                                       )}
                                 </td>
                                 <td className="delete-comment">
@@ -205,7 +207,9 @@ export default function CommentList({tradeId, tradeWriterId}) {
                           <tr>
                             <td>
                               {!isModifying && editCommentId !== comment.id && (
-                                  <button>답글</button>
+                                  <>
+                                    {/*<button>답글</button>*/}
+                                  </>
                               )}
                             </td>
                             <td className="delete-comment">
