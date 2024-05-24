@@ -1,21 +1,29 @@
 import {useEffect, useState} from "react";
-import { deleteComment, enrollComment, getComments, modifyComment } from "../../services/trade/commentAPI";
+import {
+  deleteComment,
+  enrollComment,
+  getComments,
+  modifyComment
+} from "../../services/trade/commentAPI";
 import Button from "../../components/ui/Button";
+import {getUserId} from "../../services/auth/token";
 
-export default function CommentList({tradeId}) {
+export default function CommentList({tradeId, tradeWriterId}) {
+  const loginUserId = getUserId();
   const [comments, setComments] = useState(null);
   const [error, setError] = useState(null);
   const [content, setContent] = useState("");
   const [secret, setSecret] = useState(false);
   const [isModifying, setIsModifying] = useState(false);
   const [editCommentId, setEditCommentId] = useState(null);
-  const getSecretValue = (isChecked) => { return isChecked ? 'Y' : 'N'; };
+	const getSecretValue = (isChecked) => { return isChecked ? 'Y' : 'N'; };
+
 
   useEffect(() => {
     const fetchComments = async () => {
       try {
-        const data = await getComments(tradeId);
-        setComments(data);
+        const commentList = await getComments(tradeId);
+        setComments(commentList);
       } catch (err) {
         setError("댓글을 불러오는데 실패했습니다.");
       }
@@ -89,10 +97,84 @@ export default function CommentList({tradeId}) {
             return (
                 <div key={comment.id}>
                   <div className={'comment-detail'}>
-                    {comment.secretYn === 'Y' ? (
-                        <tr>
-                          <td colSpan={2} className="content">비밀댓글입니다</td>
-                        </tr>
+                    {(comment.secretYn === 'Y') ? (
+                        (comment.user.commentWriterId !== loginUserId
+                            && tradeWriterId !== loginUserId) ? (
+                            <tr>
+                              <td colSpan={2} className="content">비밀댓글입니다</td>
+                            </tr>
+                        ) : (
+                            <>
+                              <tr>
+                                <td className="user-name">{comment.user.nickname} 🔒</td>
+                                <td className="create-date">{comment.createDate}</td>
+                              </tr>
+                              <tr>
+                                {isModifying && editCommentId === comment.id ? (
+                                    <td colSpan={2}>
+                                  <textarea
+                                      value={content}
+                                      onChange={(event) => setContent(
+                                          event.target.value)}
+                                  />
+                                      <div className={'select-secret'}>
+                                        <p>비밀댓글</p>
+                                        <input type="checkbox" checked={secret}
+                                               onChange={(event) => setSecret(
+                                                   event.target.checked)}/>
+                                      </div>
+                                    </td>
+                                ) : (
+                                    <td colSpan={2} className="content">
+                                      {comment.content}
+                                    </td>
+                                )}
+                              </tr>
+                              <tr>
+                                <td>
+                                  {!isModifying && editCommentId !== comment.id
+                                      && (
+                                          <button>답글</button>
+                                      )}
+                                </td>
+                                <td className="delete-comment">
+                                  {(loginUserId
+                                      === comment.user.commentWriterId) ?
+                                      (!isModifying || editCommentId
+                                          !== comment.id) ? (
+                                          <div>
+                                            <img
+                                                src={'https://cdn.icon-icons.com/icons2/2715/PNG/512/x_icon_172101.png'}
+                                                alt={'delete-icon'}
+                                                className={'delete-icon'}
+                                                onClick={() => handleDeleteComment(
+                                                    comment.id)}
+                                            />
+                                            <img
+                                                src={'https://cdn.icon-icons.com/icons2/2098/PNG/512/edit_icon_128873.png'}
+                                                className={'modify-icon'}
+                                                alt={'modify-icon'}
+                                                onClick={() => handleEditComment(
+                                                    comment.id,
+                                                    comment.content)}
+                                            />
+                                          </div>
+                                      ) : (
+                                          <div className={'modify-buttons'}>
+                                            <button
+                                                onClick={handleCancelEdit}>취소
+                                            </button>
+                                            <button
+                                                onClick={handleSubmitComment}>저장
+                                            </button>
+                                          </div>
+                                      ) : (
+																					<td></td>
+																			)}
+                                </td>
+                              </tr>
+                            </>
+                        )
                     ) : (
                         <>
                           <tr>
@@ -102,10 +184,11 @@ export default function CommentList({tradeId}) {
                           <tr>
                             {isModifying && editCommentId === comment.id ? (
                                 <td colSpan={2}>
-                        <textarea
-                            value={content}
-                            onChange={(event) => setContent(event.target.value)}
-                        />
+                                  <textarea
+                                      value={content}
+                                      onChange={(event) => setContent(
+																			event.target.value)}
+                                  />
                                   <div className={'select-secret'}>
                                     <p>비밀댓글</p>
                                     <input type="checkbox" checked={secret}
@@ -126,30 +209,36 @@ export default function CommentList({tradeId}) {
                               )}
                             </td>
                             <td className="delete-comment">
-                              {!isModifying || editCommentId !== comment.id ? (
-                                  <div>
-                                    <img
-                                        src={'https://cdn.icon-icons.com/icons2/2715/PNG/512/x_icon_172101.png'}
-                                        alt={'delete-icon'}
-                                        className={'delete-icon'}
-                                        onClick={() => handleDeleteComment(
-                                            comment.id)}
-                                    />
-                                    <img
-                                        src={'https://cdn.icon-icons.com/icons2/2098/PNG/512/edit_icon_128873.png'}
-                                        className={'modify-icon'}
-                                        alt={'modify-icon'}
-                                        onClick={() => handleEditComment(comment.id, comment.content)}
-                                    />
-                                  </div>
-                              ) : (
-                                  <div className={'modify-buttons'}>
-                                    <button onClick={handleCancelEdit}>취소
-                                    </button>
-                                    <button onClick={handleSubmitComment}>저장
-                                    </button>
-                                  </div>
-                              )}
+                              {(loginUserId === comment.user.commentWriterId) ?
+                                  (!isModifying || editCommentId !== comment.id)
+                                      ? (
+                                          <div>
+                                            <img
+                                                src={'https://cdn.icon-icons.com/icons2/2715/PNG/512/x_icon_172101.png'}
+                                                alt={'delete-icon'}
+                                                className={'delete-icon'}
+                                                onClick={() => handleDeleteComment(
+                                                    comment.id)}
+                                            />
+                                            <img
+                                                src={'https://cdn.icon-icons.com/icons2/2098/PNG/512/edit_icon_128873.png'}
+                                                className={'modify-icon'}
+                                                alt={'modify-icon'}
+                                                onClick={() => handleEditComment(
+                                                    comment.id,
+                                                    comment.content)}
+                                            />
+                                          </div>
+                                      ) : (
+                                          <div className={'modify-buttons'}>
+                                            <button onClick={handleCancelEdit}>취소
+                                            </button>
+                                            <button onClick={handleSubmitComment}>저장
+                                            </button>
+                                          </div>
+																			) : (
+																					<td></td>
+																	)}
                             </td>
                           </tr>
                         </>

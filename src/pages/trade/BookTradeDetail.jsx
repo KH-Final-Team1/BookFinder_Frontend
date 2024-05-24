@@ -119,7 +119,10 @@ export default function TradeDetails() {
               </div>
               <div className={'comment-area'}>
                 <h3>댓글</h3>
-                <CommentList tradeId={tradeId}/>
+                <CommentList
+                    tradeId={tradeId}
+                    tradeWriterId={trade.user.tradeWriterId}
+                />
               </div>
             </div>
         )}

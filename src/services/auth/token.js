@@ -11,3 +11,9 @@ export const getBoroughName = () => {
   const claims = jwtDecode(token);
   return claims.boroughName;
 }
+
+export const getUserId = () => {
+  const token = sessionStorage.getItem("accessToken");
+  const claims = jwtDecode(token);
+  return claims.id;
+}
