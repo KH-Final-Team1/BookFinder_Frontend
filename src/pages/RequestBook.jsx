@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from "react-router-dom";
+import React, {useState} from 'react';
+import {Link, useNavigate} from "react-router-dom";
+import {createBook} from "../services/book/bookAPI";
+import {fetchBookInfo} from "../services/book/booklibraryAPI";
 import Button from "../components/ui/Button";
-import { createBook } from "../services/book/bookAPI";
-import { fetchBookInfo } from "../services/book/booklibraryAPI";
 
 export default function RequestBook() {
   const [isbn, setIsbn] = useState('');
@@ -80,12 +80,12 @@ export default function RequestBook() {
             onChange={handleInputChange}
             onKeyPress={handleKeyPress}
         />
-        {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-        <hr />
+        {errorMessage && <p style={{color: 'red'}}>{errorMessage}</p>}
+        <hr/>
         {bookInfo && (
             <div className={'book'}>
               <div className={'book-img'}>
-                <img src={bookInfo.bookImageURL} alt="책 표지" />
+                <img src={bookInfo.bookImageURL} alt="책 표지"/>
               </div>
               <div className={'book-info'}>
                 <dl className={'book-title'}>

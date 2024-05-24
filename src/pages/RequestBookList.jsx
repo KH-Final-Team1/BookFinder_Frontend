@@ -1,17 +1,23 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import Button from "../components/ui/Button";
-import { searchBookList, updateBookStatus } from "../services/book/bookAPI";
+import {searchBookList, updateBookStatus} from "../services/book/bookAPI";
+import {getUserRole} from "../services/auth/token";
 
 export default function RequestBookList() {
   const [keyword, setKeyword] = useState("");
   const [filter, setFilter] = useState("name");
   const [books, setBooks] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
+  const [userRole, setUserRole] = useState("");
+
+  useEffect(() => {
+    const role = getUserRole();
+    setUserRole(role);
+  }, []);
 
   const handleSearch = async () => {
     try {
       const list = await searchBookList(filter, keyword);
-
       const sortedList = list.sort((a, b) => {
         const order = {'WAIT': 1, 'APPROVE': 2, 'REJECT': 3};
         return order[a.approvalStatus] - order[b.approvalStatus];
@@ -73,8 +79,8 @@ export default function RequestBookList() {
           {books.map(book => {
             const approvalStatus = book.approvalStatus === "WAIT"
                 ? "요청 대기 중" : book.approvalStatus === "REJECT"
-                ? "요청 거절" : book.approvalStatus === "APPROVE"
-                ? "요청 승인" : book.approvalStatus;
+                    ? "요청 거절" : book.approvalStatus === "APPROVE"
+                        ? "요청 승인" : book.approvalStatus;
 
             return (
                 <tr key={book.isbn}>
@@ -91,10 +97,12 @@ export default function RequestBookList() {
                     </p>
                     <p className="book-approvalStatus">
                       <span>요청 상태:</span>&nbsp;&nbsp; {approvalStatus}
-                      {book.approvalStatus === "WAIT" &&/*나중에 관리자만 승인 거절 버튼 보이게 처리할 예정*/(
+                      {userRole === "ROLE_ADMIN" && book.approvalStatus === "WAIT" && (
                           <div className="buttons">
-                            <Button type={'submit'} className={'submit-button'} onClick={() => handleApproval(book.isbn)}>승인</Button>
-                            <Button type={'submit'} className={'cancel-button'} onClick={() => handleRejection(book.isbn)}>거절</Button>
+                            <Button type={'submit'} className={'submit-button'}
+                                    onClick={() => handleApproval(book.isbn)}>승인</Button>
+                            <Button type={'submit'} className={'cancel-button'}
+                                    onClick={() => handleRejection(book.isbn)}>거절</Button>
                           </div>
                       )}
                     </p>
