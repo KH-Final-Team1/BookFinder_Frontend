@@ -17,6 +17,9 @@ import OAuth2SignUp from "./pages/auth/OAuth2SignUp";
 import OAuth2Login from "./pages/auth/OAuth2Login";
 import Error404 from "./pages/common/Error404";
 import PrivateRoute from "./components/common/PrivateRoute";
+import ErrorWithExistAuthorization from "./pages/auth/ErrorWithExistAuthorization";
+import SearchResult from "./pages/SearchResult";
+import LibraryList from "./pages/LibraryList";
 
 function App() {
   return (
@@ -24,6 +27,7 @@ function App() {
         <Header/>
         <Routes>
           <Route path="*" element={<Error404 />} />
+          <Route path="/error/403" element={<ErrorWithExistAuthorization/>}/>
           <Route path="/" element={<Main/>}/>
           {/*사용자 관련*/}
           <Route path="/sign-up" element={<SignUp/>}/>
@@ -31,6 +35,8 @@ function App() {
           <Route path="/login/email" element={<EmailLogin/>}/>
           <Route path="/oauth2/sign-up" element={<OAuth2SignUp/>}/>
           <Route path="/oauth2/login" element={<OAuth2Login/>}/>
+          {/*도서 검색 관련*/}
+          <Route path="/book/detail/:isbn" element={<LibraryList/>}/>
           {/*도서 요청 관련*/}
           <Route path="/requestBook" element={<RequestBook/>}/>
           <Route path="/requestBook/list" element={<RequestBookList />} />

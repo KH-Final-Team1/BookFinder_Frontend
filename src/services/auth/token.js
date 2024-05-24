@@ -17,3 +17,9 @@ export const getUserId = () => {
   const claims = jwtDecode(token);
   return claims.id;
 }
+
+export const getUserRole = () => {
+  const token = sessionStorage.getItem("accessToken");
+  const claims = jwtDecode(token);
+  return claims.auth;
+}
