@@ -1,9 +1,9 @@
 /* 사용자간 대출 목록*/
 .book-trades { display: flex; align-items: center; height: 90vh; flex-direction: column; margin-top: 50px; } 
 .book-trades .link { text-decoration: none; color: inherit; } 
-.book-trades hr { border: solid 1px #a4a4a4; width: 350px; margin: 8px 0 70px 0; } 
-.noTrade { display: flex; flex-direction: column; justify-content: center; align-items: center; height: 50vh; /* 화면 높이 전체를 차지하도록 설정 */}
-.submit-button { margin-top: 10px; width: 160px; height: 60px; font-size: 24px; }
+.book-trades hr { border: solid 1px #a4a4a4; width: 350px; margin: 8px 0 70px 0; }
+.book-trades .noTrade { display: flex; flex-direction: column; justify-content: center; align-items: center; height: 50vh; /* 화면 높이 전체를 차지하도록 설정 */}
+.book-trades .submit-button { margin-top: 10px; width: 160px; height: 60px; font-size: 24px; }
 .book-trades .go-write-page { position: relative } 
 .book-trades .write-button { position: absolute; right: -450px; top: -55px; } 
 .book-trades .write-button Button { width: 90px; height: 42px; font-size: 18px; }
