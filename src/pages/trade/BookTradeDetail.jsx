@@ -8,8 +8,10 @@ import {
 } from "../../services/trade/tradeAPI";
 import {viewMap} from "../../services/kakao/kakaoMap";
 import CommentList from "./CommentList";
+import {getUserId} from "../../services/auth/token";
 
 export default function TradeDetails() {
+  const loginUserId = getUserId();
   const { tradeId } = useParams();
   const [trade, setTrade] = useState(null);
   const [addressInfo, setAddressInfo] = useState('');
@@ -110,11 +112,15 @@ export default function TradeDetails() {
                   <div className={'trade-type'}>거래완료</div>
                 </div>
                 <div className={'buttons'}>
-                  <Button type={'submit'}
-                          className={'cancel-button'}
-                          onClick={handleEditClick}>수정</Button>
-                  <Button className={'submit-button'}
-                          onClick={deleteTradeClick}>삭제</Button>
+                  {loginUserId === trade.user.tradeWriterId && (
+                    <>
+                      <Button type={'submit'}
+                              className={'cancel-button'}
+                              onClick={handleEditClick}>수정</Button>
+                      <Button className={'submit-button'}
+                              onClick={deleteTradeClick}>삭제</Button>
+                    </>
+                  )}
                 </div>
               </div>
               <div className={'comment-area'}>
