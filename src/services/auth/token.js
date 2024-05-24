@@ -1,8 +1,13 @@
 import {jwtDecode} from "jwt-decode";
 
-const token = sessionStorage.getItem("accessToken");
-const claims = jwtDecode(token);
-
 export const getBoroughId = () => {
+  const token = sessionStorage.getItem("accessToken");
+  const claims = jwtDecode(token);
   return claims.boroughId;
+}
+
+export const getBoroughName = () => {
+  const token = sessionStorage.getItem("accessToken");
+  const claims = jwtDecode(token);
+  return claims.boroughName;
 }
