@@ -1,0 +1,24 @@
+.search-isbn {display: flex; justify-content: center; align-items: center; height: 135vh; flex-direction: column; }
+.search-isbn .input-isbn { margin-bottom: 30px; width: 250px; height: 40px; font-size: 24px; border: none; border-bottom: 2px solid black; text-align:center; padding-left: 15px}
+.search-isbn .result-list { width: 100%; max-width: 800px; margin-top: 20px; }
+.search-isbn .result-list .book { display: flex; justify-content: center; flex-direction: row; }
+.search-isbn .result-list .book img { width: 200px; height: 270px; }
+.search-isbn .result-list .book .book-info { padding-left: 20px; font-size: larger; }
+.search-isbn .result-list .book dl { display: flex; justify-content: space-between; margin: 5px 0;}
+.search-isbn .result-list .book dl dt, dd { margin: 0; }
+.search-isbn .result-list .book dl dt { flex: 0 0 120px; text-align: left; }
+.search-isbn .result-list .book dl dd { flex: 1; max-width: 55ch; text-align: left; margin: 0 0 15px 0; padding: 0; white-space: normal; word-wrap: break-word; }
+
+.search-isbn .result-list .libraries {margin-top: 20px; }
+.search-isbn .result-list .libraries p { font-size: x-large; }
+.search-isbn .result-list .libraries .sort-select { width: 75px; height: 30px; font-size: larger; text-align: center; }
+.search-isbn .result-list .libraries .libResult { width: 700px; height: 700px; }
+.search-isbn .result-list .libraries .libResult .library-list .library-detail { list-style: none; }
+.search-isbn .result-list .libraries .libResult .library-list .library-detail hr { width: 100%; border: dashed #a4a4a4 thin; margin: 20px 0; }
+.search-isbn .result-list .libraries .libResult .library-list .library-detail .library dl { display: flex; justify-content: space-between; margin: 10px 0;}
+.search-isbn .result-list .libraries .libResult .library-list .library-detail .library dl dt, dd { margin: 0; }
+.search-isbn .result-list .libraries .libResult .library-list .library-detail .library dl dt { flex: 0 0 70px; text-align: left; }
+.search-isbn .result-list .libraries .libResult .library-list .library-detail .library dl dd { flex: 1; max-width: 55ch; text-align: left; white-space: normal; word-wrap: break-word; }
+.search-isbn .result-list .libraries .libResult .library-list .library-detail .library dl dd a { color: black; }
+.search-isbn .result-list .libraries .libResult .library-list .library-detail .library dl dd button { width: 105px; height: 35px; background-color: white; border: black 2px solid; font-size: 16px; color: black; cursor: pointer; }
+.search-isbn .result-list .libraries .libResult .library-list .library-detail .library dl .loan { height: 35px; }
