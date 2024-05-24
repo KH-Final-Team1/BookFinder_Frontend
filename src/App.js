@@ -36,7 +36,7 @@ function App() {
           <Route path="/oauth2/sign-up" element={<OAuth2SignUp/>}/>
           <Route path="/oauth2/login" element={<OAuth2Login/>}/>
           {/*도서 검색 관련*/}
-          <Route path="/detail/:isbn" element={<LibraryList/>}/>
+          <Route path="/book/detail/:isbn" element={<LibraryList/>}/>
           {/*도서 요청 관련*/}
           <Route path="/requestBook" element={<RequestBook/>}/>
           <Route path="/requestBook/list" element={<RequestBookList />} />
