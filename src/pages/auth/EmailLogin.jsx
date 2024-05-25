@@ -35,7 +35,7 @@ export default function EmailLogin() {
     }
   }
 
-  return (<section className="sign-up-main">
+  return (<section className="auth-main">
     <div className="sign-up">
       <Title>이메일로 로그인</Title>
       <form className="sign-up" onSubmit={submitLoginForm}>
