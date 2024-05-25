@@ -9,6 +9,8 @@ const AUTH_EMAIL = "/email"
 const VERIFICATION_CODE = "/verification-code";
 const LOGIN = "/api/v1/login"
 const _403Error = "로그인 한 상태에서는 불가능한 API 요청입니다."
+const MY_INFO = "/api/v1/users/my-info"
+const NOT_AUTHORIZATION = "로그인 후 이용해주세요."
 export const requestDuplicate = async (field) => {
   if (sessionStorage.getItem("accessToken")) {
     throw _403Error;
@@ -118,6 +120,20 @@ export const requestLogin = async (fields) => {
   }
   try {
     const response = await axios.post(BASE_URL + LOGIN, data);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export const requestMyInfo = async () => {
+  if (!sessionStorage.getItem("accessToken")) {
+    throw NOT_AUTHORIZATION;
+  }
+  try {
+    const response = await axios.get(BASE_URL + MY_INFO, {
+      headers: {Authorization: "Bearer " + sessionStorage.getItem("accessToken")}
+    });
     return response;
   } catch (error) {
     throw error;
