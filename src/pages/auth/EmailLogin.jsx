@@ -29,7 +29,7 @@ export default function EmailLogin() {
     try {
       let result = await requestLogin(fields);
       sessionStorage.setItem("accessToken", result.data.accessToken)
-      navigate("/")
+      window.location.href ="/"
     } catch (error) {
       setFailCaption(error.response.data.detail);
     }

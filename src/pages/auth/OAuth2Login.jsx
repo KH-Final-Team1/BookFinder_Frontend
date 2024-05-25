@@ -9,7 +9,7 @@ export default function OAuth2Login() {
       try {
         let result = await requestAccessTokenForOAuth2Login();
         sessionStorage.setItem("accessToken", result.data.accessToken);
-        navigate("/")
+        window.location.href = "/"
       } catch (error) {
         console.log(error)
       }
