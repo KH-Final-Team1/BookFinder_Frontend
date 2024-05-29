@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 
-export default function PriceInput({ value, onChange }) {
+export default function PriceInput({ value, onChange, onFreeChange }) {
+  const [isFree, setIsFree] = useState(false);
+
   const formattedValue = value
       ? `₩ ${value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`
       : "";
@@ -15,12 +17,32 @@ export default function PriceInput({ value, onChange }) {
     }
   };
 
+  const handleCheckboxChange = (event) => {
+    const checked = event.target.checked;
+    setIsFree(checked);
+    if (checked) {
+      onChange(0);
+    }
+    onFreeChange(checked);
+  };
+
   return (
-      <input
-          className={"trade-price"}
-          placeholder={"금액을 입력해주세요"}
-          value={formattedValue}
-          onChange={handleChange}
-      />
+      <div className={'input-price'}>
+        <input
+            className={"trade-price"}
+            placeholder={"금액을 입력해주세요"}
+            value={isFree ? "₩ 0" : formattedValue}
+            onChange={handleChange}
+            disabled={isFree}
+        />
+        <div className={'free-field'}>
+          <input
+              type={"checkbox"}
+              checked={isFree}
+              onChange={handleCheckboxChange}
+          />{" "}
+          <div>무료</div>
+        </div>
+      </div>
   );
 }
