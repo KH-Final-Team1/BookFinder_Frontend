@@ -106,6 +106,7 @@
 .trade-edit .trade .borrow-active { font-size: 18px; border-radius: 18px; background-color: black; color: white; padding: 5px 13px 2px 13px; } 
 .trade-edit .trade .trade-price { width: 150px; padding: 10px; font-size: 16px; box-sizing: border-box; border: none; border-bottom: 2px solid black; outline: none; margin-bottom: 20px; text-align: right; margin-right: 10px; }
 .trade-edit .trade .trade-content { resize: none; width: 100%; padding: 15px; font-size: 16px; box-sizing: border-box; border: 2px solid black; outline: none; border-radius: 10px; margin-bottom: 20px; } 
-.trade-edit .map-area { height: 300px; width: 100%; margin: 10px 0 40px 0; } 
-.trade-edit .buttons { float: right; margin-bottom: 30px; } 
+.trade-edit .map-area { height: 300px; width: 100%; margin: 10px 0 40px 0; display: flex; align-items: center; justify-content: center; position: relative; }
+.trade-edit .map-area .location-error { text-align: center; font-size: 24px; }
+.trade-edit .buttons { float: right; margin-bottom: 30px; }
 /*사용자간 대출 글작성*/

@@ -28,7 +28,7 @@ export default function TradeDetails() {
       const result = await getTrade(tradeId);
       setTrade(result);
       setTradeComplete(result.tradeYn === 'Y');
-    }
+    };
     fetchData();
   }, [tradeId]);
 
@@ -53,7 +53,7 @@ export default function TradeDetails() {
   };
 
   useEffect(() => {
-    if (trade) {
+    if (trade && trade.latitude && trade.longitude) {
       const handleResize = () => {
         viewMap(trade, mapRef, setAddressInfo);
       };
@@ -63,6 +63,8 @@ export default function TradeDetails() {
       return () => {
         window.removeEventListener('resize', handleResize);
       };
+    } else if (trade) {
+      setAddressInfo('거래 위치를 등록하지 않았습니다.');
     }
   }, [trade, mapRef, setAddressInfo]);
 
@@ -105,28 +107,32 @@ export default function TradeDetails() {
                 </div>
               </div>
               <h3>거래 희망 위치</h3>
-              <div id="map" className={'map-area'}></div>
-              <p>{addressInfo}</p>
+              {trade.latitude && trade.longitude ? (
+                  <>
+                    <div id="map" className={'map-area'}></div>
+                    <p>{addressInfo}</p>
+                  </>
+              ) : (
+                  <p>거래 위치를 등록하지 않았습니다.</p>
+              )}
               <div className={'login-user-field'}>
                 <div className={'change-trade-type'}>
-                  <input
-                      type="checkbox"
-                      id="tradeComplete"
-                      checked={tradeComplete}
-                      onChange={handleChangeTradeType} />
-                  <label className="custom-checkbox" htmlFor="tradeComplete"></label>
+                  <input type="checkbox"
+                         id="tradeComplete"
+                         checked={tradeComplete}
+                         onChange={handleChangeTradeType} />
+                  <label className="custom-checkbox"
+                         htmlFor="tradeComplete"></label>
                   <div className={'trade-type'}>거래완료</div>
                 </div>
                 <div className={'buttons'}>
                   {loginUserId === trade.user.tradeWriterId && (
                       <>
-                        <Button
-                            type={'submit'}
-                            className={'cancel-button'}
-                            onClick={handleEditClick}>수정</Button>
-                        <Button
-                            className={'submit-button'}
-                            onClick={deleteTradeClick}>삭제</Button>
+                        <Button type={'submit'}
+                                className={'cancel-button'}
+                                onClick={handleEditClick}>수정</Button>
+                        <Button className={'submit-button'}
+                                onClick={deleteTradeClick}>삭제</Button>
                       </>
                   )}
                 </div>
