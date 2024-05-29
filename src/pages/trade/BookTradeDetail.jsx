@@ -16,8 +16,10 @@ export default function TradeDetails() {
   const [trade, setTrade] = useState(null);
   const [addressInfo, setAddressInfo] = useState('');
   const [tradeComplete, setTradeComplete] = useState(false);
+  const alertShown = useRef(false);
   const mapRef = useRef(null);
   const navigate = useNavigate();
+
 
   const handleEditClick = () => {
     navigate(`/trade/edit/${tradeId}`);
@@ -25,12 +27,25 @@ export default function TradeDetails() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const result = await getTrade(tradeId);
-      setTrade(result);
-      setTradeComplete(result.tradeYn === 'Y');
+      try {
+        const result = await getTrade(tradeId);
+        setTrade(result);
+        setTradeComplete(result.tradeYn === 'Y');
+      } catch (error) {
+        if (error.response && error.response.status === 404) {
+          const detail = error.response.data.detail || '';
+          if(!alertShown.current) {
+            alertShown.current = true;
+            alert(`${detail}`);
+          }
+          navigate('/trade/list');
+        } else {
+          console.error('An unexpected error occurred:', error);
+        }
+      }
     };
     fetchData();
-  }, [tradeId]);
+  }, [tradeId, navigate]);
 
   const deleteTradeClick = async () => {
     const result = await deleteTrade(tradeId);
