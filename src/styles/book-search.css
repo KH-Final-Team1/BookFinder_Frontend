@@ -14,6 +14,6 @@
 .noResult h4 { color: #a4a4a4; }
 .noResult hr { border: solid 1px #a4a4a4; width: 500px; }
 .noResult .buttons { display: flex; }
-.noResult .buttons button {font-size: 20px;}
-.noResult .buttons .requestISBN { width: 200px; height: 60px; border-radius: 10px; background-color: #FFE872; border: #FFE872; }
-.noResult .buttons .request { background-color: #ADD8FF; border: #ADD8FF; }
+.noResult .buttons button { margin: 20px; font-size: 20px;}
+.noResult .buttons .searchISBN { width: 200px; height: 60px; border-radius: 10px; background-color: #FFE872; border: #FFE872; }
+.noResult .buttons .request { width: 200px; height: 60px; border-radius: 10px; background-color: #ADD8FF; border: #ADD8FF; }

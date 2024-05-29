@@ -2,7 +2,7 @@ import React, {useEffect, useRef, useState} from "react";
 import Button from "../components/ui/Button";
 import {fetchBookInfo, getLibraryList, loanBook} from "../services/book/booklibraryAPI";
 
-export default function SearchByISBN (){
+export default function SearchByISBN() {
   const [isbn, setIsbn] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [bookDetail, setBookDetail] = useState(null);
@@ -10,7 +10,6 @@ export default function SearchByISBN (){
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [loanStatus, setLoanStatus] = useState({});
-  const isInitialLoad = useRef(true);
   const loader = useRef(null);
 
   const handleInputChange = (event) => {
@@ -26,39 +25,33 @@ export default function SearchByISBN (){
     setBookDetail(null);
   }
   const handleKeyPress = (event) => {
-    if(event.key === 'Enter') {
+    if (event.key === 'Enter') {
       getBookDetail();
+      setIsbn("")
       setPage(1);
-      setLibList([]);
-      initLibraryList(1);
+      initLibraryList();
     }
   }
 
   const handleObserver = (entries) => {
     const target = entries[0];
-    if(target.isIntersecting && !isInitialLoad.current && !isLoading) {
+    if (target.isIntersecting && !isLoading) {
       setPage(prevState => prevState + 1);
     }
   }
-
   useEffect(() => {
     const observer = new IntersectionObserver(handleObserver, {threshold: 1});
-    if(loader.current) {
+    if (loader.current) {
       observer.observe(loader.current);
     }
     return () => {
-      if(loader.current) {
+      if (loader.current) {
         observer.unobserve(loader.current);
       }
     }
-  }, []);
+  }, [loader.current])
 
-  useEffect( () => {
-    console.log(page)
-    if(isInitialLoad.current) {
-      isInitialLoad.current = false;
-      return;
-    }
+  useEffect(() => {
     initLibraryList();
   }, [page]);
 
@@ -75,6 +68,9 @@ export default function SearchByISBN (){
   };
 
   const initLibraryList = async () => {
+    if (isbn.length !== 13) {
+      return;
+    }
     setIsLoading(true);
     try {
       const libInfo = await getLibraryList(isbn, page);
@@ -89,7 +85,7 @@ export default function SearchByISBN (){
 
   const loanAvailable = async (libCode) => {
     const loanInfo = await loanBook(libCode, isbn);
-    if(loanInfo.response.result.loanAvailable === 'Y') {
+    if (loanInfo.response.result.loanAvailable === 'Y') {
       setLoanStatus((prevStatus) => ({...prevStatus, [libCode]: "대출 가능"}));
     } else {
       setLoanStatus((prevState) => ({...prevState, [libCode]: "대출 불가능"}));
@@ -106,7 +102,6 @@ export default function SearchByISBN (){
             onKeyPress={handleKeyPress}
         />
         {errorMessage && <p style={{color: 'red'}}>{errorMessage}</p>}
-        <hr />
         {bookDetail && (
             <div className={'result-list'}>
               <div className={'book'}>
@@ -135,8 +130,8 @@ export default function SearchByISBN (){
                   </dl>
                 </div>
               </div>
+              <hr/>
               <div className={'libraries'}>
-                {/*<p>전체 {libList.length}건</p>*/}
                 <select className={'sort-select'}>
                   <option>이름순</option>
                   <option>거리순</option>
