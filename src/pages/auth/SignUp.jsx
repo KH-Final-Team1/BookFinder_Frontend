@@ -8,7 +8,7 @@ export default function SignUp() {
     return <Navigate to="/error/403" replace/>
   }
   return (
-      <section className="sign-up-main">
+      <section className="auth-main">
         <Back/>
         <Title>회원가입</Title>
         <SignUpForm/>

@@ -15,7 +15,8 @@ export default function TradeDetails() {
   const { tradeId } = useParams();
   const [trade, setTrade] = useState(null);
   const [addressInfo, setAddressInfo] = useState('');
-  const mapRef = useRef(null); // Ref to store the map instance
+  const [tradeComplete, setTradeComplete] = useState(false);
+  const mapRef = useRef(null);
   const navigate = useNavigate();
 
   const handleEditClick = () => {
@@ -26,6 +27,7 @@ export default function TradeDetails() {
     const fetchData = async () => {
       const result = await getTrade(tradeId);
       setTrade(result);
+      setTradeComplete(result.tradeYn === 'Y');
     };
     fetchData();
   }, [tradeId]);
@@ -38,12 +40,15 @@ export default function TradeDetails() {
   };
 
   const handleChangeTradeType = async (event) => {
-    const tradeYn = event.target.checked ? 'Y' : 'N';
+    const newTradeComplete = event.target.checked;
+    setTradeComplete(newTradeComplete);
+    const tradeYn = newTradeComplete ? 'Y' : 'N';
     const success = await changeTradeType(tradeId, { tradeYn });
     if (success) {
       alert('거래 상태가 변경되었습니다.');
     } else {
       alert('거래 상태 변경 중 오류가 발생했습니다.');
+      setTradeComplete(!newTradeComplete);
     }
   };
 
@@ -80,7 +85,7 @@ export default function TradeDetails() {
                   </div>
                 </div>
                 <div className="write-date">
-                  {trade.createdDate}
+                  {trade.createDate}
                 </div>
               </div>
               <div className="book-info">
@@ -112,7 +117,9 @@ export default function TradeDetails() {
               )}
               <div className={'login-user-field'}>
                 <div className={'change-trade-type'}>
-                  <input type="checkbox" id="tradeComplete"
+                  <input type="checkbox"
+                         id="tradeComplete"
+                         checked={tradeComplete}
                          onChange={handleChangeTradeType} />
                   <label className="custom-checkbox"
                          htmlFor="tradeComplete"></label>
