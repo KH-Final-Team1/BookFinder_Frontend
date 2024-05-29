@@ -78,7 +78,7 @@ export default function TradeDetails() {
                   </div>
                 </div>
                 <div className="write-date">
-                  {trade.createdDate}
+                  {trade.createDate}
                 </div>
               </div>
               <div className="book-info">

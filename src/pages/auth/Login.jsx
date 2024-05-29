@@ -7,7 +7,7 @@ export default function Login() {
   if (sessionStorage.getItem("accessToken")) {
     return <Navigate to="/error/403" replace/>
   }
-  return (<section className="sign-up-main">
+  return (<section className="auth-main">
     <Title>간편하게 로그인 하세요.</Title>
     <div>
       회원이 되어 회원 간 대출 서비스를 이용해 보세요.

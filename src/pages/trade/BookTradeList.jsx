@@ -81,7 +81,7 @@ export default function BookTradeList() {
 											</p>
 											<div>
 												<p className='trade-yn'>{tradeYn}</p>
-												<p className="create-date">{trade.createdDate}</p>
+												<p className="create-date">{trade.createDate}</p>
 											</div>
 										</td>
 									</tr>
