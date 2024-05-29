@@ -35,7 +35,7 @@ function App() {
           <Route path="/login/email" element={<EmailLogin/>}/>
           <Route path="/oauth2/sign-up" element={<OAuth2SignUp/>}/>
           <Route path="/oauth2/login" element={<OAuth2Login/>}/>
-          <Route path="/mypage" element={<MyPage/>}/>
+          <Route path="/mypage" element={<PrivateRoute element={MyPage}/>}/>
           {/*도서 검색 관련*/}
           <Route path="/book/detail/:isbn" element={<LibraryList/>}/>
           {/*도서 요청 관련*/}
