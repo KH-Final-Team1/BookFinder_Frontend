@@ -26,10 +26,8 @@ export default function SearchByISBN() {
   }
   const handleKeyPress = (event) => {
     if (event.key === 'Enter') {
-      getBookDetail();
-      setIsbn("")
       setPage(1);
-      initLibraryList();
+      getBookDetail();
     }
   }
 
@@ -52,7 +50,9 @@ export default function SearchByISBN() {
   }, [loader.current])
 
   useEffect(() => {
-    initLibraryList();
+    if (isbn.length === 13) {
+      initLibraryList();
+    }
   }, [page]);
 
   const getBookDetail = async () => {
@@ -60,6 +60,9 @@ export default function SearchByISBN() {
       const bookInfo = await fetchBookInfo(isbn);
       if (bookInfo.response.detail) {
         setBookDetail(bookInfo.response.detail[0].book);
+        setLibList([]);
+        setLoanStatus({});
+        await initLibraryList(1, true);
       } else {
         setErrorMessage('유효하지 않은 ISBN 번호입니다.');
         setBookDetail(null);
@@ -74,9 +77,7 @@ export default function SearchByISBN() {
     setIsLoading(true);
     try {
       const libInfo = await getLibraryList(isbn, page);
-      const list = libList;
-      list.push(...libInfo.response.libs);
-      setLibList(list);
+      setLibList((prevList) => [...prevList, ...libInfo.response.libs]);
     } catch (error) {
       console.log(error);
     }
