@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Button from "../../components/ui/Button";
 import { useParams, useNavigate } from 'react-router-dom';
 import {
@@ -6,26 +6,28 @@ import {
   deleteTrade,
   getTrade
 } from "../../services/trade/tradeAPI";
-import {viewMap} from "../../services/kakao/kakaoMap";
+import { viewMap } from "../../services/kakao/kakaoMap";
 import CommentList from "./CommentList";
-import {getUserId} from "../../services/auth/token";
+import { getUserId } from "../../services/auth/token";
 
 export default function TradeDetails() {
   const loginUserId = getUserId();
   const { tradeId } = useParams();
   const [trade, setTrade] = useState(null);
   const [addressInfo, setAddressInfo] = useState('');
-  const mapRef = useRef(null); // Ref to store the map instance
+  const [tradeComplete, setTradeComplete] = useState(false);
+  const mapRef = useRef(null);
   const navigate = useNavigate();
 
   const handleEditClick = () => {
     navigate(`/trade/edit/${tradeId}`);
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     const fetchData = async () => {
       const result = await getTrade(tradeId);
       setTrade(result);
+      setTradeComplete(result.tradeYn === 'Y');
     }
     fetchData();
   }, [tradeId]);
@@ -38,12 +40,15 @@ export default function TradeDetails() {
   };
 
   const handleChangeTradeType = async (event) => {
-    const tradeYn = event.target.checked ? 'Y' : 'N';
+    const newTradeComplete = event.target.checked;
+    setTradeComplete(newTradeComplete);
+    const tradeYn = newTradeComplete ? 'Y' : 'N';
     const success = await changeTradeType(tradeId, { tradeYn });
     if (success) {
       alert('거래 상태가 변경되었습니다.');
     } else {
       alert('거래 상태 변경 중 오류가 발생했습니다.');
+      setTradeComplete(!newTradeComplete);
     }
   };
 
@@ -71,7 +76,7 @@ export default function TradeDetails() {
                   <div className="user-img">
                     <img
                         src="https://cdn-icons-png.flaticon.com/512/44/44463.png"
-                        alt="Writer Icon"/>
+                        alt="Writer Icon" />
                   </div>
                   <div className={'user-name'}>
                     {trade.user.nickname}
@@ -84,9 +89,9 @@ export default function TradeDetails() {
               <div className="book-info">
                 <div className="book-img-area">
                   <div className="img-background"
-                       style={{backgroundImage: `url(${trade.book.imageUrl})`}}/>
-                  <div className="background-shadow"/>
-                  <img src={trade.book.imageUrl} alt={trade.book.name}/>
+                       style={{ backgroundImage: `url(${trade.book.imageUrl})` }} />
+                  <div className="background-shadow" />
+                  <img src={trade.book.imageUrl} alt={trade.book.name} />
                 </div>
               </div>
               <div className={'trade-price'}>
@@ -102,24 +107,27 @@ export default function TradeDetails() {
               <h3>거래 희망 위치</h3>
               <div id="map" className={'map-area'}></div>
               <p>{addressInfo}</p>
-              {/*로그인한 사용자가 글 작성자와 일치할 경우에만 보이도록 수정 예정*/}
               <div className={'login-user-field'}>
                 <div className={'change-trade-type'}>
-                  <input type="checkbox" id="tradeComplete"
-                         onChange={handleChangeTradeType}/>
-                  <label className="custom-checkbox"
-                         htmlFor="tradeComplete"></label>
+                  <input
+                      type="checkbox"
+                      id="tradeComplete"
+                      checked={tradeComplete}
+                      onChange={handleChangeTradeType} />
+                  <label className="custom-checkbox" htmlFor="tradeComplete"></label>
                   <div className={'trade-type'}>거래완료</div>
                 </div>
                 <div className={'buttons'}>
                   {loginUserId === trade.user.tradeWriterId && (
-                    <>
-                      <Button type={'submit'}
-                              className={'cancel-button'}
-                              onClick={handleEditClick}>수정</Button>
-                      <Button className={'submit-button'}
-                              onClick={deleteTradeClick}>삭제</Button>
-                    </>
+                      <>
+                        <Button
+                            type={'submit'}
+                            className={'cancel-button'}
+                            onClick={handleEditClick}>수정</Button>
+                        <Button
+                            className={'submit-button'}
+                            onClick={deleteTradeClick}>삭제</Button>
+                      </>
                   )}
                 </div>
               </div>
