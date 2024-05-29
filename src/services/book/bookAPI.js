@@ -1,15 +1,15 @@
 import axios from 'axios';
 
-export const searchBookList = async (filter, keyword, approvalStatus) => {
+export const searchBookList = async (filter, keyword, approvalStatus, page) => {
   try {
-    const response = await axios.get(`http://localhost:8080/api/v1/books/list`,
-        {
+    const response = await axios.get(`http://localhost:8080/api/v1/books/list`, {
           params: {
             filter: filter,
             keyword: keyword,
-            approvalStatus: approvalStatus
+            approvalStatus: approvalStatus,
+            page: page
           }
-        })
+        });
     return response.data;
   } catch (error) {
     throw error
