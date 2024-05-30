@@ -11,8 +11,10 @@ import {useParams, useNavigate} from "react-router-dom";
 import BookInfo from "../../components/trade/BookInfo";
 import PriceInput from "../../components/trade/PriceInput";
 import BookInput from "../../components/trade/BookInput";
+import {getUserId} from "../../services/auth/token";
 
 export default function BookTradeEdit() {
+	const loginUserId = getUserId();
 	const {tradeId} = useParams();
 	const [trade, setTrade] = useState(null);
 	const alertShownRef = useRef(false);
@@ -42,21 +44,38 @@ export default function BookTradeEdit() {
 							navigate('/trade/edit');
 						}
 					} else {
-						console.log(fetchedTrade)
-						setTrade(fetchedTrade);
-						setISBN(fetchedTrade.book.isbn);
-						setTradeType(fetchedTrade.tradeType);
-						setRentalCost(fetchedTrade.rentalCost);
-						setLimitedDate(fetchedTrade.limitedDate);
-						setContent(fetchedTrade.content);
-						setNewLatitude(fetchedTrade.latitude);
-						setNewLongitude(fetchedTrade.longitude);
+						if(fetchedTrade.deleteYn === 'N'){
+							if(loginUserId === fetchedTrade.user.tradeWriterId) {
+								console.log(fetchedTrade)
+								setTrade(fetchedTrade);
+								setISBN(fetchedTrade.book.isbn);
+								setTradeType(fetchedTrade.tradeType);
+								setRentalCost(fetchedTrade.rentalCost);
+								setLimitedDate(fetchedTrade.limitedDate);
+								setContent(fetchedTrade.content);
+								setNewLatitude(fetchedTrade.latitude);
+								setNewLongitude(fetchedTrade.longitude);
+							} else {
+								if (!alertShownRef.current) {
+									alertShownRef.current = true;
+									alert('게시글 수정은 작성자만 가능합니다.');
+									navigate('/trade/list');
+								}
+							}
+						} else {
+							if (!alertShownRef.current) {
+								alertShownRef.current = true;
+								alert('삭제된 게시물 입니다.');
+								navigate('/trade/list');
+							}
+						}
 					}
 				} catch (error) {
 					console.error('Failed to fetch trade:', error);
+					const detail = error.response.data.detail
 					if (!alertShownRef.current) {
 						alertShownRef.current = true;
-						alert('거래 정보를 불러오는데 실패했습니다');
+						alert(`${detail}`);
 						navigate('/trade/edit');
 					}
 				}
@@ -124,8 +143,6 @@ export default function BookTradeEdit() {
 			}
 		} catch (error) {
 			console.error('Failed to fetch trade:', error);
-			alert('거래 정보를 불러오는데 실패했습니다');
-			navigate('/trade/edit');
 		}
 	};
 
@@ -209,7 +226,8 @@ export default function BookTradeEdit() {
 					<div id="map" className={'map-area'}>
 						{locationError && (
 								<div className="location-error">
-									위치 정보를 불러올 수 없습니다. 액세스를 허용해주세요.
+									위치 정보를 불러올 수 없습니다.<br/>
+									액세스를 허용해주세요.
 								</div>
 						)}
 					</div>

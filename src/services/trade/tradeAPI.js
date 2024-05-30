@@ -17,13 +17,15 @@ export const deleteTrade = async (tradeId) => {
 };
 
 export const getTrade = async (tradeId) => {
-  return await axios.get(`http://localhost:8080/api/v1/trades/${tradeId}`,
-      {headers: {'Authorization': `Bearer ${sessionStorage.getItem("accessToken")}`}})
-  .then(response => {
+  try {
+    const response
+        = await axios.get(`http://localhost:8080/api/v1/trades/${tradeId}`,
+        {headers: { 'Authorization': `Bearer ${sessionStorage.getItem("accessToken")}`}});
     return response.data;
-  })
-  .catch(error => console.error("게시물을 불러오는 중 오류가 발생했습니다.:", error));
-}
+  } catch (error) {
+    throw error;
+  }
+};
 
 export const getTrades = async (boroughId) => {
   return await axios.get(`http://localhost:8080/api/v1/trades/list/${boroughId}`,
