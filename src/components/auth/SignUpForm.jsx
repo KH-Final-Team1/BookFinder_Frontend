@@ -57,7 +57,7 @@ export default function SignUpForm() {
         signingToken = await requestAuthEmail(fields.email.value);
       }
     } catch (error) {
-      updateFields("email", {valid: false, caption: error.response.data.details.email, duplicate: true})
+      updateFields("email", {valid: false, caption: error.response.data.detail, duplicate: true})
     }
   }
   const handleAuthCodeCheck = async () => {
@@ -75,7 +75,7 @@ export default function SignUpForm() {
         updateFields("nickname", {disabled: true})
       }
     } catch (error) {
-      updateFields("nickname", {valid: false, caption: error.response.data.details.nickname, duplicate: true})
+      updateFields("nickname", {valid: false, caption: error.response.data.detail, duplicate: true})
     }
   }
   const handleAddress = () => {

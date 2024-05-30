@@ -18,8 +18,8 @@ import OAuth2Login from "./pages/auth/OAuth2Login";
 import Error404 from "./pages/common/Error404";
 import PrivateRoute from "./components/common/PrivateRoute";
 import ErrorWithExistAuthorization from "./pages/auth/ErrorWithExistAuthorization";
-import SearchResult from "./pages/SearchResult";
 import LibraryList from "./pages/LibraryList";
+import MyPage from "./pages/auth/MyPage";
 import SearchByISBN from "./pages/SearchByISBN";
 
 function App() {
@@ -36,6 +36,7 @@ function App() {
           <Route path="/login/email" element={<EmailLogin/>}/>
           <Route path="/oauth2/sign-up" element={<OAuth2SignUp/>}/>
           <Route path="/oauth2/login" element={<OAuth2Login/>}/>
+          <Route path="/mypage" element={<PrivateRoute element={MyPage}/>}/>
           {/*도서 검색 관련*/}
           <Route path="/book/detail/:isbn" element={<LibraryList/>}/>
           <Route path="/search/isbn" element={<SearchByISBN/>}/>

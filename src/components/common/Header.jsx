@@ -1,7 +1,8 @@
 import {Link} from "react-router-dom";
+import isLogin from "../../utils/isLogin";
 
-export default function Header(){
-  return(
+export default function Header() {
+  return (
       <div className={"header"}>
         <div className={'logo'}>
           <Link to="/">
@@ -18,12 +19,13 @@ export default function Header(){
           <div>
             <Link to="" className={"menu"}>메뉴명3</Link>
           </div>
-          <div>
-            <Link to="/login" className={"menu"}>로그인</Link>
-          </div>
-          <div>
-            <Link to="" className={"menu"}>마이페이지</Link>
-          </div>
+          {isLogin() ?
+              <div>
+                <Link to="/mypage" className={"menu"}>마이페이지</Link>
+              </div>
+              : <div>
+                <Link to="/login" className={"menu"}>로그인</Link>
+              </div>}
           <div></div>
         </div>
       </div>

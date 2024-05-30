@@ -29,13 +29,13 @@ export default function EmailLogin() {
     try {
       let result = await requestLogin(fields);
       sessionStorage.setItem("accessToken", result.data.accessToken)
-      navigate("/")
+      window.location.href ="/"
     } catch (error) {
       setFailCaption(error.response.data.detail);
     }
   }
 
-  return (<section className="sign-up-main">
+  return (<section className="auth-main">
     <div className="sign-up">
       <Title>이메일로 로그인</Title>
       <form className="sign-up" onSubmit={submitLoginForm}>

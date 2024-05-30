@@ -24,8 +24,9 @@ export default function BookTradeEdit() {
 	const [content, setContent] = useState('');
 	const [newLatitude, setNewLatitude] = useState(null);
 	const [newLongitude, setNewLongitude] = useState(null);
+	const [isFree, setIsFree] = useState(false);
 	const [loading, setLoading] = useState(false);
-	const [notFoundMessage, setNotFoundMessage] = useState(false);
+	const [locationError, setLocationError] = useState(false);
 	const today = new Date().toISOString().slice(0, 10);
 	const navigate = useNavigate();
 
@@ -70,6 +71,16 @@ export default function BookTradeEdit() {
 	};
 
 	const handleEnrollTrade = async () => {
+		if (!ISBN) {
+			alert('ISBN은 필수 입력사항입니다');
+			return;
+		}
+
+		if (!isFree && !rentalCost) {
+			alert('금액은 필수 입력사항입니다');
+			return;
+		}
+
 		const newTrade = {
 			isbn: ISBN,
 			tradeType: tradeType,
@@ -84,7 +95,7 @@ export default function BookTradeEdit() {
 			if (tradeId) {
 				await updateTrade(tradeId, newTrade);
 				alert('거래 수정이 성공하였습니다.');
-				navigate(`/trade/${tradeId}`)
+				navigate(`/trade/${tradeId}`);
 			} else {
 				await enrollTrade(newTrade);
 				alert('거래 등록을 성공하였습니다.');
@@ -107,8 +118,7 @@ export default function BookTradeEdit() {
 		try {
 			const fetchedTrade = await getTrade(tradeId);
 			if (fetchedTrade) {
-				moveMarker(fetchedTrade.latitude, fetchedTrade.longitude,
-						handleMarkerMove);
+				moveMarker(fetchedTrade.latitude, fetchedTrade.longitude, handleMarkerMove);
 			} else {
 				getCurrentPositionAndSetMarker();
 			}
@@ -124,11 +134,12 @@ export default function BookTradeEdit() {
 	};
 
 	const success = (pos) => {
+		setLocationError(false);
 		moveMarker(pos.coords.latitude, pos.coords.longitude, handleMarkerMove);
 	};
 
 	const fail = (err) => {
-		alert('현위치를 찾을 수 없습니다.');
+		setLocationError(true);
 	};
 
 	const handleMarkerMove = (newLatitude, newLongitude) => {
@@ -148,10 +159,10 @@ export default function BookTradeEdit() {
 							tradeId={tradeId}
 					/>
 					<div>
-						{(!trade ) && (book || trade) && (
+						{(!trade) && (book || trade) && (
 								<div>
 									{(!trade) && (ISBN || trade) && (
-											<BookInfo trade={trade} book={book}/>
+											<BookInfo trade={trade} book={book} />
 									)}
 								</div>
 						)}
@@ -175,34 +186,39 @@ export default function BookTradeEdit() {
 						<div className={'cost-date-area'}>
 							<div className={'cost-area'}>
 								<div className={'trade-section-title'}>금액</div>
-								<PriceInput value={rentalCost} onChange={setRentalCost} />
+								<PriceInput value={rentalCost} onChange={setRentalCost} onFreeChange={setIsFree} />
 							</div>
 							<div>
 								<div className={'trade-section-title'}>반납일</div>
 								<input type={'date'} name={'limitedDate'}
 											 min={today}
 											 value={limitedDate}
-											 onChange={(event) => setLimitedDate(
-													 event.target.value)}
+											 onChange={(event) => setLimitedDate(event.target.value)}
 								/>
 							</div>
 						</div>
 						<div>
 							<div className={'trade-section-title'}>내용</div>
-							{<textarea name="content" cols="30" rows="10"
-												 onChange={(event) => setContent(
-														 event.target.value)}
-												 value={content}
-												 className={'trade-content'}></textarea>}
+							<textarea name="content" cols="30" rows="10"
+												onChange={(event) => setContent(event.target.value)}
+												value={content}
+												className={'trade-content'}></textarea>
 						</div>
 					</div>
 					<div className={'trade-section-title'}>거래 위치</div>
-					<div id="map" className={'map-area'}></div>
+					<div id="map" className={'map-area'}>
+						{locationError && (
+								<div className="location-error">
+									위치 정보를 불러올 수 없습니다. 액세스를 허용해주세요.
+								</div>
+						)}
+					</div>
 					<div className={'buttons'}>
-						<Button className={'cancel-button'}>취소</Button>
+						<Button className={'cancel-button'} onClick={() => navigate('/trade/list')}>취소</Button>
 						<Button className={'submit-button'}
 										onClick={handleEnrollTrade}>
-							{!tradeId ? ('등록') : ('수정')}</Button>
+							{!tradeId ? ('등록') : ('수정')}
+						</Button>
 					</div>
 				</div>
 			</div>

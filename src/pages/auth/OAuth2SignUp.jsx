@@ -8,7 +8,7 @@ export default function OAuth2SignUp() {
     return <Navigate to="/error/403" replace/>
   }
   return (
-      <section className="sign-up-main">
+      <section className="auth-main">
         <Back/>
         <Title>추가 정보 입력</Title>
         <OAuth2SignUpForm/>

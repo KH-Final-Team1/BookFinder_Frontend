@@ -1,4 +1,5 @@
-.sign-up-main { display: flex; flex-direction: column; -webkit-box-pack: center; justify-content: center; -webkit-box-align: center; align-items: center; width: 100%; margin: 24px auto 80px; }
+.auth-main { display: flex; flex-direction: column; -webkit-box-pack: center; justify-content: center; -webkit-box-align: center; align-items: center; width: 100%; margin: 24px auto 80px; }
+.auth-main hr { border: solid 1px #a4a4a4; width: 350px; margin: 8px 0 20px 0; }
 
 /** Back 영역 시작**/
 div.back { width: 100%; max-width: 1060px; padding-left: 20px; margin-bottom: 20px; }
@@ -49,8 +50,12 @@ svg.login-svg {user-select: none; width: 1em; height: 1em; display: inline-block
 p.kakao-login-button-text {color: #000000; text-align: left; letter-spacing: 0.01em; font-size: 20px; line-height: 22px; margin-top: 13px; margin-bottom: 13px;}
 p.login-button-text {color: #ffffff; text-align: left; letter-spacing: 0.01em; font-size: 20px; line-height: 22px; margin-top: 13px; margin-bottom: 13px;}
 
-/*.email-login-button { width: 360px; height: 50px; background-color: black; border: none; border-radius: 10px; font-size: 20px; color: white; cursor: pointer; }*/
-
+/**/
+.my-info-grid { display: flex; box-sizing: border-box; flex-wrap: wrap; width: 100%; margin-top: 12px; margin-bottom: 12px; }
+.my-info-container { display: flex; box-sizing: border-box; flex-wrap: wrap; width: 100%; flex-direction: row; justify-content: center; align-items: center; gap: 20px; }
+.my-info-avatar {width:150px; height: 150px; background-color: gray; border-radius: 50% }
 /* Auth 관련 공통 */
 .auth-button { width: 440px; height: 50px; background-color: black; border: none; border-radius: 10px; font-size: 20px; color: white; cursor: pointer; }
 .auth-button:disabled { width: 100%; height: 50px; border: none; border-radius: 10px; font-size: 20px; color: rgba(55, 56, 60, 0.16); background-color: rgb(244, 244, 245); cursor: default; }
+
+

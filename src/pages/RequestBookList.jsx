@@ -1,29 +1,64 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import Button from "../components/ui/Button";
 import { searchBookList, updateBookStatus } from "../services/book/bookAPI";
+import { getUserRole } from "../services/auth/token";
+import debounce from 'lodash.debounce';
 
 export default function RequestBookList() {
   const [keyword, setKeyword] = useState("");
   const [filter, setFilter] = useState("name");
   const [books, setBooks] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
+  const [userRole, setUserRole] = useState("");
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [searchKeyword, setSearchKeyword] = useState("");
+  const loader = useRef(null);
+  const isInitialLoad = useRef(true);
 
-  const handleSearch = async () => {
+  useEffect(() => {
+    const role = getUserRole();
+    setUserRole(role);
+  }, []);
+
+  const loadBooks = useCallback(async () => {
+    setLoading(true);
     try {
-      const list = await searchBookList(filter, keyword);
-
-      const sortedList = list.sort((a, b) => {
-        const order = {'WAIT': 1, 'APPROVE': 2, 'REJECT': 3};
-        return order[a.approvalStatus] - order[b.approvalStatus];
+      const currentPage = books.length < 10 ? 0 : page;
+      const list = await searchBookList(filter, searchKeyword, null, currentPage);
+      const sortedList = sortBooks(list);
+      setBooks(prevBooks => {
+        const newBooks = currentPage === 0 ? sortedList : [...prevBooks, ...sortedList];
+        const uniqueBooks = newBooks.filter((book, index, self) =>
+          index === self.findIndex((b) => b.isbn === book.isbn)
+        );
+        return uniqueBooks;
       });
-
-      setBooks(sortedList);
-      setErrorMessage("");
+      setHasMore(list.length === 10);
+      setErrorMessage('');
     } catch (error) {
-      setBooks([]);
       setErrorMessage(error.response.data.detail);
+    } finally {
+      setLoading(false);
     }
-  }
+  }, [filter, searchKeyword, page, books.length]);
+
+  useEffect(() => {
+    if (isInitialLoad.current) {
+      isInitialLoad.current = false;
+      return;
+    }
+    loadBooks();
+  }, [loadBooks]);
+
+  const handleSearch = useCallback(() => {
+    setPage(1);
+    setBooks([]);
+    setHasMore(true);
+    setSearchKeyword(keyword)
+  }, [keyword]);
+
   const handleKeyword = (e) => {
     setKeyword(e.target.value);
   }
@@ -32,19 +67,32 @@ export default function RequestBookList() {
     setFilter(e.target.value);
   }
 
-  const handleApproval = async (isbn) => {
-    const response = await updateBookStatus(isbn, "APPROVE");
+  const handleApproval = async (isbn) => {const response = await updateBookStatus(isbn, "APPROVE");
     const message = response.data?.message || response.message;
     alert(message);
     await handleSearch();
   }
 
-  const handleRejection = async (isbn) => {
-    const response = await updateBookStatus(isbn, "REJECT");
-    const message = response.data?.message || response.message;
+  const handleRejection = async (isbn) => {const response = await updateBookStatus(isbn, "REJECT");
+    const message = response.data?.message || response.message;;
     alert(message);
     await handleSearch();
   }
+
+  const handleScroll = useCallback(debounce(() => {
+    if (loader.current && loader.current.getBoundingClientRect().bottom <= window.innerHeight) {
+      if (hasMore && !loading) {
+        setPage(prevPage => prevPage + 1);
+      }
+    }
+  }, 100), [hasMore, loading]);
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [handleScroll]);
 
   return (
       <div className="request-books">
@@ -73,9 +121,7 @@ export default function RequestBookList() {
           {books.map(book => {
             const approvalStatus = book.approvalStatus === "WAIT"
                 ? "요청 대기 중" : book.approvalStatus === "REJECT"
-                ? "요청 거절" : book.approvalStatus === "APPROVE"
-                ? "요청 승인" : book.approvalStatus;
-
+                    ? "요청 거절" : book.approvalStatus;
             return (
                 <tr key={book.isbn}>
                   <td className="book-img-border">
@@ -83,15 +129,10 @@ export default function RequestBookList() {
                   </td>
                   <td className="book-info">
                     <p className="book-title"><span>도서명:</span> {book.name} / (ISBN 번호:{book.isbn})</p>
-                    <p className="book-author">
-                      <span>저자:</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {book.authors}
-                    </p>
-                    <p className="book-publication-year">
-                      <span>발행년도:</span>&nbsp;&nbsp;&nbsp; {book.publicationYear}
-                    </p>
-                    <p className="book-approvalStatus">
-                      <span>요청 상태:</span>&nbsp;&nbsp; {approvalStatus}
-                      {book.approvalStatus === "WAIT" &&/*나중에 관리자만 승인 거절 버튼 보이게 처리할 예정*/(
+                    <p className="book-author"><span>저자:</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {book.authors}</p>
+                    <p className="book-publication-year"><span>발행년도:</span>&nbsp;&nbsp;&nbsp; {book.publicationYear}</p>
+                    <p className="book-approvalStatus"><span>요청 상태:</span>&nbsp;&nbsp; {approvalStatus}
+                      {userRole === "ROLE_ADMIN" && book.approvalStatus === "WAIT" && (
                           <div className="buttons">
                             <Button type={'submit'} className={'submit-button'} onClick={() => handleApproval(book.isbn)}>승인</Button>
                             <Button type={'submit'} className={'cancel-button'} onClick={() => handleRejection(book.isbn)}>거절</Button>
@@ -104,6 +145,7 @@ export default function RequestBookList() {
           })}
           </tbody>
         </table>
-      </div>
+      <div ref={loader}>Loading...</div>
+    </div>
   );
 }
