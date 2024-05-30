@@ -16,9 +16,6 @@ export default function Header() {
           <div>
             <Link to="/trade/list" className={"menu"}>지역 게시판</Link>
           </div>
-          <div>
-            <Link to="" className={"menu"}>메뉴명3</Link>
-          </div>
           {isLogin() ?
               <div>
                 <Link to="/mypage" className={"menu"}>마이페이지</Link>
