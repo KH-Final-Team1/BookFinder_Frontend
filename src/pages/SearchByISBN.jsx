@@ -156,6 +156,9 @@ export default function SearchByISBN() {
                   <option value={"distance"}>거리순</option>
                 </select>
                 <div className={'libResult'}>
+                  {libList.length === 0 && !isLoading && (
+                    <p>해당 도서를 소장하고 있는 도서관이 없습니다.</p>
+                  )}
                   <ul className={'library-list'}>
                     {sortedLibList().map((data, idx) => {
                       return <li className={'library-detail'} key={"lib_" + idx}>
