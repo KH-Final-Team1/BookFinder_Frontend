@@ -8,8 +8,10 @@ export default function SearchByISBN() {
   const [bookDetail, setBookDetail] = useState(null);
   const [libList, setLibList] = useState([]);
   const [page, setPage] = useState(1);
+  const [sortOrder, setSortOrder] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [loanStatus, setLoanStatus] = useState({});
+  const [totalLibs, setTotalLibs] = useState(0);
   const loader = useRef(null);
 
   const handleInputChange = (event) => {
@@ -33,7 +35,7 @@ export default function SearchByISBN() {
 
   const handleObserver = (entries) => {
     const target = entries[0];
-    if (target.isIntersecting && !isLoading) {
+    if (target.isIntersecting && !isLoading && libList.length < totalLibs) {
       setPage(prevState => prevState + 1);
     }
   }
@@ -50,8 +52,8 @@ export default function SearchByISBN() {
   }, [loader.current])
 
   useEffect(() => {
-    if (isbn.length === 13) {
-      initLibraryList();
+    if (isbn.length === 13 && page>1) {
+      loadLibraryList();
     }
   }, [page]);
 
@@ -62,7 +64,8 @@ export default function SearchByISBN() {
         setBookDetail(bookInfo.response.detail[0].book);
         setLibList([]);
         setLoanStatus({});
-        await initLibraryList(1, true);
+        setTotalLibs(0);
+        loadLibraryList(1, true);
       } else {
         setErrorMessage('유효하지 않은 ISBN 번호입니다.');
         setBookDetail(null);
@@ -70,14 +73,19 @@ export default function SearchByISBN() {
     }
   };
 
-  const initLibraryList = async () => {
+  const loadLibraryList = async (currentPage = page, resetList = false ) => {
     if (isbn.length !== 13) {
       return;
     }
     setIsLoading(true);
     try {
-      const libInfo = await getLibraryList(isbn, page);
-      setLibList((prevList) => [...prevList, ...libInfo.response.libs]);
+      const libInfo = await getLibraryList(isbn, currentPage);
+      if(resetList) {
+        setLibList(libInfo.response.libs);
+      } else {
+        setLibList((prevList) => [...prevList, ...libInfo.response.libs]);
+      }
+      setTotalLibs(libInfo.response.numFound);
     } catch (error) {
       console.log(error);
     }
@@ -91,6 +99,15 @@ export default function SearchByISBN() {
     } else {
       setLoanStatus((prevState) => ({...prevState, [libCode]: "대출 불가능"}));
     }
+  }
+  const handleSortChange = (event) => {
+    setSortOrder(event.target.value);
+  }
+  const sortedLibList = () => {
+    if(sortOrder === "name") {
+      return [...libList].sort((a,b) => a.lib.libName.localeCompare(b.lib.libName));
+    }
+    return libList;
   }
   return (
       <div className={'search-isbn'}>
@@ -133,13 +150,17 @@ export default function SearchByISBN() {
               </div>
               <hr/>
               <div className={'libraries'}>
-                <select className={'sort-select'}>
-                  <option>이름순</option>
-                  <option>거리순</option>
+                <select className={'sort-select'} onChange={handleSortChange}>
+                  <option value={""}>선택하세요</option>
+                  <option value={"name"}>이름순</option>
+                  <option value={"distance"}>거리순</option>
                 </select>
                 <div className={'libResult'}>
+                  {libList.length === 0 && !isLoading && (
+                    <p>해당 도서를 소장하고 있는 도서관이 없습니다.</p>
+                  )}
                   <ul className={'library-list'}>
-                    {libList.map((data, idx) => {
+                    {sortedLibList().map((data, idx) => {
                       return <li className={'library-detail'} key={"lib_" + idx}>
                         <div className={'library'}>
                           <p>{data.lib.libName}</p>
@@ -178,7 +199,9 @@ export default function SearchByISBN() {
                       </li>
                     })}
                   </ul>
-                  <div ref={loader} style={{height: "10px"}}>Loading...</div>
+                  {libList.length < totalLibs && (
+                    <div ref={loader} style={{height: "10px"}}>Loading...</div>
+                  )}
                 </div>
               </div>
             </div>

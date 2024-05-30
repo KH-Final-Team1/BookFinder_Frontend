@@ -10,10 +10,11 @@
 .search-isbn .result-list .book dl dd { flex: 1; max-width: 55ch; text-align: left; margin: 0 0 15px 0; padding: 0; white-space: normal; word-wrap: break-word; }
 .search-isbn hr { border: solid 1px #a4a4a4; margin: 20px 0 30px 0; }
 .search-isbn .result-list .libraries {margin-top: 20px; }
-.search-isbn .result-list .libraries p { font-size: x-large; }
-.search-isbn .result-list .libraries .sort-select { width: 75px; height: 30px; font-size: larger; text-align: center; }
+.search-isbn .result-list .libraries p { font-size: x-large; text-align: center; }
+.search-isbn .result-list .libraries .sort-select { width: 100px; height: 30px; font-size: larger; text-align: center; }
 .search-isbn .result-list .libraries .libResult { width: 700px; height: 700px; }
 .search-isbn .result-list .libraries .libResult .library-list .library-detail { list-style: none; }
+.search-isbn .result-list .libraries .libResult .library-list .library-detail .library p { font-size: x-large; text-align: left; }
 .search-isbn .result-list .libraries .libResult .library-list .library-detail hr { width: 100%; border: dashed #a4a4a4 thin; margin: 20px 0; }
 .search-isbn .result-list .libraries .libResult .library-list .library-detail .library dl { display: flex; justify-content: space-between; margin: 10px 0;}
 .search-isbn .result-list .libraries .libResult .library-list .library-detail .library dl dt, dd { margin: 0; }
