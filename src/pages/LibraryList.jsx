@@ -58,15 +58,12 @@ export default function LibraryList() {
     setIsLoading(true);
     try {
       const libInfo = await getLibraryList(isbn, currentPage);
-      // const list = libList;
-      // list.push(...libInfo.response.libs);
       if(resetList) {
         setLibList(libInfo.response.libs);
       } else {
         setLibList((prevList) => [...prevList, ...libInfo.response.libs]);
       }
       setTotalLibs(libInfo.response.numFound);
-      // setLibList(list);
     } catch (error) {
       console.log(error);
     }
