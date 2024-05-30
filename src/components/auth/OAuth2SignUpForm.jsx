@@ -46,7 +46,7 @@ export default function OAuth2SignUpForm() {
         updateFields("nickname", {disabled: true})
       }
     } catch (error) {
-      updateFields("nickname", {valid: false, caption: error.response.data.details.nickname, duplicate: true})
+      updateFields("nickname", {valid: false, caption: error.response.data.detail, duplicate: true})
     }
   }
   const handleAddress = () => {
