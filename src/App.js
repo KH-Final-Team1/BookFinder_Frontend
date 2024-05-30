@@ -41,8 +41,8 @@ function App() {
           <Route path="/book/detail/:isbn" element={<LibraryList/>}/>
           <Route path="/search/isbn" element={<SearchByISBN/>}/>
           {/*도서 요청 관련*/}
-          <Route path="/requestBook" element={<RequestBook/>}/>
-          <Route path="/requestBook/list" element={<RequestBookList />} />
+          <Route path="/requestBook" element={<PrivateRoute element={RequestBook}/>} />
+          <Route path="/requestBook/list" element={<PrivateRoute element={RequestBookList}/>} />
           {/*거래 관련*/}
           <Route path="/trade/list" element={<PrivateRoute element={BookTradeList} />} />
           <Route path="/trade/:tradeId" element={<PrivateRoute element={BookTradeDetail} />} />
