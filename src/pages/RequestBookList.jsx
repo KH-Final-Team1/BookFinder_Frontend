@@ -26,10 +26,9 @@ export default function RequestBookList() {
     setLoading(true);
     try {
       const currentPage = books.length < 10 ? 0 : page;
-      const list = await searchBookList(filter, searchKeyword, null, currentPage);
-      const sortedList = sortBooks(list);
+      const list = await searchBookList(filter, searchKeyword, "WAIT", currentPage);
       setBooks(prevBooks => {
-        const newBooks = currentPage === 0 ? sortedList : [...prevBooks, ...sortedList];
+        const newBooks = currentPage === 0 ? list : [...prevBooks, ...list];
         const uniqueBooks = newBooks.filter((book, index, self) =>
           index === self.findIndex((b) => b.isbn === book.isbn)
         );

@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
-import {Link, useNavigate} from "react-router-dom";
-import {createBook} from "../services/book/bookAPI";
-import {fetchBookInfo} from "../services/book/booklibraryAPI";
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from "react-router-dom";
+import { createBook } from "../services/book/bookAPI";
+import { fetchBookInfo } from "../services/book/booklibraryAPI";
 import Button from "../components/ui/Button";
 
 export default function RequestBook() {
