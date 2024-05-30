@@ -3,9 +3,16 @@
 /*헤더 영역*/
 .header { height: 75px; border-bottom: solid gray 1px; display: flex; color: #ffffff; background-color: #000000; font-size: 24px } 
 .header .logo { justify-content: center; align-content: center; text-align: center; margin-left: 50px; } 
-.header .logo img { height: 50px; margin-top: 10px;}
-.header .menu-bar { display: flex; gap: 15px; margin-left: auto; align-items: center; justify-content: center; margin-right: 50px; }
-.header .menu-bar .menu { color: white; text-decoration: none; margin-right: 20px; } 
+.header .logo img { height: 50px; margin-top: 10px; } 
+.header .menu-bar { height: 75px; display: flex; gap: 15px; margin-left: auto; align-items: center; justify-content: center; margin-right: 50px; } 
+.header .menu-bar .menu { position: relative; height: 75px; display: flex; align-items: center; } 
+.header .menu-bar .menu:hover { background: #1a1a1a } 
+.header .menu-bar .menu .menu-name { color: white; text-decoration: none; margin: 0 17px; } 
+.header .menu-bar .menu .dropdown-content { display: none; position: absolute; background-color: #ffffff; box-shadow: 0 8px 16px rgba(0,0,0,0.2); z-index: 1; width: 100%; top: 76px; } 
+.header .menu-bar .menu .dropdown-content a { color: black; padding: 12px 16px; text-decoration: none; display: block; font-size: 16px; } 
+.header .menu-bar .menu .dropdown-content a:hover { background-color: #ddd; } 
+.header .menu-bar .menu:hover .dropdown-content,
+.header .menu-bar .menu .dropdown-content:hover { display: block; } 
 /*헤더 영역*/
 
 /*메인 화면*/
@@ -25,8 +32,8 @@
 /*버튼*/
 
 /*에러페이지*/
-.error { display: flex; justify-content: center; align-items: center; height: calc(100vh - 100px); flex-direction: column; }
-.error .error404 {text-align: center; margin-bottom: 50px; font-size: 50px;}
-.error .error404 h1 {font-size: 120px; margin-bottom: 0; }
-.error .submit-button { width: 140px; height: 70px; padding: 10px 20px; font-size: 24px;}
+.error { display: flex; justify-content: center; align-items: center; height: calc(100vh - 100px); flex-direction: column; } 
+.error .error404 { text-align: center; margin-bottom: 50px; font-size: 50px; } 
+.error .error404 h1 { font-size: 120px; margin-bottom: 0; } 
+.error .submit-button { width: 140px; height: 70px; padding: 10px 20px; font-size: 24px; } 
 /*에러페이지*/
