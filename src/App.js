@@ -20,6 +20,7 @@ import PrivateRoute from "./components/common/PrivateRoute";
 import ErrorWithExistAuthorization from "./pages/auth/ErrorWithExistAuthorization";
 import LibraryList from "./pages/LibraryList";
 import MyPage from "./pages/auth/MyPage";
+import SearchByISBN from "./pages/SearchByISBN";
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
           <Route path="/mypage" element={<PrivateRoute element={MyPage}/>}/>
           {/*도서 검색 관련*/}
           <Route path="/book/detail/:isbn" element={<LibraryList/>}/>
+          <Route path="/search/isbn" element={<SearchByISBN/>}/>
           {/*도서 요청 관련*/}
           <Route path="/requestBook" element={<RequestBook/>}/>
           <Route path="/requestBook/list" element={<RequestBookList />} />

@@ -6,6 +6,7 @@ import './styles/request-book.css'
 import './styles/book-trade.css'
 import './styles/book-search.css'
 import './styles/library-list.css'
+import './styles/search-isbn.css'
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
