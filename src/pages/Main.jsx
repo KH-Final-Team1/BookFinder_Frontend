@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import SearchResult from "./SearchResult";
-import {searchBookList} from "../services/book/bookAPI";
+import {searchApproveBookList, searchBookList} from "../services/book/bookAPI";
 import NoResult from "./NoResult";
 
 
@@ -12,7 +12,7 @@ export default function Main(){
 
   const handleSearch = async () => {
     setShow(true);
-    const list = await searchBookList(filter, keyword);
+    const list = await searchApproveBookList(filter, keyword);
     console.log(list)
     setBookList(list);
   }

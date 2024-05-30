@@ -16,6 +16,21 @@ export const searchBookList = async (filter, keyword, approvalStatus, page) => {
   }
 }
 
+export const searchApproveBookList = async (filter, keyword) => {
+  try {
+    const response = await axios.get(`http://localhost:8080/api/v1/books/list`, {
+          params: {
+            filter: filter,
+            keyword: keyword,
+            approvalStatus: "APPROVE",
+          }
+        });
+    return response.data;
+  } catch (error) {
+    throw error
+  }
+}
+
 export const createBook = async (bookRequestDto) => {
   try {
     const response = await axios.post(`http://localhost:8080/api/v1/books`, bookRequestDto);
