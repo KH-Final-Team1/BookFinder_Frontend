@@ -56,14 +56,17 @@ export default function TradeDetails() {
 
   const handleChangeTradeType = async (event) => {
     const newTradeComplete = event.target.checked;
-    setTradeComplete(newTradeComplete);
     const tradeYn = newTradeComplete ? 'Y' : 'N';
     const success = await changeTradeType(tradeId, { tradeYn });
     if (success) {
-      alert('거래 상태가 변경되었습니다.');
+      setTradeComplete(newTradeComplete);
+      setTrade(prevTrade => ({
+        ...prevTrade,
+        tradeYn: newTradeComplete ? 'Y' : 'N'
+      }));
+      // alert('거래 상태가 변경되었습니다.');
     } else {
       alert('거래 상태 변경 중 오류가 발생했습니다.');
-      setTradeComplete(!newTradeComplete);
     }
   };
 
@@ -132,16 +135,22 @@ export default function TradeDetails() {
               )}
               <div className={'login-user-field'}>
                 <div className={'change-trade-type'}>
-                  <input type="checkbox"
-                         id="tradeComplete"
-                         checked={tradeComplete}
-                         onChange={handleChangeTradeType} />
-                  <label className="custom-checkbox"
-                         htmlFor="tradeComplete"></label>
-                  <div className={'trade-type'}>거래완료</div>
+                  {trade.deleteYn === 'N' && loginUserId === trade.user.tradeWriterId && (
+                      <>
+                        <input type="checkbox"
+                               id="tradeComplete"
+                               checked={tradeComplete}
+                               onChange={handleChangeTradeType} />
+                        <label className="custom-checkbox"
+                               htmlFor="tradeComplete">
+                        </label>
+                      </>
+                    )}
+                  <div className={'trade-type'}>
+                    { trade.tradeYn === 'Y' ? '거래완료' : '거래중'}</div>
                 </div>
                 <div className={'buttons'}>
-                  {loginUserId === trade.user.tradeWriterId && (
+                  {trade.deleteYn === 'N' && loginUserId === trade.user.tradeWriterId && (
                       <>
                         <Button type={'submit'}
                                 className={'cancel-button'}
