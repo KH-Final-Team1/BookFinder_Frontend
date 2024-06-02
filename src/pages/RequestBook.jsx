@@ -119,9 +119,6 @@ export default function RequestBook() {
             등록
           </Button>
         </div>
-        <div>
-          <Link to="/requestBook/list">도서 요청 게시판</Link>
-        </div>
       </div>
   );
 }
