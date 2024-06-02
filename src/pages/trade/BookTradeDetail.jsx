@@ -133,6 +133,7 @@ export default function TradeDetails() {
               ) : (
                   <p>거래 위치를 등록하지 않았습니다.</p>
               )}
+                <h3>거래 상태</h3>
               <div className={'login-user-field'}>
                 <div className={'change-trade-type'}>
                   {trade.deleteYn === 'N' && loginUserId === trade.user.tradeWriterId && (
