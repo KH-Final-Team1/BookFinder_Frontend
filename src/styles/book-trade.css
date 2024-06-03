@@ -22,7 +22,8 @@
 .book-trades table .trade-info .writer-info img { vertical-align: text-top; width: 15px; margin-right: 5px; } 
 .book-trades table .trade-info .trade-yn { margin-bottom: 0; font-size: 14px; } 
 .book-trades table .trade-info .create-date { float: right; font-size: 14px; margin-bottom: 0 } 
-.book-trades table .trade-info div { display: flex; justify-content: space-between; } 
+.book-trades table .trade-info div { display: flex; justify-content: space-between; align-items: center}
+.book-trades table .trade-info div .deleted-trade { color: red }
 /* 사용자간 대출 목록*/
 
 /*사용자간 대출 상세보기*/

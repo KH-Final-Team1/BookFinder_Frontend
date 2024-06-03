@@ -52,7 +52,7 @@ export default function BookTradeList() {
 					<tbody>
 					{trades.map(trade => {
 						const tradeType = trade.tradeType === 'BORROW' ? "빌려요" : "빌려드려요"
-						const tradeTypeColor = trade.tradeType === 'BORROW' ? "red"
+						const tradeTypeColor = trade.tradeType === 'BORROW' ? "green"
 								: "blue";
 						const tradeYn = trade.tradeYn === 'Y' ? "거래완료" : "거래중"
 
@@ -63,8 +63,11 @@ export default function BookTradeList() {
 											<img src={trade.book.imageUrl} alt={trade.book.name}/>
 										</td>
 										<td className="trade-info">
-											<p className="trade-type"
-												 style={{color: tradeTypeColor}}>{tradeType}</p>
+											<div>
+												<p className="trade-type" style={{color: tradeTypeColor}}>{tradeType}</p>
+												{trade.deleteYn === "Y" &&
+														<p className={'deleted-trade'}>삭제됨</p>}
+											</div>
 											<p className="book-title">{trade.book.name}</p>
 											<p className="book-info">{trade.book.authors} / {trade.book.publicationYear}</p>
 											<p className="writer-info">
