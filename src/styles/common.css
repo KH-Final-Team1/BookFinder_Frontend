@@ -21,7 +21,7 @@
 .main .main-search { display: flex; align-items: center; justify-content: center; align-content: center; border: solid 3px; padding: 0; border-radius: 5px;}
 .main .main-search .search-div { padding-right: 5px; border-right:2px solid black; }
 .main .main-search .search-select { background-color:transparent; padding: 8px; border: none; height: 50px; font-size: 18px; }
-.main .main-search input { width: 500px; height: 50px; font-size: 20px; padding: 0 0 0 15px; border: none; border-right: 2px solid black; }
+.main .main-search input { width: 500px; height: 50px; font-size: 20px; padding: 0 0 0 15px; border: none; border-right: 2px solid black; outline: none;}
 .main .main-search .search-button { border: none; background-color:transparent; }
 .main .main-search .search-button img { display: flex; justify-content: center; align-items: center; width: 40px; } 
 /*메인 화면*/
