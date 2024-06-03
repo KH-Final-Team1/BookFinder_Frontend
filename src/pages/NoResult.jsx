@@ -8,7 +8,7 @@ export default function NoResult() {
     navigate('/search/isbn');
   }
   const handleRequest = () => {
-    navigate('/requestBook/list');
+    navigate('/requestBook');
   }
   return (
       <div className={'noResult'}>
