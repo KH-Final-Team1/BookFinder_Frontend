@@ -115,7 +115,7 @@ export default function RequestBookList() {
         </div>
         <br/><br/><br/>
         {books.length === 0 && (
-          <p className="empty-list-message">해당 도서는 이미 등록된 도서이거나 요청하지 않은 도서입니다.</p>
+          <p className="empty-list-message">요청된 도서가 존재하지 않습니다.</p>
         )}
         <table>
           <tbody>
