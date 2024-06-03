@@ -131,7 +131,8 @@ export default function RequestBookList() {
                   <td className="book-info">
                     <p className="book-title"><span>도서명:</span> {book.name} / (ISBN 번호:{book.isbn})</p>
                     <p className="book-author"><span>저자:</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {book.authors}</p>
-                    <p className="book-publication-year"><span>발행년도:</span>&nbsp;&nbsp;&nbsp; {book.publicationYear}</p>
+                    <p className="book-publisher"><span>출판사:</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {book.publisher}</p>
+                    <p className="book-publication-year"><span>출판연도:</span>&nbsp;&nbsp;&nbsp; {book.publicationYear}</p>
                     <p className="book-approvalStatus"><span>요청 상태:</span>&nbsp;&nbsp; {approvalStatus}
                       {userRole === "ROLE_ADMIN" && book.approvalStatus === "WAIT" && (
                           <div className="buttons">

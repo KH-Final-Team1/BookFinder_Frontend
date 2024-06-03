@@ -31,7 +31,7 @@ export default function EmailLogin() {
       sessionStorage.setItem("accessToken", result.data.accessToken)
       window.location.href ="/"
     } catch (error) {
-      setFailCaption(error.response.data.detail);
+      setFailCaption("이메일 또는 비밀번호가 올바르지 않습니다.");
     }
   }
 
