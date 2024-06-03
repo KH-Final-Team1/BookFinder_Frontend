@@ -14,18 +14,19 @@ export default function LibraryList() {
   const [page, setPage] = useState(1)
   const [isLoading, setIsLoading] = useState(false)
   const [loanStatus, setLoanStatus] = useState({});
+  const [sortOrder, setSortOrder] = useState("");
+  const [totalLibs, setTotalLibs] = useState(0);
   const loader = useRef(null);
   const isInitialLoad = useRef(true);
 
   const handleObserver = (entries) => {
     const target = entries[0];
-    if (target.isIntersecting && !isInitialLoad.current && !isLoading) {
+    if (target.isIntersecting && !isLoading && libList.length < totalLibs) {
       setPage(prevState => prevState + 1);
     }
   }
 
   useEffect(() => {
-    getBookDetail();
     const observer = new IntersectionObserver(handleObserver, {threshold: 1})
     if (loader.current) {
       observer.observe(loader.current);
@@ -35,30 +36,34 @@ export default function LibraryList() {
         observer.unobserve(loader.current);
       }
     }
+  }, [loader, isLoading, totalLibs]);
+
+  useEffect(() => {
+    getBookDetail();
   }, []);
 
   useEffect(() => {
-    if (isInitialLoad.current) {
-      isInitialLoad.current = false;
-      return;
-    }
-    initLibraryList();
+    initLibraryList(page);
   }, [page])
 
   const getBookDetail = async () => {
     const bookInfo = await fetchBookInfo(isbn);
     if (bookInfo.response.detail) {
       setBookDetail(bookInfo.response.detail[0].book);
+      initLibraryList(1,true);
     }
   }
 
-  const initLibraryList = async () => {
+  const initLibraryList = async (currentPage = page, resetList = false) => {
     setIsLoading(true);
     try {
-      const libInfo = await getLibraryList(isbn, page);
-      const list = libList;
-      list.push(...libInfo.response.libs);
-      setLibList(list);
+      const libInfo = await getLibraryList(isbn, currentPage);
+      if(resetList) {
+        setLibList(libInfo.response.libs);
+      } else {
+        setLibList((prevList) => [...prevList, ...libInfo.response.libs]);
+      }
+      setTotalLibs(libInfo.response.numFound);
     } catch (error) {
       console.log(error);
     }
@@ -74,15 +79,23 @@ export default function LibraryList() {
     }
   }
 
-  const handleBack = () => {
-
+  // const handleBack = () => {
+  //   // 뒤로가기 기능 구현 예정
+  // }
+  const handleSortChange = (event) => {
+    setSortOrder(event.target.value);
   }
-
+  const sortedLibList = () => {
+    if(sortOrder === "name") {
+      return [...libList].sort((a,b) => a.lib.libName.localeCompare(b.lib.libName));
+    }
+    return libList;
+  }
   return (
       <div className={'libraryList'}>
-        <div>
-          <Button className={'cancel-button'} onClick={handleBack}>목록</Button>
-        </div>
+        {/*<div>*/}
+        {/*  <Button className={'cancel-button'} onClick={handleBack}>목록</Button>*/}
+        {/*</div>*/}
         <div className={'book'}>
           <img
               src={bookDetail.bookImageURL}/>
@@ -110,15 +123,15 @@ export default function LibraryList() {
           </div>
         </div>
         <hr/>
-        <div className={'library'}>
-          {/*<p>전체 {libList.length}건</p>*/}
-          <select className={'sort-select'}>
-            <option>이름순</option>
-            <option>거리순</option>
+        <div className={'libraries'}>
+          <select className={'sort-select'} onChange={handleSortChange}>
+            <option value={""}>선택하세요</option>
+            <option value={"name"}>이름순</option>
+            <option value={"distance"}>거리순</option>
           </select>
           <div className={'libResult'}>
             <ul className={'library-list'}>
-              {libList.map((data, idx) => {
+              {sortedLibList().map((data, idx) => {
                 return <li className={'library-detail'} key={"lib_" + idx}>
                   <div className={'library'}>
                     <p>{data.lib.libName}</p>
@@ -157,9 +170,11 @@ export default function LibraryList() {
                 </li>
               })}
             </ul>
-            <div ref={loader} style={{height: "10px"}}>Loading...</div>
+            {libList.length < totalLibs && (
+              <div ref={loader} style={{height: "10px"}}>Loading...</div>
+            )}
           </div>
         </div>
       </div>
-  )
+  );
 }

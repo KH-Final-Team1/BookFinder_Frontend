@@ -17,7 +17,7 @@ import OAuth2SignUp from "./pages/auth/OAuth2SignUp";
 import OAuth2Login from "./pages/auth/OAuth2Login";
 import Error404 from "./pages/common/Error404";
 import PrivateRoute from "./components/common/PrivateRoute";
-import ErrorWithExistAuthorization from "./pages/auth/ErrorWithExistAuthorization";
+import Error403 from "./pages/common/Error403";
 import LibraryList from "./pages/LibraryList";
 import MyPage from "./pages/auth/MyPage";
 import SearchByISBN from "./pages/SearchByISBN";
@@ -28,7 +28,7 @@ function App() {
         <Header/>
         <Routes>
           <Route path="*" element={<Error404 />} />
-          <Route path="/error/403" element={<ErrorWithExistAuthorization/>}/>
+          <Route path="/error/403" element={<Error403/>}/>
           <Route path="/" element={<Main/>}/>
           {/*사용자 관련*/}
           <Route path="/sign-up" element={<SignUp/>}/>
@@ -41,8 +41,8 @@ function App() {
           <Route path="/book/detail/:isbn" element={<LibraryList/>}/>
           <Route path="/search/isbn" element={<SearchByISBN/>}/>
           {/*도서 요청 관련*/}
-          <Route path="/requestBook" element={<RequestBook/>}/>
-          <Route path="/requestBook/list" element={<RequestBookList />} />
+          <Route path="/requestBook" element={<PrivateRoute element={RequestBook}/>} />
+          <Route path="/requestBook/list" element={<PrivateRoute element={RequestBookList}/>} />
           {/*거래 관련*/}
           <Route path="/trade/list" element={<PrivateRoute element={BookTradeList} />} />
           <Route path="/trade/:tradeId" element={<PrivateRoute element={BookTradeDetail} />} />

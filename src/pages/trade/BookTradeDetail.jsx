@@ -16,8 +16,10 @@ export default function TradeDetails() {
   const [trade, setTrade] = useState(null);
   const [addressInfo, setAddressInfo] = useState('');
   const [tradeComplete, setTradeComplete] = useState(false);
+  const alertShown = useRef(false);
   const mapRef = useRef(null);
   const navigate = useNavigate();
+
 
   const handleEditClick = () => {
     navigate(`/trade/edit/${tradeId}`);
@@ -25,12 +27,25 @@ export default function TradeDetails() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const result = await getTrade(tradeId);
-      setTrade(result);
-      setTradeComplete(result.tradeYn === 'Y');
+      try {
+        const result = await getTrade(tradeId);
+        setTrade(result);
+        setTradeComplete(result.tradeYn === 'Y');
+      } catch (error) {
+        if (error.response && error.response.status === 404) {
+          const detail = error.response.data.detail || '';
+          if(!alertShown.current) {
+            alertShown.current = true;
+            alert(`${detail}`);
+          }
+          navigate('/trade/list');
+        } else {
+          console.error('An unexpected error occurred:', error);
+        }
+      }
     };
     fetchData();
-  }, [tradeId]);
+  }, [tradeId, navigate]);
 
   const deleteTradeClick = async () => {
     const result = await deleteTrade(tradeId);
@@ -41,14 +56,17 @@ export default function TradeDetails() {
 
   const handleChangeTradeType = async (event) => {
     const newTradeComplete = event.target.checked;
-    setTradeComplete(newTradeComplete);
     const tradeYn = newTradeComplete ? 'Y' : 'N';
     const success = await changeTradeType(tradeId, { tradeYn });
     if (success) {
-      alert('거래 상태가 변경되었습니다.');
+      setTradeComplete(newTradeComplete);
+      setTrade(prevTrade => ({
+        ...prevTrade,
+        tradeYn: newTradeComplete ? 'Y' : 'N'
+      }));
+      // alert('거래 상태가 변경되었습니다.');
     } else {
       alert('거래 상태 변경 중 오류가 발생했습니다.');
-      setTradeComplete(!newTradeComplete);
     }
   };
 
@@ -115,18 +133,25 @@ export default function TradeDetails() {
               ) : (
                   <p>거래 위치를 등록하지 않았습니다.</p>
               )}
+                <h3>거래 상태</h3>
               <div className={'login-user-field'}>
                 <div className={'change-trade-type'}>
-                  <input type="checkbox"
-                         id="tradeComplete"
-                         checked={tradeComplete}
-                         onChange={handleChangeTradeType} />
-                  <label className="custom-checkbox"
-                         htmlFor="tradeComplete"></label>
-                  <div className={'trade-type'}>거래완료</div>
+                  {trade.deleteYn === 'N' && loginUserId === trade.user.tradeWriterId && (
+                      <>
+                        <input type="checkbox"
+                               id="tradeComplete"
+                               checked={tradeComplete}
+                               onChange={handleChangeTradeType} />
+                        <label className="custom-checkbox"
+                               htmlFor="tradeComplete">
+                        </label>
+                      </>
+                    )}
+                  <div className={'trade-type'}>
+                    { trade.tradeYn === 'Y' ? '거래완료' : '거래중'}</div>
                 </div>
                 <div className={'buttons'}>
-                  {loginUserId === trade.user.tradeWriterId && (
+                  {trade.deleteYn === 'N' && loginUserId === trade.user.tradeWriterId && (
                       <>
                         <Button type={'submit'}
                                 className={'cancel-button'}

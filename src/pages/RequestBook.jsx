@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
-import {Link, useNavigate} from "react-router-dom";
-import {createBook} from "../services/book/bookAPI";
-import {fetchBookInfo} from "../services/book/booklibraryAPI";
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from "react-router-dom";
+import { createBook } from "../services/book/bookAPI";
+import { fetchBookInfo } from "../services/book/booklibraryAPI";
 import Button from "../components/ui/Button";
 
 export default function RequestBook() {
@@ -118,9 +118,6 @@ export default function RequestBook() {
           <Button type={'submit'} onClick={clickSubmit} className={'submit-button'}>
             등록
           </Button>
-        </div>
-        <div>
-          <Link to="/requestBook/list">도서 요청 게시판</Link>
         </div>
       </div>
   );

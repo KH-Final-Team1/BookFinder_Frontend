@@ -8,14 +8,13 @@ export default function RequestBookList() {
   const [keyword, setKeyword] = useState("");
   const [filter, setFilter] = useState("name");
   const [books, setBooks] = useState([]);
-  const [errorMessage, setErrorMessage] = useState('');
   const [userRole, setUserRole] = useState("");
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(false);
   const [searchKeyword, setSearchKeyword] = useState("");
   const loader = useRef(null);
-  const isInitialLoad = useRef(true);
+  const [searching, setSearching] = useState(false);
 
   useEffect(() => {
     const role = getUserRole();
@@ -25,30 +24,21 @@ export default function RequestBookList() {
   const loadBooks = useCallback(async () => {
     setLoading(true);
     try {
-      const currentPage = books.length < 10 ? 0 : page;
-      const list = await searchBookList(filter, searchKeyword, null, currentPage);
-      const sortedList = list;
-      setBooks(prevBooks => {
-        const newBooks = currentPage === 0 ? sortedList : [...prevBooks, ...sortedList];
-        const uniqueBooks = newBooks.filter((book, index, self) =>
-          index === self.findIndex((b) => b.isbn === book.isbn)
-        );
+      const list = await searchBookList(filter, searchKeyword, null, page - 1);
+        setHasMore(false);
+        setBooks(prevBooks => {
+          const newBooks = page === 0 ? list : [...prevBooks, ...list];
+          const uniqueBooks = newBooks.filter((book, index, self) =>
+          index === self.findIndex((b) => b.isbn === book.isbn));
         return uniqueBooks;
       });
       setHasMore(list.length === 10);
-      setErrorMessage('');
-    } catch (error) {
-      setErrorMessage(error.response.data.detail);
     } finally {
       setLoading(false);
     }
   }, [filter, searchKeyword, page, books.length]);
 
   useEffect(() => {
-    if (isInitialLoad.current) {
-      isInitialLoad.current = false;
-      return;
-    }
     loadBooks();
   }, [loadBooks]);
 
@@ -56,7 +46,8 @@ export default function RequestBookList() {
     setPage(1);
     setBooks([]);
     setHasMore(true);
-    setSearchKeyword(keyword)
+    setSearchKeyword(keyword);
+    setSearching(true);
   }, [keyword]);
 
   const handleKeyword = (e) => {
@@ -67,13 +58,15 @@ export default function RequestBookList() {
     setFilter(e.target.value);
   }
 
-  const handleApproval = async (isbn) => {const response = await updateBookStatus(isbn, "APPROVE");
+  const handleApproval = async (isbn) => {
+    const response = await updateBookStatus(isbn, "APPROVE");
     const message = response.data?.message || response.message;
     alert(message);
     await handleSearch();
   }
 
-  const handleRejection = async (isbn) => {const response = await updateBookStatus(isbn, "REJECT");
+  const handleRejection = async (isbn) => {
+    const response = await updateBookStatus(isbn, "REJECT");
     const message = response.data?.message || response.message;;
     alert(message);
     await handleSearch();
@@ -85,7 +78,7 @@ export default function RequestBookList() {
         setPage(prevPage => prevPage + 1);
       }
     }
-  }, 100), [hasMore, loading]);
+  }, 100), [hasMore, loading, loadBooks]);
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
@@ -93,6 +86,12 @@ export default function RequestBookList() {
       window.removeEventListener('scroll', handleScroll);
     };
   }, [handleScroll]);
+
+  useEffect(() => {
+    if (books.length > 0 && searching) {
+      setSearching(false);
+    }
+  }, [books, searching]);
 
   return (
       <div className="request-books">
@@ -115,7 +114,9 @@ export default function RequestBookList() {
           </button>
         </div>
         <br/><br/><br/>
-        {errorMessage && <p>{errorMessage}</p>}
+        {books.length === 0 && (
+          <p className="empty-list-message">해당 도서는 이미 등록된 도서이거나 요청하지 않은 도서입니다.</p>
+        )}
         <table>
           <tbody>
           {books.map(book => {
@@ -145,7 +146,7 @@ export default function RequestBookList() {
           })}
           </tbody>
         </table>
-      <div ref={loader}>Loading...</div>
+      {!loading && hasMore && !searching && <div ref={loader}>Loading...</div>}
     </div>
   );
 }
