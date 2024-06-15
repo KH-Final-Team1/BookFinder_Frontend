@@ -6,7 +6,7 @@ export const searchBookList = async (filter, keyword, approvalStatus, page) => {
           params: {
             filter: filter,
             keyword: keyword,
-            approvalStatus: approvalStatus,
+            status: approvalStatus,
             page: page
           }
         });
@@ -22,7 +22,7 @@ export const searchApproveBookList = async (filter, keyword) => {
           params: {
             filter: filter,
             keyword: keyword,
-            approvalStatus: "APPROVE",
+            status: "APPROVE",
           }
         });
     return response.data;
