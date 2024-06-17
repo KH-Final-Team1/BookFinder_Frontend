@@ -3,13 +3,13 @@ import axios from 'axios';
 export const searchBookList = async (filter, keyword, approvalStatus, page) => {
   try {
     const response = await axios.get(`http://localhost:8080/api/v1/books/list`, {
-          params: {
-            filter: filter,
-            keyword: keyword,
-            status: approvalStatus,
-            page: page
-          }
-        });
+      params: {
+        filter: filter,
+        keyword: keyword,
+        status: approvalStatus,
+        page: page
+      }
+    });
     return response.data;
   } catch (error) {
     throw error
@@ -19,12 +19,12 @@ export const searchBookList = async (filter, keyword, approvalStatus, page) => {
 export const searchApproveBookList = async (filter, keyword) => {
   try {
     const response = await axios.get(`http://localhost:8080/api/v1/books/list`, {
-          params: {
-            filter: filter,
-            keyword: keyword,
-            status: "APPROVE",
-          }
-        });
+      params: {
+        filter: filter,
+        keyword: keyword,
+        status: "APPROVE",
+      }
+    });
     return response.data;
   } catch (error) {
     throw error
@@ -50,13 +50,12 @@ export const getBookByISBN = async (ISBN) => {
   .catch(error => console.error("Error fetching trade:", error));
 }
 
-export async function updateBookStatus(isbn, approvalStatus) {
+export async function updateBookStatus(isbn, bookUpdateStatusRequestDto) {
   try {
-    const response = await axios.patch(`http://localhost:8080/api/v1/books/${isbn}`, null,{
-      params:{
-        approvalStatus
-      }
-    });
+    const response = await axios.patch(`http://localhost:8080/api/v1/books/${isbn}`,
+        bookUpdateStatusRequestDto,
+        {headers: {"Authorization": `Bearer ${sessionStorage.getItem("accessToken")}`}}
+    );
     return response.data;
   } catch (error) {
     throw error;

@@ -59,15 +59,15 @@ export default function RequestBookList() {
   }
 
   const handleApproval = async (isbn) => {
-    const response = await updateBookStatus(isbn, "APPROVE");
+    const response = await updateBookStatus(isbn, {approvalStatus: "approve"});
     const message = response.data?.message || response.message;
     alert(message);
     await handleSearch();
   }
 
   const handleRejection = async (isbn) => {
-    const response = await updateBookStatus(isbn, "REJECT");
-    const message = response.data?.message || response.message;;
+    const response = await updateBookStatus(isbn, {approvalStatus: "reject"});
+    const message = response.data?.message || response.message;
     alert(message);
     await handleSearch();
   }
